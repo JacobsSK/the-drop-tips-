@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tip the Team — The Drop Indoor Skydiving</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1c1c26;
+    --border: rgba(255,255,255,0.08);
+    --border-active: rgba(99,179,255,0.6);
+    --accent: #63b3ff;
+    --accent-dim: rgba(99,179,255,0.12);
+    --accent-glow: rgba(99,179,255,0.25);
+    --text: #f0f0f5;
+    --text-muted: rgba(240,240,245,0.5);
+    --text-faint: rgba(240,240,245,0.28);
+    --success: #4ade80;
+    --success-dim: rgba(74,222,128,0.12);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  html { background: var(--bg); }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 4rem;
+    overflow-x: hidden;
+  }
+
+  /* Background atmosphere */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(99,179,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 480px; margin: 0 auto; padding: 0 1.25rem; position: relative; z-index: 1; }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(99,179,255,0.2);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 6vw, 34px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  .hero p {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* Section label */
+  .sec {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 1.75rem 0 0.75rem;
+  }
+
+  /* Team button */
+  .team-btn {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.2s, background 0.2s;
+    text-align: left;
+    color: inherit;
+  }
+  .team-btn:hover { border-color: rgba(255,255,255,0.15); background: var(--surface2); }
+  .team-btn.sel {
+    border-color: var(--border-active);
+    background: var(--accent-dim);
+  }
+  .team-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+  .team-btn.sel .team-icon { background: var(--accent-dim); border-color: var(--border-active); }
+  .team-title { font-size: 14px; font-weight: 500; color: var(--text); display: block; margin-bottom: 2px; }
+  .team-sub { font-size: 12px; color: var(--text-muted); display: block; }
+  .chk-circle {
+    margin-left: auto; flex-shrink: 0;
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: transparent;
+    transition: all 0.2s;
+  }
+  .team-btn.sel .chk-circle {
+    background: var(--accent); border-color: var(--accent); color: var(--bg);
+  }
+
+  /* Staff grid */
+  .staff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+  .sc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 0.5rem 0.75rem;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .sc:hover { border-color: rgba(255,255,255,0.15); background: var(--surface2); }
+  .sc.sel { border-color: var(--border-active); background: var(--accent-dim); }
+  .sc-chk {
+    position: absolute; top: 8px; right: 8px;
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: transparent;
+    transition: all 0.2s;
+  }
+  .sc.sel .sc-chk { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .av {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; color: var(--text-muted);
+    margin: 0 auto 8px;
+    font-family: 'Syne', sans-serif;
+    transition: all 0.2s;
+  }
+  .sc.sel .av { background: rgba(99,179,255,0.15); border-color: rgba(99,179,255,0.3); color: var(--accent); }
+  .sname { font-size: 12px; font-weight: 500; color: var(--text); font-family: 'Syne', sans-serif; }
+  .add-sc {
+    background: transparent;
+    border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 0.9rem 0.5rem 0.75rem;
+    cursor: pointer;
+    text-align: center;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .add-sc:hover { opacity: 0.85; }
+
+  /* Amount input */
+  .amount-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.2s;
+  }
+  .amount-wrap:focus-within { border-color: var(--border-active); }
+  .amount-prefix { font-size: 20px; font-weight: 600; color: var(--text-muted); font-family: 'Syne', sans-serif; }
+  .amount-wrap input {
+    flex: 1; background: transparent; border: none; outline: none;
+    font-size: 24px; font-weight: 600; color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-width: 0;
+  }
+  .amount-wrap input::placeholder { color: var(--text-faint); }
+
+  /* Summary */
+  .summary {
+    background: linear-gradient(135deg, rgba(99,179,255,0.08), rgba(99,179,255,0.04));
+    border: 1px solid rgba(99,179,255,0.2);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sum-left { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .sum-left strong { color: var(--text); font-weight: 500; }
+  .sum-total { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+
+  /* Bank cards */
+  .bank-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    animation: fadeUp 0.25s ease;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+  .bc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .bc-av {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent-dim); border: 1px solid rgba(99,179,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--accent);
+    font-family: 'Syne', sans-serif; flex-shrink: 0;
+  }
+  .bc-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .bc-bank { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .brow { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .brow:last-child { border: none; }
+  .bl { font-size: 12px; color: var(--text-faint); }
+  .bv { font-size: 12px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .cp-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-faint); font-size: 13px; padding: 0;
+    line-height: 1; display: flex; transition: color 0.15s;
+  }
+  .cp-btn:hover { color: var(--accent); }
+  .cp-ok { font-size: 11px; color: var(--success); font-weight: 500; }
+
+  .results { display: flex; flex-direction: column; gap: 8px; }
+
+  /* Pay note */
+  .pay-note {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--success-dim);
+    border: 1px solid rgba(74,222,128,0.15);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    font-size: 12px; color: rgba(74,222,128,0.85); line-height: 1.5;
+  }
+  .pay-note svg { flex-shrink: 0; margin-top: 1px; }
+
+  /* Divider */
+  .divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+  /* Utility */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-badge">🪂 The Drop Indoor Skydiving</div>
+    <h1>Tip your instructor</h1>
+    <p>Had an epic experience? Leave a cashless tip<br>for the people who made it happen.</p>
+  </div>
+
+  <p class="sec">Tip the whole team</p>
+  <button class="team-btn" id="team-btn" onclick="toggleTeam()">
+    <div class="team-icon">👥</div>
+    <div>
+      <span class="team-title">Everyone on shift today</span>
+      <span class="team-sub">Amount split equally among all staff</span>
+    </div>
+    <div class="chk-circle" id="team-chk">✓</div>
+  </button>
+
+  <p class="sec">Choose who to tip</p>
+  <div class="staff-grid" id="staff-grid"></div>
+
+  <div id="amount-section" class="hidden" style="margin-top:1.25rem;">
+    <p class="sec" style="margin-top:0;">Tip amount per person</p>
+    <div class="amount-wrap">
+      <span class="amount-prefix">R</span>
+      <input type="number" id="amount-input" placeholder="0" min="0" oninput="renderSummary()" />
+    </div>
+    <div id="summary-wrap" class="hidden" style="margin-top:8px;">
+      <div class="summary">
+        <div class="sum-left" id="sum-text"></div>
+        <div class="sum-total" id="sum-total"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="results-section" class="hidden" style="margin-top:1.25rem;">
+    <p class="sec" style="margin-top:0;">Banking details</p>
+    <div class="pay-note" style="margin-bottom:10px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".5"/><path d="M8 7v4M8 5.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Open your banking app, copy each account number and reference below, and pay each person separately.
+    </div>
+    <div class="results" id="results"></div>
+  </div>
+</div>
+
+<script>
+const staff = [
+  { id:'tshego',  name:'Tshego',         initials:'TS', bank:'Capitec Bank',   account:'1391931139',  type:'Savings', branch:'470010',  ref:'Tip - Tshego' },
+  { id:'jacobs',  name:'Jacobs',          initials:'JA', bank:'Capitec Bank',   account:'1995719690',  type:'Savings', branch:'470010',  ref:'Tip - Jacobs' },
+  { id:'chukwu',  name:'Chukwunwendu',    initials:'CO', bank:'Discovery Bank', account:'15108138302', type:'Cheque',  branch:'679000',  swift:'DISCZAJJXXX', ref:'Tip - Chukwunwendu' },
+];
+const teamInfo = { name:'The Drop Team', initials:'🪂', bank:'Capitec Bank', account:'1391931139', type:'Savings', branch:'470010', ref:'Team Tip - The Drop' };
+
+let selected = new Set();
+let teamSelected = false;
+
+function renderGrid() {
+  document.getElementById('staff-grid').innerHTML =
+    staff.map(s => `
+      <div class="sc ${selected.has(s.id)?'sel':''}" onclick="toggleStaff('${s.id}')">
+        <div class="sc-chk">✓</div>
+        <div class="av">${s.initials}</div>
+        <div class="sname">${s.name}</div>
+      </div>`).join('') +
+    `<div class="add-sc" onclick="alert('Contact the manager to add more staff.')">
+      <div class="av" style="background:transparent;border:1px dashed rgba(255,255,255,0.15);font-size:18px;">+</div>
+      <div class="sname" style="color:rgba(240,240,245,0.3);font-size:11px;">Add staff</div>
+    </div>`;
+}
+
+function getCount() { return teamSelected ? staff.length : selected.size; }
+
+function renderSummary() {
+  const amt = parseFloat(document.getElementById('amount-input').value) || 0;
+  const count = getCount();
+  const wrap = document.getElementById('summary-wrap');
+  if (amt > 0 && count > 0) {
+    wrap.classList.remove('hidden');
+    document.getElementById('sum-text').innerHTML =
+      `<strong>${count} ${count===1?'person':'people'}</strong> × R${amt.toFixed(0)} each<br>` +
+      `<span style="font-size:11px;">Pay each person separately</span>`;
+    document.getElementById('sum-total').textContent = `R${(amt*count).toFixed(0)}`;
+  } else {
+    wrap.classList.add('hidden');
+  }
+}
+
+function showSections() {
+  const show = getCount() > 0;
+  document.getElementById('amount-section').classList.toggle('hidden', !show);
+  document.getElementById('results-section').classList.toggle('hidden', !show);
+  if (show) { renderSummary(); renderCards(); }
+}
+
+function renderCards() {
+  const people = teamSelected ? [teamInfo, ...staff] : staff.filter(s => selected.has(s.id));
+  document.getElementById('results').innerHTML = people.map(s => {
+    const rows = [['Bank',s.bank],['Account number',s.account],['Account type',s.type],['Branch code',s.branch]];
+    if (s.swift) rows.push(['SWIFT / BIC',s.swift]);
+    rows.push(['Reference',s.ref]);
+    return `<div class="bank-card">
+      <div class="bc-head">
+        <div class="bc-av">${s.initials}</div>
+        <div><div class="bc-name">${s.name}</div><div class="bc-bank">${s.bank}</div></div>
+      </div>
+      ${rows.map(([l,v])=>`
+        <div class="brow">
+          <span class="bl">${l}</span>
+          <span class="bv">${v}
+            <button class="cp-btn" onclick="cp('${v}',this)" aria-label="Copy ${l}">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 11H2a1 1 0 01-1-1V2a1 1 0 011-1h8a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.4"/></svg>
+            </button>
+          </span>
+        </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+function toggleStaff(id) {
+  teamSelected = false;
+  updateTeamUI(false);
+  selected.has(id) ? selected.delete(id) : selected.add(id);
+  renderGrid();
+  showSections();
+}
+
+function toggleTeam() {
+  selected.clear();
+  teamSelected = !teamSelected;
+  updateTeamUI(teamSelected);
+  renderGrid();
+  showSections();
+}
+
+function updateTeamUI(on) {
+  document.getElementById('team-btn').classList.toggle('sel', on);
+  document.getElementById('team-chk').style.opacity = on ? '1' : '0';
+}
+
+function cp(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.innerHTML = '<span class="cp-ok">Copied!</span>';
+    setTimeout(() => {
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 11H2a1 1 0 01-1-1V2a1 1 0 011-1h8a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.4"/></svg>';
+    }, 1500);
+  });
+}
+
+updateTeamUI(false);
+renderGrid();
+</script>
+</body>
+</html>
