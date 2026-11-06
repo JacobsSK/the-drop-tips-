@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>The 40+ Body Reset — ad v1</title>
+<!--
+  VIDEO PAGE TEMPLATE — copy this file, keep the ENGINE block, rewrite the SCENES block.
+  Open it in a browser to preview (loops in real time; Space = pause, ←/→ = scrub, R = restart).
+  Render it:  node ../scripts/render.js thisfile.html out.mp4 [--audio music.mp3]
+
+  Scene markup:
+    <section class="scene" data-start="0" data-end="2.5" data-trans="cut|fade|slide|zoom|whip|up"> ... </section>
+    Scenes must have an opaque background (later scenes paint over earlier ones).
+  Element animation (times are seconds RELATIVE to the scene start):
+    data-anim="pop"            one or more of: fade up down left right pop zoom words shake pulse float spin strike
+    data-at="0.3"              when the entrance starts (default 0)
+    data-dur="0.5"             entrance length (default 0.5)
+    data-out="2.0"             optional: when it exits (fades out over 0.3s)
+    data-step="0.16"           for "words": seconds between words (karaoke captions; current word highlighted)
+    data-kb="in|out|left|right"  Ken Burns move across the whole scene (for photos / backgrounds)
+    data-count="0:4.9:1"       number tween from:to:decimals, starting at data-at over data-dur
+-->
+<style>
+  @font-face { font-family: 'Emoji'; src: local('Noto Color Emoji'); }
+  :root {
+    --bg: #5c0033; --ink: #ffffff; --muted: rgba(255,255,255,.72);
+    --accent: #f9a825; --hl: #f9a825; --hot: #ff3d6e;
+    --font: 'Inter Display', 'Inter', 'Liberation Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; background: var(--bg);
+           font-family: var(--font), 'Emoji'; color: var(--ink); transform-origin: 0 0; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; background: var(--bg); }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; padding: 0 90px; gap: 40px; }
+  [data-anim], [data-kb] { will-change: transform, opacity; }
+  .words .w { display: inline-block; margin: 0 .12em; }
+  .words .w.now { color: var(--hl); }
+  .strike { position: relative; display: inline-block; }
+  .strike::after { content: ''; position: absolute; left: -3%; top: 50%; height: .12em; border-radius: .06em;
+                   width: calc(106% * var(--strike, 0)); background: var(--hot); transform: rotate(-4deg); }
+  .full { position: absolute; inset: -6%; background-size: cover; background-position: center; }
+
+  /* type scale for 1080x1920 — keep text out of the bottom 380px and right 140px (TikTok/Reels UI) */
+  .h-xl { font-size: 132px; font-weight: 900; line-height: 1.0; letter-spacing: -3px; }
+  .h-l  { font-size: 104px; font-weight: 800; line-height: 1.05; letter-spacing: -2px; }
+  .h-m  { font-size: 72px;  font-weight: 800; line-height: 1.1; }
+  .body { font-size: 52px;  font-weight: 600; line-height: 1.25; color: var(--muted); }
+  .chip { display: inline-block; padding: 18px 34px; border-radius: 999px; font-size: 40px; font-weight: 700;
+          background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25); }
+  .caption { position: absolute; left: 70px; right: 140px; bottom: 470px; text-align: center;
+             font-size: 70px; font-weight: 900; line-height: 1.15;
+             text-shadow: 0 6px 0 rgba(0,0,0,.55), 0 0 30px rgba(0,0,0,.5); }
+  .btn { display: inline-block; padding: 40px 80px; border-radius: 999px; background: var(--accent); color: #04121f;
+         font-size: 64px; font-weight: 900; box-shadow: 0 20px 60px rgba(99,179,255,.5); }
+  #progress { position: absolute; top: 40px; left: 40px; right: 40px; height: 8px; border-radius: 8px;
+              background: rgba(255,255,255,.2); z-index: 999; overflow: hidden; }
+  #progress i { display: block; height: 100%; width: 0; background: #fff; }
+
+  /* ---- 40+ Body Reset brand (from the PDF cover) ---- */
+  .plum { background: radial-gradient(110% 70% at 20% 15%, #c2185b 0%, #8b1050 45%, #5c0033 100%); }
+  .deep { background: radial-gradient(120% 80% at 80% 20%, #8b1050 0%, #4a0029 70%, #2e0019 100%); }
+  .paper { background: #fff7f2; color: #5c0033; }
+  .gold { color: #f9a825; }
+  .blob { position: absolute; border-radius: 50%; }
+  .chip.gold-chip { background: #f9a825; color: #5c0033; border: none; }
+  .pill { display:inline-block; padding: 26px 50px; border-radius: 999px; font-size: 76px; font-weight: 900;
+          background: #fff; color: #8b1050; box-shadow: 0 18px 50px rgba(0,0,0,.25); }
+  .mock { width: 640px; border-radius: 10px; box-shadow: -40px 50px 90px rgba(0,0,0,.55), 0 0 0 4px rgba(255,255,255,.9);
+          transform: perspective(1800px) rotateY(-16deg) rotateX(5deg); }
+  .row { display:flex; align-items:center; gap: 34px; width: 900px; padding: 30px 40px; border-radius: 32px;
+         background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.18); font-size: 60px; font-weight: 800; text-align:left; }
+  .row .ic { font-size: 72px; width: 90px; text-align:center; }
+  .sheet { position:absolute; width: 470px; border-radius: 8px; box-shadow: 0 30px 70px rgba(0,0,0,.5); }
+  .no { font-size: 104px; font-weight: 900; color: #5c0033; letter-spacing: -2px; }
+  .no b { color: #c2185b; }
+  .glow { position:absolute; border-radius:50%; background: radial-gradient(circle, rgba(249,168,37,.6) 0%, rgba(255,120,170,.25) 40%, transparent 68%); }
+  .badge { position:absolute; width: 270px; height: 270px; border-radius: 50%; background:#f9a825; color:#5c0033;
+           display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:900; font-size: 44px; line-height:1.05; text-align:center;
+           box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+  .badge small { font-size: 28px; font-weight: 800; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="progress"><i></i></div>
+
+  <!-- ============================ SCENES ============================ -->
+  <!-- Timings come from vo_marks.json (voiceover phrase start/end, seconds). -->
+
+  <!-- 1. HOOK  vo: hook 0.25–3.01 -->
+  <section class="scene plum" data-start="0" data-end="3.1" data-trans="cut">
+    <div class="blob" style="width:900px;height:900px;right:-420px;bottom:-200px;background:#5c0033;opacity:.7" data-anim="float"></div>
+    <div class="center" style="gap:50px">
+      <div class="h-xl" style="font-size:118px"><span data-anim="pop" data-at="0" data-dur="0.4"><span data-anim="strike" data-at="1.0" data-dur="0.3">"eat less,</span></span><br><span data-anim="pop" data-at="0.2" data-dur="0.4"><span data-anim="strike" data-at="1.2" data-dur="0.3">move more"</span></span></div>
+      <h2 class="h-m words" style="font-size:84px" data-anim="words" data-at="1.25" data-step="0.24">stopped working in your 40s?</h2>
+    </div>
+  </section>
+  <!-- strike timing: line draws at ~1.0s while she says "stopped working" -->
+
+  <!-- 2. VALIDATION  vo: notimg 3.16 / broken 4.41 -->
+  <section class="scene deep" data-start="3.1" data-end="5.5" data-trans="whip">
+    <div class="center" style="gap:70px">
+      <h1 class="h-l" data-anim="up" data-at="0.05">you're not imagining it.</h1>
+      <h1 class="h-xl" data-anim="pop" data-at="1.3" data-dur="0.4">and you're <span class="gold">NOT</span> broken.</h1>
+    </div>
+  </section>
+
+  <!-- 3. WHY  vo: changed 5.61–7.77 / plan 7.92 -->
+  <section class="scene plum" data-start="5.5" data-end="9.25" data-trans="slide">
+    <div class="center" style="gap:44px">
+      <div class="body" style="color:#fff;font-size:60px" data-anim="fade" data-at="0.05">after 40, your</div>
+      <div class="pill" data-anim="pop" data-at="0.3">hormones</div>
+      <div class="pill" data-anim="pop" data-at="0.95">muscle</div>
+      <div class="pill" data-anim="pop" data-at="1.45">sleep</div>
+      <div class="h-m" data-anim="fade" data-at="1.85">changed.</div>
+      <h1 class="h-l gold" data-anim="up" data-at="2.42">so your plan should too.</h1>
+    </div>
+  </section>
+
+  <!-- 4. REVEAL  vo: reveal 9.37–13.7 -->
+  <section class="scene deep" data-start="9.25" data-end="13.9" data-trans="zoom">
+    <div style="position:absolute;left:0;right:0;top:170px;text-align:center">
+      <div class="chip" data-anim="down" data-at="0.1">introducing</div>
+    </div>
+    <div class="glow" style="width:1300px;height:1300px;left:-110px;top:120px" data-anim="fade" data-at="0.1" data-dur="0.8"></div>
+    <div style="position:absolute;left:220px;top:300px" data-anim="zoom float" data-at="0.15" data-dur="0.8">
+      <img class="mock" src="assets/page1.png">
+    </div>
+    <div class="badge" style="right:80px;top:250px" data-anim="pop spin" data-at="2.3">30-DAY<br>PLAN<small>for women 40+</small></div>
+    <div style="position:absolute;left:0;right:0;top:1230px;text-align:center">
+      <h1 class="h-l" data-anim="up" data-at="0.6">The 40+ Body Reset</h1>
+      <div class="body" style="color:#fff;margin-top:14px" data-anim="fade" data-at="1.4">a 30-day plan built for women over 40</div>
+    </div>
+  </section>
+
+  <!-- 5. WHAT'S INSIDE  vo: f1 14.0 / f2 15.31 / f3 16.53 / f4 17.93 -->
+  <section class="scene plum" data-start="13.9" data-end="19.7" data-trans="up">
+    <div class="center" style="justify-content:flex-start;padding-top:190px;gap:28px">
+      <div class="chip gold-chip" data-anim="down" data-at="0">what's inside</div>
+      <div class="row" data-anim="left" data-at="0.1"><span class="ic">🍳</span>protein-first eating</div>
+      <div class="row" data-anim="left" data-at="1.41"><span class="ic">🏋️‍♀️</span>strength-led workouts</div>
+      <div class="row" data-anim="left" data-at="2.63"><span class="ic">😴</span>sleep &amp; stress fixes</div>
+      <div class="row" data-anim="left" data-at="4.03"><span class="ic">📋</span>6 printable trackers</div>
+    </div>
+    <img class="sheet" src="assets/page10.png" style="left:70px;top:1060px;transform-origin:center" data-anim="up" data-at="0.6" data-dur="0.6">
+    <img class="sheet" src="assets/page15.png" style="left:520px;top:1010px" data-anim="up" data-at="4.03" data-dur="0.5">
+  </section>
+
+  <!-- 6. OBJECTION KILLERS  vo: no1 19.84 / no2 21.0 / no3 22.29 -->
+  <section class="scene paper" data-start="19.7" data-end="23.75" data-trans="whip">
+    <div class="center" style="gap:80px">
+      <div class="no" data-anim="pop" data-at="0.14" data-dur="0.35"><b>✕</b> crash diets</div>
+      <div class="no" data-anim="pop" data-at="1.3" data-dur="0.35"><b>✕</b> forbidden foods</div>
+      <div class="no" data-anim="pop" data-at="2.59" data-dur="0.35"><b>✕</b> hours of cardio</div>
+    </div>
+  </section>
+
+  <!-- 7. CTA  vo: cta 23.88 / bio 25.53 -->
+  <section class="scene plum" data-start="23.75" data-end="27.58" data-trans="zoom">
+    <div class="glow" style="width:1100px;height:1100px;left:-10px;top:-60px" data-anim="fade" data-at="0"></div>
+    <div class="center" style="gap:46px;justify-content:flex-start;padding-top:200px">
+      <img class="mock" style="width:430px;transform:perspective(1800px) rotateY(-12deg)" src="assets/page1.png" data-anim="pop float" data-at="0">
+      <div class="h-xl" style="font-size:180px" data-anim="pop" data-at="0.5"><span class="gold">$37</span></div>
+      <div class="btn" style="background:#f9a825;color:#5c0033;box-shadow:0 20px 60px rgba(249,168,37,.45)" data-anim="pop pulse" data-at="0.9">Get the plan</div>
+      <div class="body" style="color:#fff" data-anim="fade" data-at="1.78">link in bio 👆</div>
+    </div>
+  </section>
+
+  <!-- ========================== /SCENES ========================== -->
+</div>
+
+<script>
+// Optional overrides; duration defaults to the last scene's end.
+window.VIDEO = { width: 1080, height: 1920, fps: 30 };
+</script>
+
+<!-- ============================ ENGINE (don't edit) ============================ -->
+<script>
+(() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = {
+    out: (p) => 1 - Math.pow(1 - p, 3),
+    inOut: (p) => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+    back: (p) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); },
+  };
+  const num = (el, k, d) => el.dataset[k] !== undefined ? parseFloat(el.dataset[k]) : d;
+  const TRANS = 0.35;
+
+  // deterministic pseudo-random (frames must be identical for the same t)
+  const rand = (i) => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+  const scenes = [...document.querySelectorAll('.scene')].map((el, i) => ({
+    el, i, start: num(el, 'start', 0), end: num(el, 'end', 1), trans: el.dataset.trans || 'cut',
+  }));
+  const duration = window.VIDEO.duration || Math.max(...scenes.map((s) => s.end));
+  window.VIDEO.duration = duration;
+
+  // split karaoke captions into word spans
+  document.querySelectorAll('[data-anim~="words"]').forEach((el) => {
+    el.classList.add('words');
+    el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(' ');
+  });
+  // wind / speed streak backgrounds
+  document.querySelectorAll('.fx-streaks').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;';
+    const n = num(el, 'count', 30);
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i'); s.className = 'streak';
+      s.dataset.seed = k * 100 + i;
+      s.style.left = (rand(k * 100 + i) * 1080) + 'px';
+      s.style.height = (120 + rand(i + 7) * 260) + 'px';
+      s.style.opacity = .25 + rand(i + 3) * .6;
+      el.appendChild(s);
+    }
+  });
+
+  function animate(el, lt, sceneLen) {
+    const kinds = (el.dataset.anim || '').split(/\s+/).filter(Boolean);
+    const at = num(el, 'at', 0), dur = num(el, 'dur', .5);
+    const p = clamp((lt - at) / dur);
+    let op = 1, tf = '';
+    for (const k of kinds) {
+      switch (k) {
+        case 'fade': op *= ease.out(p); break;
+        case 'up': op *= ease.out(p); tf += ` translateY(${(1 - ease.out(p)) * 120}px)`; break;
+        case 'down': op *= ease.out(p); tf += ` translateY(${-(1 - ease.out(p)) * 120}px)`; break;
+        case 'left': op *= ease.out(p); tf += ` translateX(${(1 - ease.out(p)) * 300}px)`; break;
+        case 'right': op *= ease.out(p); tf += ` translateX(${-(1 - ease.out(p)) * 300}px)`; break;
+        case 'pop': op *= clamp(p * 3); tf += ` scale(${.3 + .7 * ease.back(p)})`; break;
+        case 'zoom': op *= ease.out(p); tf += ` scale(${1.5 - .5 * ease.out(p)})`; break;
+        case 'spin': op *= ease.out(p); tf += ` rotate(${(1 - ease.out(p)) * -180}deg)`; break;
+        case 'shake': { const a = 22 * Math.max(0, 1 - (lt - at) / 0.8); tf += ` translateX(${Math.sin(lt * 70) * a}px) rotate(${Math.sin(lt * 53) * a * .15}deg)`; break; }
+        case 'pulse': if (lt > at + dur) tf += ` scale(${1 + .05 * Math.sin((lt - at - dur) * 7)})`; break;
+        case 'strike': el.classList.add('strike'); el.style.setProperty('--strike', ease.out(p)); break;
+        case 'float': tf += ` translateY(${Math.sin(lt * 2.4) * 28}px) rotate(${Math.sin(lt * 1.7) * 4}deg)`; break;
+        case 'words': {
+          const step = num(el, 'step', .18), ws = el.querySelectorAll('.w');
+          ws.forEach((w, i) => {
+            const wp = clamp((lt - at - i * step) / .22);
+            w.style.opacity = clamp(wp * 3);
+            w.style.transform = `scale(${.5 + .5 * ease.back(wp)})`;
+            w.classList.toggle('now', lt >= at + i * step && lt < at + (i + 1) * step + .05);
+          });
+          break;
+        }
+      }
+    }
+    const out = num(el, 'out', null);
+    if (out !== null) op *= 1 - clamp((lt - out) / .3);
+    el.style.opacity = op;
+    el.style.transform = tf;
+  }
+
+  function sceneTransition(s, lt) {
+    const p = ease.out(clamp(lt / TRANS));
+    const st = s.el.style;
+    st.opacity = 1; st.transform = ''; st.filter = '';
+    if (s.i === 0) return;
+    switch (s.trans) {
+      case 'fade': st.opacity = p; break;
+      case 'slide': st.transform = `translateX(${(1 - p) * 100}%)`; break;
+      case 'up': st.transform = `translateY(${(1 - p) * 100}%)`; break;
+      case 'zoom': st.opacity = p; st.transform = `scale(${1.25 - .25 * p})`; break;
+      case 'whip': st.transform = `translateX(${(1 - p) * -100}%)`; st.filter = p < 1 ? `blur(${(1 - p) * 30}px)` : ''; break;
+    }
+  }
+
+  window.renderFrame = (t) => {
+    for (const s of scenes) {
+      const tail = s.i < scenes.length - 1 ? TRANS : 0;
+      const on = t >= s.start && t < s.end + tail;
+      s.el.style.display = on ? 'block' : 'none';
+      s.el.style.zIndex = s.i + 1;
+      if (!on) continue;
+      const lt = t - s.start, len = s.end - s.start;
+      sceneTransition(s, lt);
+      s.el.querySelectorAll('[data-anim]').forEach((el) => animate(el, lt, len));
+      s.el.querySelectorAll('[data-kb]').forEach((el) => {
+        const p = ease.inOut(clamp(lt / len)), m = el.dataset.kb;
+        el.style.transform = m === 'out' ? `scale(${1.18 - .18 * p})`
+          : m === 'left' ? `scale(1.12) translateX(${(.5 - p) * 6}%)`
+          : m === 'right' ? `scale(1.12) translateX(${(p - .5) * 6}%)`
+          : `scale(${1 + .18 * p})`;
+      });
+      s.el.querySelectorAll('[data-count]').forEach((el) => {
+        const [a, b, d] = el.dataset.count.split(':').map(Number);
+        const p = ease.out(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        el.textContent = (a + (b - a) * p).toFixed(d || 0);
+      });
+      s.el.querySelectorAll('.fx-streaks').forEach((fx) => {
+        const speed = num(fx, 'speed', 900);
+        fx.querySelectorAll('.streak').forEach((st) => {
+          const seed = +st.dataset.seed, h = parseFloat(st.style.height);
+          const y = ((rand(seed + 11) * 2200 + t * speed * (.6 + rand(seed + 5) * .8)) % (1920 + h)) - h;
+          st.style.top = (1920 - y - h) + 'px'; // streaks rush UPWARD (wind)
+        });
+      });
+    }
+    const bar = document.querySelector('#progress i');
+    if (bar) bar.style.width = (100 * t / duration) + '%';
+  };
+
+  // ---- preview mode (open the file in a browser) ----
+  if (!location.search.includes('render=1')) {
+    const stage = document.getElementById('stage');
+    const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920);
+      stage.style.transform = `scale(${k})`; document.body.style.height = innerHeight + 'px'; };
+    addEventListener('resize', fit); fit();
+    let t = 0, last = performance.now(), paused = false;
+    addEventListener('keydown', (e) => {
+      if (e.code === 'Space') paused = !paused;
+      if (e.key === 'ArrowRight') t = Math.min(duration, t + .5);
+      if (e.key === 'ArrowLeft') t = Math.max(0, t - .5);
+      if (e.key === 'r') t = 0;
+    });
+    const loop = (now) => { if (!paused) t = (t + (now - last) / 1000) % duration; last = now;
+      window.renderFrame(t); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  } else {
+    window.renderFrame(0);
+  }
+})();
+</script>
+</body>
+</html>

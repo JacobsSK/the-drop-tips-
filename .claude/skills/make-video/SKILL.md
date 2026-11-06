@@ -57,7 +57,7 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
 ```
 - `data-trans`: `cut fade slide up zoom whip`. Give every scene an opaque background.
 - On any element: `data-anim="pop"` (combine: `"pop pulse"`). Types: `fade up down left right pop zoom spin`
-  (entrances), `shake pulse float` (continuous), `words` (karaoke captions, current word gets `--hl` color;
+  (entrances), `strike` (draws a red line through the text at `data-at`), `shake pulse float` (continuous), `words` (karaoke captions, current word gets `--hl` color;
   `data-step` = seconds per word). Timing: `data-at` (start, seconds from scene start), `data-dur`, `data-out`.
 - `data-kb="in|out|left|right"`: slow Ken Burns move across the scene, for photos:
   ```html

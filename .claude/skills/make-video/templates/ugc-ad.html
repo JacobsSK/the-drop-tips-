@@ -12,7 +12,7 @@
     <section class="scene" data-start="0" data-end="2.5" data-trans="cut|fade|slide|zoom|whip|up"> ... </section>
     Scenes must have an opaque background (later scenes paint over earlier ones).
   Element animation (times are seconds RELATIVE to the scene start):
-    data-anim="pop"            one or more of: fade up down left right pop zoom words shake pulse float spin
+    data-anim="pop"            one or more of: fade up down left right pop zoom words shake pulse float spin strike
     data-at="0.3"              when the entrance starts (default 0)
     data-dur="0.5"             entrance length (default 0.5)
     data-out="2.0"             optional: when it exits (fades out over 0.3s)
@@ -37,6 +37,9 @@
   [data-anim], [data-kb] { will-change: transform, opacity; }
   .words .w { display: inline-block; margin: 0 .12em; }
   .words .w.now { color: var(--hl); }
+  .strike { position: relative; display: inline-block; }
+  .strike::after { content: ''; position: absolute; left: -3%; top: 50%; height: .12em; border-radius: .06em;
+                   width: calc(106% * var(--strike, 0)); background: var(--hot); transform: rotate(-4deg); }
   .full { position: absolute; inset: -6%; background-size: cover; background-position: center; }
 
   /* type scale for 1080x1920 — keep text out of the bottom 380px and right 140px (TikTok/Reels UI) */
@@ -198,6 +201,7 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
         case 'spin': op *= ease.out(p); tf += ` rotate(${(1 - ease.out(p)) * -180}deg)`; break;
         case 'shake': { const a = 22 * Math.max(0, 1 - (lt - at) / 0.8); tf += ` translateX(${Math.sin(lt * 70) * a}px) rotate(${Math.sin(lt * 53) * a * .15}deg)`; break; }
         case 'pulse': if (lt > at + dur) tf += ` scale(${1 + .05 * Math.sin((lt - at - dur) * 7)})`; break;
+        case 'strike': el.classList.add('strike'); el.style.setProperty('--strike', ease.out(p)); break;
         case 'float': tf += ` translateY(${Math.sin(lt * 2.4) * 28}px) rotate(${Math.sin(lt * 1.7) * 4}deg)`; break;
         case 'words': {
           const step = num(el, 'step', .18), ws = el.querySelectorAll('.w');
