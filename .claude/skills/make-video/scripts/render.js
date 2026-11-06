@@ -16,6 +16,26 @@ const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
+
+// Serve files over http://127.0.0.1 so ES modules (e.g. three.js) load; file:// blocks them.
+// Root = current working directory, so a scene can import from the skill's vendor/ folder.
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css',
+  '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp',
+  '.svg': 'image/svg+xml', '.gif': 'image/gif', '.mp3': 'audio/mpeg', '.wav': 'audio/wav', '.mp4': 'video/mp4',
+  '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf', '.glb': 'model/gltf-binary', '.gltf': 'model/gltf+json' };
+function serve(root) {
+  return new Promise((resolve) => {
+    const srv = http.createServer((req, res) => {
+      const rel = decodeURIComponent(req.url.split('?')[0]);
+      const file = path.join(root, rel);
+      if (!file.startsWith(root) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); return res.end(); }
+      res.writeHead(200, { 'Content-Type': MIME[path.extname(file).toLowerCase()] || 'application/octet-stream' });
+      fs.createReadStream(file).pipe(res);
+    });
+    srv.listen(0, '127.0.0.1', () => resolve(srv));
+  });
+}
 
 function parseArgs(argv) {
   const pos = [];
@@ -38,10 +58,15 @@ function parseArgs(argv) {
   const output = path.resolve(pos[1]);
   if (!fs.existsSync(input)) { console.error('no such file: ' + input); process.exit(2); }
 
-  const browser = await chromium.launch();
+  const root = path.resolve(opt.root || process.cwd());
+  if (!input.startsWith(root + path.sep)) { console.error(`scene must be inside --root (${root}); run from the project folder`); process.exit(2); }
+  const srv = await serve(root);
+  const url = `http://127.0.0.1:${srv.address().port}/${path.relative(root, input).split(path.sep).map(encodeURIComponent).join('/')}?render=1`;
+  const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   // First load at a probe size to read window.VIDEO.
   let page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
-  await page.goto('file://' + input + '?render=1', { waitUntil: 'load' });
+  await page.goto(url, { waitUntil: 'load' });
+  await page.waitForFunction(() => window.VIDEO_READY !== false, null, { timeout: 30000 });
   const cfg = await page.evaluate(() => window.VIDEO || {});
   const fps = Number(opt.fps || cfg.fps || 30);
   const width = Number(opt.width || cfg.width || 1080);
@@ -55,7 +80,10 @@ function parseArgs(argv) {
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
-  await page.goto('file://' + input + '?render=1', { waitUntil: 'load' });
+  await page.goto(url, { waitUntil: 'load' });
+  // A page that loads things asynchronously (modules, 3D models, textures) sets window.VIDEO_READY = false
+  // at the top and true when done; the renderer waits for it.
+  await page.waitForFunction(() => window.VIDEO_READY !== false, null, { timeout: 30000 });
   await page.evaluate(() => document.fonts && document.fonts.ready);
   // Wait for every <img> to finish loading.
   await page.evaluate(() => Promise.all([...document.images].map((img) =>
@@ -90,6 +118,7 @@ function parseArgs(argv) {
   ff.stdin.end();
   await ffDone;
   await browser.close();
+  srv.close();
   process.stdout.write(`\rrendered ${frames} frames (${width}x${height} @ ${fps}fps, ${duration - from}s) in ${((Date.now() - t0) / 1000).toFixed(0)}s\n`);
   console.log('wrote ' + output);
   if (errors.length) {

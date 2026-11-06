@@ -35,6 +35,8 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
    ```bash
    node .claude/skills/make-video/scripts/render.js videos/<slug>/index.html videos/<slug>/<slug>.mp4
    ```
+   Always run it from the project root: the page is served over a local http server rooted at the
+   current folder (so `/.claude/skills/make-video/vendor/three.module.min.js` resolves for 3D).
    Options: `--audio track.mp3` (muxed and faded out at the end), `--audio-volume 0.8`,
    `--fps 30`, `--duration 15`, `--width/--height` (e.g. 1080×1080 for feed),
    `--from 9 --duration 12` to render only part of it. A 15s video takes ~30s.
@@ -65,6 +67,8 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
   <div style="position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.75))"></div>
   ```
 - `data-count="0:4.9:1"`: number counts up (from:to:decimals).
+- Voiceover with exact timings: generate it phrase by phrase (Kokoro, see below) and write the
+  phrase start/end times to `vo_marks.json`. Set `data-start` / `data-at` from those times.
 - `<div class="fx-streaks" data-speed="1200" data-count="40"></div>`: rushing speed/wind lines.
 - Classes: `.center` (centered column), `.h-xl .h-l .h-m .body .chip .btn .caption .full`.
 - Draw illustrations as inline SVG (see the flyer in the template). Emoji render via Noto Color Emoji.
@@ -80,6 +84,23 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
   `DejaVu`. Remote font CDNs may be blocked when rendering. Load other fonts from files in `assets/`
   with `@font-face`.
 - Images: reference local files (`assets/…`). Remote URLs may be blocked.
+
+## Real 3D (three.js)
+
+`templates/3d-product.html` is a working three.js product shot: the product cover is wrapped
+on a 3D book or box, with soft shadows, a rim light, a bounce drop-in, a turn and a camera dolly.
+Edit `CONFIG` (cover image, size, colours, overlay text timings). three.js is vendored at
+`vendor/three.module.min.js` (import map `"three": "/.claude/skills/make-video/vendor/three.module.min.js"`).
+Rules for 3D pages: set `window.VIDEO_READY = false` first and `true` after async loads (textures, models);
+put all motion in `window.renderFrame(t)` and call `renderer.render()` there; set
+`preserveDrawingBuffer: true`. Rendering uses software WebGL: about 3–8s of render time per second
+of video at 1080×1920. Render 3D shots as separate clips and join them with ffmpeg.
+
+## Style and long videos
+
+Read `reference/style-playbook.md` before planning anything bigger than a simple ad. It covers
+the techniques the user likes (screen-in-scene, persistent series banner, comment-keyword CTA,
+one-word captions, mascots, 3D, motion trails) and how to build 60s+ videos in chapters.
 
 ## Pictures: where they come from
 
@@ -104,7 +125,14 @@ scenes (`--duration`), normalize the clip, concat. Add audio last:
 
 ## Audio
 
-No text-to-speech engine is installed. Use a voiceover or music file the user provides (`--audio`).
+**AI voice (free, local):** Kokoro TTS (`pip install kokoro-onnx soundfile` in a venv; model files
+`kokoro-v1.0.int8.onnx` and `voices-v1.0.bin` from github.com/thewh1teagle/kokoro-onnx releases
+`model-files-v1.0`). Female voices `af_heart` (default), `af_bella`, `af_sarah`, `af_nicole`; speed ~1.05–1.08.
+Write numbers as words ("forty", "thirty seven dollars"). Polish the voice with:
+`ffmpeg -i in.wav -af "highpass=f=80,equalizer=f=3000:t=q:w=1:g=2,acompressor=threshold=-18dB:ratio=3:attack=5:release=80,loudnorm=I=-14:TP=-1.5:LRA=7" vo.mp3`
+**The user's own voice:** a phone voice memo; run the same polish chain on it. Get the phrase timings
+by listening points: `ffmpeg -i vo.mp3 -af silencedetect=n=-35dB:d=0.25 -f null -` lists the pauses.
+Also usable: a voiceover or music file the user provides (`--audio`).
 Time scenes to the voiceover: get its length with
 `ffprobe -v error -show_entries format=duration -of csv=p=0 vo.mp3`, then match the scene `data-start`
 values to the line timings. Remind the user to use music they have rights to.
