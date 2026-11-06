@@ -30,7 +30,15 @@ function serve(root) {
       const rel = decodeURIComponent(req.url.split('?')[0]);
       const file = path.join(root, rel);
       if (!file.startsWith(root) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); return res.end(); }
-      res.writeHead(200, { 'Content-Type': MIME[path.extname(file).toLowerCase()] || 'application/octet-stream' });
+      const type = MIME[path.extname(file).toLowerCase()] || 'application/octet-stream';
+      const size = fs.statSync(file).size;
+      const m = /bytes=(\d*)-(\d*)/.exec(req.headers.range || '');
+      if (m) { // range requests: required for <video> seeking
+        const start = m[1] ? +m[1] : size - +m[2], end = m[1] && m[2] ? Math.min(+m[2], size - 1) : size - 1;
+        res.writeHead(206, { 'Content-Type': type, 'Accept-Ranges': 'bytes', 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': end - start + 1 });
+        return fs.createReadStream(file, { start, end }).pipe(res);
+      }
+      res.writeHead(200, { 'Content-Type': type, 'Accept-Ranges': 'bytes', 'Content-Length': size });
       fs.createReadStream(file).pipe(res);
     });
     srv.listen(0, '127.0.0.1', () => resolve(srv));

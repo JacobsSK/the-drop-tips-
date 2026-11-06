@@ -67,6 +67,15 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
   <div style="position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.75))"></div>
   ```
 - `data-count="0:4.9:1"`: number counts up (from:to:decimals).
+- More kinds: `squash` (springy squash-and-stretch entrance), `glow` (pulsing neon glow, colour `--glow`),
+  `blur` (blur-in), `draw` (on an SVG `<path>`: the line draws itself).
+- `<circle r="14" data-follow="pathId" data-at="1" data-dur="2">`: a dot travels along a path. Pair it with
+  `draw` on the same path for a "journey" trail (day 1 → day 30).
+- `<div class="hud" data-from="3" data-to="25">…</div>` outside the scenes: a persistent banner (price, series name, CTA)
+  shown between those absolute times. Style `.hud` yourself (position absolute, opacity 0).
+- `<div class="fx-particles" data-count="40" data-color="#f9a825"></div>`: soft floating particles.
+- `<video data-clip data-at="0.2" src="clip.mp4" muted>` plays a rendered clip (e.g. a 3D shot) inside a scene,
+  frame-accurate. Size it with CSS; put HTML overlays on top.
 - Voiceover with exact timings: generate it phrase by phrase (Kokoro, see below) and write the
   phrase start/end times to `vo_marks.json`. Set `data-start` / `data-at` from those times.
 - `<div class="fx-streaks" data-speed="1200" data-count="40"></div>`: rushing speed/wind lines.

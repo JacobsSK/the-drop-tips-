@@ -202,6 +202,11 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
         case 'shake': { const a = 22 * Math.max(0, 1 - (lt - at) / 0.8); tf += ` translateX(${Math.sin(lt * 70) * a}px) rotate(${Math.sin(lt * 53) * a * .15}deg)`; break; }
         case 'pulse': if (lt > at + dur) tf += ` scale(${1 + .05 * Math.sin((lt - at - dur) * 7)})`; break;
         case 'strike': el.classList.add('strike'); el.style.setProperty('--strike', ease.out(p)); break;
+        case 'squash': { const q = lt - at; if (q < 0) { op = 0; break; } const k = Math.exp(-6 * q) * Math.cos(13 * q);
+          op *= clamp(q * 8); tf += ` scale(${1 + .38 * k}, ${1 - .38 * k})`; break; }
+        case 'glow': { const g = clamp((lt - at) / dur); el.style.textShadow = g > 0 ? `0 0 ${(18 + 14 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent)), 0 0 ${(50 + 30 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent))` : ''; break; }
+        case 'blur': op *= ease.out(p); el.style.filter = p < 1 ? `blur(${(1 - ease.out(p)) * 30}px)` : ''; break;
+        case 'draw': { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L * (1 - ease.inOut(p)); break; }
         case 'float': tf += ` translateY(${Math.sin(lt * 2.4) * 28}px) rotate(${Math.sin(lt * 1.7) * 4}deg)`; break;
         case 'words': {
           const step = num(el, 'step', .18), ws = el.querySelectorAll('.w');
@@ -235,7 +240,28 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
     }
   }
 
-  window.renderFrame = (t) => {
+  // particles (deterministic floating dots)
+  document.querySelectorAll('.fx-particles').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;pointer-events:none;';
+    const n = num(el, 'count', 40);
+    for (let i = 0; i < n; i++) { const d = document.createElement('i'); const r = 3 + rand(k * 50 + i) * 9;
+      d.style.cssText = `position:absolute;width:${r}px;height:${r}px;border-radius:50%;background:${el.dataset.color || '#fff'};filter:blur(${rand(i + 9) * 3}px)`;
+      d.dataset.seed = k * 50 + i; el.appendChild(d); }
+  });
+  // embedded video clips (e.g. a rendered 3D shot): <video data-clip data-at="0.2" src="..." muted>
+  const clips = [...document.querySelectorAll('video[data-clip]')];
+  if (clips.length) {
+    window.VIDEO_READY = false;
+    Promise.all(clips.map((v) => { v.muted = true; v.preload = 'auto'; v.pause();
+      return v.readyState >= 2 ? null : new Promise((r) => { v.addEventListener('loadeddata', r, { once: true }); v.load(); }); }))
+      .then(() => { window.VIDEO_READY = true; });
+  }
+  const seek = (v, time) => new Promise((r) => {
+    if (Math.abs(v.currentTime - time) < 0.001) return r();
+    v.addEventListener('seeked', () => r(), { once: true }); v.currentTime = time; });
+
+  window.renderFrame = async (t) => {
+    const waits = [];
     for (const s of scenes) {
       const tail = s.i < scenes.length - 1 ? TRANS : 0;
       const on = t >= s.start && t < s.end + tail;
@@ -257,6 +283,22 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
         const p = ease.out(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
         el.textContent = (a + (b - a) * p).toFixed(d || 0);
       });
+      s.el.querySelectorAll('[data-follow]').forEach((el) => {
+        const path = document.getElementById(el.dataset.follow); const L = path.getTotalLength();
+        const p = ease.inOut(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        const pt = path.getPointAtLength(L * p); el.setAttribute('cx', pt.x); el.setAttribute('cy', pt.y);
+      });
+      s.el.querySelectorAll('.fx-particles').forEach((fx) => {
+        fx.querySelectorAll('i').forEach((d) => { const sd = +d.dataset.seed;
+          const y = (rand(sd + 1) * 2100 - t * (30 + rand(sd + 2) * 70)) % 2100; const yy = y < 0 ? y + 2100 : y;
+          d.style.left = (rand(sd + 3) * 1080 + Math.sin(t * (0.5 + rand(sd + 4)) + sd) * 30) + 'px';
+          d.style.top = (yy - 90) + 'px'; d.style.opacity = (.15 + .5 * rand(sd + 6)) * (.6 + .4 * Math.sin(t * 2 + sd)); });
+      });
+      s.el.querySelectorAll('video[data-clip]').forEach((v) => {
+        const at = num(v, 'at', 0), d = v.duration || 0;
+        if (location.search.includes('render=1')) waits.push(seek(v, clamp(lt - at, 0, Math.max(0, d - 0.034))));
+        else if (lt >= at && v.paused) v.play().catch(() => {});
+      });
       s.el.querySelectorAll('.fx-streaks').forEach((fx) => {
         const speed = num(fx, 'speed', 900);
         fx.querySelectorAll('.streak').forEach((st) => {
@@ -266,8 +308,15 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
         });
       });
     }
+    // persistent overlays across scenes: <div class="hud" data-from="3" data-to="25">…</div> (absolute seconds)
+    document.querySelectorAll('.hud').forEach((h) => {
+      const f = num(h, 'from', 0), to = num(h, 'to', 1e9);
+      const p = clamp((t - f) / .3) * (1 - clamp((t - to) / .3));
+      h.style.opacity = p; h.style.transform = `translateY(${(1 - ease.out(clamp((t - f) / .4))) * -40}px)`; h.style.zIndex = 900;
+    });
     const bar = document.querySelector('#progress i');
     if (bar) bar.style.width = (100 * t / duration) + '%';
+    await Promise.all(waits);
   };
 
   // ---- preview mode (open the file in a browser) ----
