@@ -316,6 +316,8 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
     });
     const bar = document.querySelector('#progress i');
     if (bar) bar.style.width = (100 * t / duration) + '%';
+    // custom per-page animation (characters, levers, charts): window.onFrame = (t, lt) => {...}
+    if (typeof window.onFrame === 'function') window.onFrame(t);
     await Promise.all(waits);
   };
 

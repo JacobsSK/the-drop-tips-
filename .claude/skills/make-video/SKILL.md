@@ -74,7 +74,9 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
 - `<div class="hud" data-from="3" data-to="25">…</div>` outside the scenes: a persistent banner (price, series name, CTA)
   shown between those absolute times. Style `.hud` yourself (position absolute, opacity 0).
 - `<div class="fx-particles" data-count="40" data-color="#f9a825"></div>`: soft floating particles.
-- `<video data-clip data-at="0.2" src="clip.mp4" muted>` plays a rendered clip (e.g. a 3D shot) inside a scene,
+- `window.onFrame = (t) => {...}` in a `<script>` after the scenes: custom per-frame animation (a running figure,
+  a lever, filling rings, volume bars). t is absolute seconds; keep it a pure function of t.
+- `<video data-clip data-at="0.2" src="clip.mp4" muted>` plays (a negative data-at starts the clip that many seconds in) a rendered clip (e.g. a 3D shot) inside a scene,
   frame-accurate. Size it with CSS; put HTML overlays on top.
 - Voiceover with exact timings: generate it phrase by phrase (Kokoro, see below) and write the
   phrase start/end times to `vo_marks.json`. Set `data-start` / `data-at` from those times.
@@ -133,6 +135,16 @@ scenes (`--duration`), normalize the clip, concat. Add audio last:
 `ffmpeg -i joined.mp4 -i music.mp3 -c:v copy -c:a aac -shortest final.mp4`.
 
 ## Audio
+
+**Scripts (preferred):**
+- `scripts/voice.py <script.json> <outdir> --models <kokoro dir> [--voice af_heart] [--speed 1.08]`:
+  script.json is `[["id","Text.",gap_before], ...]` → `vo.mp3` + `vo_marks.json` (phrase start/end times; time the scenes to these).
+- `scripts/sfx.py make videos/sfx`: synthesises `whoosh`, `whoosh_long`, `impact`, `pop`, `riser`, `tick` (numpy + soundfile).
+- `scripts/sfx.py mix vo.mp3 cues.json mix.mp3 --sfxdir videos/sfx`: cues `[{"t":1.75,"sfx":"whoosh","gain":1}]`.
+  Put a whoosh ~0.1–0.2s before every scene change, an impact on the big word, pops on icons, ticks on counters/bars,
+  and a riser into the product reveal. Then render with `--audio mix.mp3`.
+  You can't listen to it: check SFX with `ffmpeg -i x.wav -lavfi showspectrumpic=s=600x240 spec.png` and look at it.
+
 
 **AI voice (free, local):** Kokoro TTS (`pip install kokoro-onnx soundfile` in a venv; model files
 `kokoro-v1.0.int8.onnx` and `voices-v1.0.bin` from github.com/thewh1teagle/kokoro-onnx releases

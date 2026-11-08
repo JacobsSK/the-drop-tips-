@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>3D product shot</title>
+<!--
+  REAL 3D (three.js / WebGL) product shot: a book/box with the product cover as its front face.
+  Copy next to an assets/ folder, set CONFIG below, render from the project root:
+    node .claude/skills/make-video/scripts/render.js videos/<slug>/3d.html videos/<slug>/3d.mp4
+  Use the output as a clip (concat with other scenes) or as a scene background.
+  All motion is a pure function of t inside renderFrame(t). No clocks or randomness.
+-->
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: 'Inter Display', 'Inter', sans-serif; transform-origin: 0 0; }
+  canvas { position: absolute; inset: 0; }
+  .ov { position: absolute; left: 0; right: 0; text-align: center; color: #fff; font-weight: 900; opacity: 0; }
+</style>
+<script>window.VIDEO_READY = false;</script>
+<script type="importmap">{ "imports": { "three": "/.claude/skills/make-video/vendor/three.module.min.js" } }</script>
+</head>
+<body>
+<div id="stage">
+  <div class="ov" id="t1" hidden style="top:250px;font-size:96px;letter-spacing:-2px">The 40+ Body Reset</div>
+  <div class="ov" id="t2" hidden style="top:1560px;font-size:58px;color:#f9a825">30-day plan · $37</div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+
+// ---------------- CONFIG ----------------
+const CONFIG = {
+  duration: 6.2,
+  cover: 'assets/cover.png',        // front face image
+  size: [1.7, 2.2, 0.2],             // width, height, thickness (book proportions = cover aspect)
+  bg: '#061633', floor: '#0d2a5c', spine: '#8b1050', rim: '#4fc3ff',
+  overlays: [],
+  motion: 'orbit',                    // 'drop' = bounce in + turn; 'orbit' = standing book, low hero orbit
+};
+window.VIDEO = { width: 1080, height: 1920, fps: 30, duration: CONFIG.duration };
+// ----------------------------------------
+
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.45;
+document.getElementById('stage').prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(CONFIG.bg);
+scene.fog = new THREE.Fog(CONFIG.bg, 9, 20);
+const camera = new THREE.PerspectiveCamera(32, W / H, 0.1, 100);
+
+scene.add(new THREE.HemisphereLight('#ffe3ef', '#2a0014', 0.9));
+const key = new THREE.DirectionalLight('#ffffff', 2.6);
+key.position.set(3, 7, 5); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+key.shadow.camera.left = -4; key.shadow.camera.right = 4; key.shadow.camera.top = 4; key.shadow.camera.bottom = -4;
+key.shadow.radius = 6; scene.add(key);
+const rim = new THREE.PointLight(CONFIG.rim, 40, 12); rim.position.set(-3, 2.5, -2.5); scene.add(rim);
+
+const floor = new THREE.Mesh(new THREE.CircleGeometry(12, 64), new THREE.MeshStandardMaterial({ color: CONFIG.floor, roughness: 0.9 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+
+// page-edge texture (thin stripes) for the three page sides
+function pagesTexture(vertical) {
+  const c = document.createElement('canvas'); c.width = 256; c.height = 256; const g = c.getContext('2d');
+  g.fillStyle = '#f6efe9'; g.fillRect(0, 0, 256, 256); g.strokeStyle = 'rgba(120,90,80,.18)';
+  for (let i = 0; i < 256; i += 3) { g.beginPath(); vertical ? (g.moveTo(i, 0), g.lineTo(i, 256)) : (g.moveTo(0, i), g.lineTo(256, i)); g.stroke(); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const coverTex = await new THREE.TextureLoader().loadAsync(CONFIG.cover);
+coverTex.colorSpace = THREE.SRGBColorSpace; coverTex.anisotropy = 8;
+const [bw, bh, bd] = CONFIG.size;
+const mat = (o) => new THREE.MeshStandardMaterial({ roughness: 0.45, ...o });
+const book = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), [
+  mat({ map: pagesTexture(false) }),                 // +x  page edge
+  mat({ color: CONFIG.spine }),                      // -x  spine
+  mat({ map: pagesTexture(true) }),                  // +y  top pages
+  mat({ map: pagesTexture(true) }),                  // -y  bottom pages
+  mat({ map: coverTex, roughness: 0.35 }),           // +z  front cover
+  mat({ color: CONFIG.spine }),                      // -z  back cover
+]);
+book.castShadow = true; scene.add(book);
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (p) => 1 - Math.pow(1 - p, 3);
+const bounce = (p) => { const n = 7.5625, d = 2.75;
+  if (p < 1 / d) return n * p * p; if (p < 2 / d) return n * (p -= 1.5 / d) * p + .75;
+  if (p < 2.5 / d) return n * (p -= 2.25 / d) * p + .9375; return n * (p -= 2.625 / d) * p + .984375; };
+
+window.renderFrame = (t) => {
+  if (CONFIG.motion === 'orbit') return orbit(t);
+  // drop in with a bounce (0–1.1s), then a slow showcase turn + float
+  const drop = bounce(clamp(t / 1.1));
+  const turn = -1.5 + 1.75 * easeOut(clamp((t - 0.6) / 2.2)) + Math.sin(Math.max(0, t - 2.8) * 0.6) * 0.18;
+  book.position.set(0, bh / 2 + (1 - drop) * 6 + Math.max(0, Math.sin((t - 2.8) * 1.6)) * 0.08 * (t > 2.8), 0);
+  book.rotation.set(0, turn, (1 - drop) * 0.25);
+  // camera: slow dolly in + slight orbit
+  const k = easeOut(clamp(t / CONFIG.duration));
+  camera.position.set(Math.sin(0.25 - k * 0.3) * 6.2, 2.0 + (1 - k) * 0.6, Math.cos(0.25 - k * 0.3) * (10.8 - k * 1.8));
+  camera.lookAt(0, bh * 0.52, 0);
+  rim.intensity = 25 + 20 * clamp((t - 0.8) / 1);
+  renderer.render(scene, camera);
+  for (const o of CONFIG.overlays) {
+    const el = document.getElementById(o.id), p = easeOut(clamp((t - o.in) / 0.5)) * (1 - clamp((t - o.out) / 0.3));
+    el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * 60}px)`;
+  }
+};
+
+function orbit(t) {
+  const k = clamp(t / CONFIG.duration), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+  book.position.set(0, bh / 2 + 0.05 + Math.sin(t * 1.5) * 0.06, 0);
+  book.rotation.set(0, -0.75 + 1.1 * e, 0);
+  const a = 0.9 - 1.2 * e;
+  camera.position.set(Math.sin(a) * 7.5, 0.9 + 1.4 * e, Math.cos(a) * 7.5);
+  camera.lookAt(0, bh * 0.55, 0);
+  rim.position.set(Math.sin(a + 2.6) * 3.5, 2.8, Math.cos(a + 2.6) * 3.5); rim.intensity = 45;
+  renderer.render(scene, camera);
+  for (const o of CONFIG.overlays) { const el = document.getElementById(o.id), p = easeOut(clamp((t - o.in) / 0.5)) * (1 - clamp((t - o.out) / 0.3));
+    el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * 60}px)`; }
+}
+
+if (location.search.includes('render=1')) { window.renderFrame(0); }
+else { // preview: fit to window and loop
+  const st = document.getElementById('stage'); const fit = () => st.style.transform = `scale(${Math.min(innerWidth / W, innerHeight / H)})`;
+  addEventListener('resize', fit); fit(); const t0 = performance.now();
+  const loop = (now) => { window.renderFrame(((now - t0) / 1000) % CONFIG.duration); requestAnimationFrame(loop); }; requestAnimationFrame(loop);
+}
+window.VIDEO_READY = true;
+</script>
+</body>
+</html>

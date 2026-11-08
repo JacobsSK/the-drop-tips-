@@ -1,0 +1,6 @@
+[{"t":0.15,"sfx":"impact","gain":1.1},{"t":0.95,"sfx":"pop"},{"t":1.75,"sfx":"whoosh"},
+ {"t":6.1,"sfx":"whoosh"},{"t":6.65,"sfx":"tick"},{"t":6.8,"sfx":"tick"},{"t":6.95,"sfx":"tick"},{"t":7.1,"sfx":"tick"},
+ {"t":10.2,"sfx":"whoosh"},{"t":10.95,"sfx":"pop"},{"t":11.25,"sfx":"pop"},{"t":11.55,"sfx":"pop"},
+ {"t":13.05,"sfx":"tick"},{"t":13.2,"sfx":"tick"},{"t":13.35,"sfx":"tick"},{"t":13.5,"sfx":"tick"},
+ {"t":13.25,"sfx":"riser","gain":0.6},{"t":14.25,"sfx":"whoosh_long"},
+ {"t":18.55,"sfx":"whoosh"},{"t":18.95,"sfx":"impact"},{"t":20.67,"sfx":"pop"}]

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Stop the cardio — 40+ Body Reset</title>
+<!--
+  VIDEO PAGE TEMPLATE — copy this file, keep the ENGINE block, rewrite the SCENES block.
+  Open it in a browser to preview (loops in real time; Space = pause, ←/→ = scrub, R = restart).
+  Render it:  node ../scripts/render.js thisfile.html out.mp4 [--audio music.mp3]
+
+  Scene markup:
+    <section class="scene" data-start="0" data-end="2.5" data-trans="cut|fade|slide|zoom|whip|up"> ... </section>
+    Scenes must have an opaque background (later scenes paint over earlier ones).
+  Element animation (times are seconds RELATIVE to the scene start):
+    data-anim="pop"            one or more of: fade up down left right pop zoom words shake pulse float spin strike
+    data-at="0.3"              when the entrance starts (default 0)
+    data-dur="0.5"             entrance length (default 0.5)
+    data-out="2.0"             optional: when it exits (fades out over 0.3s)
+    data-step="0.16"           for "words": seconds between words (karaoke captions; current word highlighted)
+    data-kb="in|out|left|right"  Ken Burns move across the whole scene (for photos / backgrounds)
+    data-count="0:4.9:1"       number tween from:to:decimals, starting at data-at over data-dur
+-->
+<style>
+  @font-face { font-family: 'Emoji'; src: local('Noto Color Emoji'); }
+  :root {
+    --bg: #061633; --ink: #ffffff; --muted: rgba(255,255,255,.72);
+    --accent: #4fc3ff; --hl: #ffd34d; --hot: #ff3d6e;
+    --font: 'Inter Display', 'Inter', 'Liberation Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; background: var(--bg);
+           font-family: var(--font), 'Emoji'; color: var(--ink); transform-origin: 0 0; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; background: var(--bg); }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; padding: 0 90px; gap: 40px; }
+  [data-anim], [data-kb] { will-change: transform, opacity; }
+  .words .w { display: inline-block; margin: 0 .12em; }
+  .words .w.now { color: var(--hl); }
+  .strike { position: relative; display: inline-block; }
+  .strike::after { content: ''; position: absolute; left: -3%; top: 50%; height: .12em; border-radius: .06em;
+                   width: calc(106% * var(--strike, 0)); background: var(--hot); transform: rotate(-4deg); }
+  .full { position: absolute; inset: -6%; background-size: cover; background-position: center; }
+
+  /* type scale for 1080x1920 — keep text out of the bottom 380px and right 140px (TikTok/Reels UI) */
+  .h-xl { font-size: 132px; font-weight: 900; line-height: 1.0; letter-spacing: -3px; }
+  .h-l  { font-size: 104px; font-weight: 800; line-height: 1.05; letter-spacing: -2px; }
+  .h-m  { font-size: 72px;  font-weight: 800; line-height: 1.1; }
+  .body { font-size: 52px;  font-weight: 600; line-height: 1.25; color: var(--muted); }
+  .chip { display: inline-block; padding: 18px 34px; border-radius: 999px; font-size: 40px; font-weight: 700;
+          background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25); }
+  .caption { position: absolute; left: 70px; right: 140px; bottom: 470px; text-align: center;
+             font-size: 70px; font-weight: 900; line-height: 1.15;
+             text-shadow: 0 6px 0 rgba(0,0,0,.55), 0 0 30px rgba(0,0,0,.5); }
+  .btn { display: inline-block; padding: 40px 80px; border-radius: 999px; background: var(--accent); color: #04121f;
+         font-size: 64px; font-weight: 900; box-shadow: 0 20px 60px rgba(99,179,255,.5); }
+  #progress { position: absolute; top: 40px; left: 40px; right: 40px; height: 8px; border-radius: 8px;
+              background: rgba(255,255,255,.2); z-index: 999; overflow: hidden; }
+  #progress i { display: block; height: 100%; width: 0; background: #fff; }
+
+  .blue { background: radial-gradient(110% 70% at 25% 15%, #2f7bff 0%, #0b3a9c 45%, #061633 100%); }
+  .navy { background: radial-gradient(120% 80% at 75% 15%, #1a3f8f 0%, #0a1c45 55%, #040b1f 100%); }
+  .ice { background: linear-gradient(180deg, #eef6ff 0%, #d7e9ff 100%); color: #061633; }
+  .clipbg { background: #061633; }
+  .cyan { color: #4fc3ff; --glow: #4fc3ff; } .hot { color: #ff3d6e; --glow: #ff3d6e; } .gold { color: #ffd34d; --glow: #ffc400; }
+  .card { width: 900px; padding: 34px 44px; border-radius: 36px; background: rgba(255,255,255,.12);
+          border: 2px solid rgba(255,255,255,.25); font-size: 52px; font-weight: 700; line-height: 1.25; text-align: left; }
+  .tick { display: inline-block; padding: 18px 34px; border-radius: 999px; background: #fff; color: #0b3a9c; font-size: 46px; font-weight: 900; }
+  .tick.pink { background: #ff3d8b; color: #fff; }
+  .clip { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+  .sheet { position:absolute; width: 440px; border-radius: 8px; box-shadow: 0 30px 70px rgba(0,0,0,.55); }
+  .hud { position: absolute; left: 0; right: 0; top: 104px; text-align: center; opacity: 0; pointer-events: none; }
+  .hud span { display: inline-block; padding: 14px 30px; border-radius: 999px; background: rgba(4,11,31,.55); color: #fff;
+              font-size: 34px; font-weight: 800; letter-spacing: .5px; border: 2px solid rgba(79,195,255,.8); }
+  .hud span b { color: #ffd34d; }
+  .day { width: 128px; height: 190px; border-radius: 26px; background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25);
+         display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding: 18px 0 22px; font-size: 40px; font-weight: 800; }
+  .day .ic { font-size: 70px; line-height: 1; }
+  .bar { position:absolute; bottom: 0; width: 150px; border-radius: 22px 22px 0 0; background: linear-gradient(#4fc3ff, #1e6bff); }
+  .no { font-size: 84px; font-weight: 900; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="progress"><i></i></div>
+
+  <div class="hud" data-from="2.0" data-to="14.4"><span>THE 40+ BODY RESET · <b>$19</b></span></div>
+  <!-- vo: hook .25–1.57 | b1 2.02 b2 3.5 | b3 6.44 b4 8.09 | b5 10.58 b6 13.0 | c1 14.58 c2 18.84 c3 20.67 | end 22.73 -->
+
+  <!-- 1. HOOK: runner on a treadmill + STOP -->
+  <section class="scene blue" data-start="0" data-end="1.95" data-trans="cut">
+    <div class="fx-particles" data-count="26" data-color="#9fd8ff"></div>
+    <div style="position:absolute;left:0;right:0;top:230px;text-align:center">
+      <div class="hot" style="font-size:250px;font-weight:900;line-height:.9;letter-spacing:-6px" data-anim="squash glow" data-at="0.2">STOP</div>
+      <div class="h-l" style="margin-top:14px" data-anim="up" data-at="0.55">doing more cardio.</div>
+    </div>
+    <div style="position:absolute;left:90px;top:760px;width:900px;height:800px" data-kb="in">
+      <svg viewBox="0 0 800 720" width="900" height="810">
+        <rect x="60" y="610" width="640" height="34" rx="17" fill="#0a2a6b"/>
+        <rect x="80" y="565" width="600" height="46" rx="23" fill="#0d2350" stroke="#4fc3ff" stroke-width="4"/>
+        <line id="belt" x1="105" y1="588" x2="655" y2="588" stroke="#4fc3ff" stroke-width="5" stroke-dasharray="26 26" opacity=".7"/>
+        <path d="M640 570 L715 270" stroke="#9fc4ff" stroke-width="24" stroke-linecap="round"/>
+        <path d="M700 305 L575 345" stroke="#9fc4ff" stroke-width="16" stroke-linecap="round"/>
+        <rect x="655" y="215" width="130" height="66" rx="14" fill="#1e6bff" stroke="#fff" stroke-width="4"/>
+        <text x="720" y="260" text-anchor="middle" font-size="34" font-weight="900" fill="#fff" font-family="Inter">45:00</text>
+        <g id="runner">
+          <polyline id="legB" fill="none" stroke="#0b1f4d" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline id="armB" fill="none" stroke="#e8b8a0" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+          <line id="torso" stroke="#ff3d8b" stroke-width="66" stroke-linecap="round"/>
+          <circle id="head" r="44" fill="#ffd9c7"/>
+          <circle id="pony" r="26" fill="#3b2314"/>
+          <polyline id="legF" fill="none" stroke="#173a8a" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline id="armF" fill="none" stroke="#ffd9c7" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g data-anim="pop" data-at="0.95" data-dur="0.3" style="transform-origin:380px 380px">
+          <circle cx="380" cy="380" r="300" fill="none" stroke="#ff3d6e" stroke-width="34" opacity=".9"/>
+          <line x1="168" y1="168" x2="592" y2="592" stroke="#ff3d6e" stroke-width="34" stroke-linecap="round" opacity=".9"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 2. HEART: cardio is good for your heart... but -->
+  <section class="scene navy" data-start="1.95" data-end="6.3" data-trans="zoom">
+    <div class="fx-particles" data-count="20" data-color="#ff8fb8"></div>
+    <div style="position:absolute;left:0;right:0;top:300px;text-align:center">
+      <h1 class="h-l" data-anim="up" data-at="0.07">cardio's good for<br>your heart</h1>
+    </div>
+    <svg viewBox="0 0 1080 700" width="1080" height="700" style="position:absolute;left:0;top:640px">
+      <path d="M 40 380 L 330 380 L 370 320 L 410 440 L 455 190 L 500 520 L 545 380 L 1040 380" fill="none" stroke="#4fc3ff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" data-anim="draw" data-at="0.1" data-dur="1.3" style="filter:drop-shadow(0 0 14px #4fc3ff)"/>
+      <g id="heart" style="transform-origin:540px 300px"><path d="M540 420 C 380 310, 400 150, 540 215 C 680 150, 700 310, 540 420 Z" fill="#ff3d6e" style="filter:drop-shadow(0 0 30px #ff3d6e)"/></g>
+    </svg>
+    <div style="position:absolute;left:60px;right:60px;top:1240px;text-align:center">
+      <div class="h-m" data-anim="squash" data-at="1.55">but after 40, it can't do<br>the main job <span class="gold" data-anim="glow" data-at="2.6">alone.</span></div>
+    </div>
+  </section>
+
+  <!-- 3. MUSCLE LOSS chart -->
+  <section class="scene blue" data-start="6.3" data-end="10.4" data-trans="slide">
+    <div style="position:absolute;left:0;right:0;top:240px;text-align:center">
+      <h1 class="h-l" data-anim="up" data-at="0.1">you're losing muscle<br><span class="hot">every year</span></h1>
+    </div>
+    <div style="position:absolute;left:110px;top:640px;width:860px;height:560px;border-bottom:4px solid rgba(255,255,255,.5)">
+      <div class="bar" style="left:20px;height:520px" data-anim="up" data-at="0.35"></div>
+      <div class="bar" style="left:240px;height:478px" data-anim="up" data-at="0.5"></div>
+      <div class="bar" style="left:460px;height:440px" data-anim="up" data-at="0.65"></div>
+      <div class="bar" style="left:680px;height:405px" data-anim="up" data-at="0.8"></div>
+      <svg viewBox="0 0 860 560" width="860" height="560" style="position:absolute;inset:0;overflow:visible">
+        <path d="M 95 -20 L 315 22 L 535 60 L 755 95" fill="none" stroke="#ff3d6e" stroke-width="10" stroke-linecap="round" stroke-dasharray="1 0" data-anim="draw" data-at="1.0" data-dur="0.9"/>
+      </svg>
+    </div>
+    <div style="position:absolute;left:110px;top:1215px;width:860px;display:flex;justify-content:space-around;font-size:44px;font-weight:800;color:#bfe3ff">
+      <span>40</span><span>50</span><span>60</span><span>70</span>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:1300px;text-align:center;font-size:40px;font-weight:700;color:#bfe3ff" data-anim="fade" data-at="1.1">≈3–8% of muscle lost per decade</div>
+    <div style="position:absolute;left:0;right:0;top:1390px;text-align:center">
+      <div class="h-m" data-anim="squash" data-at="1.79">and muscle keeps your<br>body burning <span data-anim="pulse" data-at="1.9" style="display:inline-block">🔥</span></div>
+    </div>
+  </section>
+
+  <!-- 4. THE FIX: week calendar -->
+  <section class="scene navy" data-start="10.4" data-end="14.45" data-trans="whip">
+    <div class="fx-particles" data-count="24" data-color="#9fd8ff"></div>
+    <div style="position:absolute;left:0;right:0;top:300px;text-align:center">
+      <div class="cyan" style="font-size:200px;font-weight:900;line-height:1" data-anim="squash glow" data-at="0.15">2–3×</div>
+      <div class="h-m" data-anim="up" data-at="0.4">strength sessions a week</div>
+    </div>
+    <div style="position:absolute;left:30px;right:30px;top:800px;display:flex;justify-content:space-between">
+      <div class="day" style="background:#ff3d8b">M<span class="ic" data-anim="squash" data-at="0.55">🏋️‍♀️</span></div>
+      <div class="day">T<span class="ic" data-anim="pop" data-at="2.65">👟</span></div>
+      <div class="day" style="background:#ff3d8b">W<span class="ic" data-anim="squash" data-at="0.85">🏋️‍♀️</span></div>
+      <div class="day">T<span class="ic" data-anim="pop" data-at="2.8">👟</span></div>
+      <div class="day" style="background:#ff3d8b">F<span class="ic" data-anim="squash" data-at="1.15">🏋️‍♀️</span></div>
+      <div class="day">S<span class="ic" data-anim="pop" data-at="2.95">👟</span></div>
+      <div class="day">S<span class="ic" data-anim="pop" data-at="3.1">👟</span></div>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:1080px;text-align:center">
+      <div class="card" style="display:inline-block;width:auto" data-anim="up" data-at="1.4">💪 protects your muscle</div>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:1270px;text-align:center">
+      <h1 class="h-l gold" data-anim="squash" data-at="2.6">walking does the rest.</h1>
+    </div>
+  </section>
+
+  <!-- 5. PRODUCT: 3D book + what's in it -->
+  <section class="scene clipbg" data-start="14.45" data-end="18.75" data-trans="zoom">
+    <video class="clip" data-clip data-at="-2.1" src="assets/3d-blue.mp4" muted></video>
+    <div style="position:absolute;left:0;right:0;top:220px;text-align:center">
+      <h1 class="h-l" data-anim="squash" data-at="0.1">The 40+ Body Reset</h1>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:1400px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px">
+      <div class="tick pink" data-anim="left" data-at="1.0">🏋️‍♀️ full sample strength workout</div>
+      <div class="tick" data-anim="left" data-at="3.0">📅 30-day plan</div>
+    </div>
+    <img class="sheet" src="assets/workout.png" style="left:720px;top:960px;width:300px;transform:rotate(7deg)" data-anim="up" data-at="1.0" data-dur="0.5">
+  </section>
+
+  <!-- 6. PRICE + CTA -->
+  <section class="scene ice" data-start="18.75" data-end="22.73" data-trans="up">
+    <div class="center" style="gap:34px">
+      <div class="h-m" data-anim="fade" data-at="0.05">one-time price</div>
+      <div style="font-size:250px;font-weight:900;color:#1e6bff;line-height:1;--glow:#4fc3ff" data-anim="squash glow" data-at="0.2">$19</div>
+      <div style="display:flex;gap:22px" data-anim="up" data-at="0.9">
+        <span class="tick" style="background:#061633;color:#fff">✕ no app</span><span class="tick" style="background:#061633;color:#fff">✕ no subscription</span>
+      </div>
+      <div class="btn" style="background:#ff3d8b;color:#fff;margin-top:20px;box-shadow:0 20px 60px rgba(255,61,139,.4)" data-anim="pop pulse" data-at="1.92">link in bio 👆</div>
+    </div>
+  </section>
+
+<script>
+// treadmill runner (scene 1): articulated legs/arms driven by t
+window.onFrame = (t) => {
+  const $ = (id) => document.getElementById(id); if (!$('runner')) return;
+  const w = 13, hip = [330, 360], sh = [352, 222];
+  const bob = -Math.abs(Math.sin(t * w)) * 14;
+  const P = (pts) => pts.map((p) => p[0] + ',' + (p[1] + bob)).join(' ');
+  const leg = (ph) => { const a = 0.62 * Math.sin(t * w + ph), b = 0.25 + 0.95 * Math.max(0, Math.sin(t * w + ph + 1.3));
+    const k = [hip[0] + 130 * Math.sin(a), hip[1] + 130 * Math.cos(a)];
+    const f = [k[0] + 125 * Math.sin(a - b), Math.min(565, k[1] + 125 * Math.cos(a - b))]; return [hip, k, f]; };
+  const arm = (ph) => { const a = -0.75 * Math.sin(t * w + ph);
+    const e = [sh[0] + 85 * Math.sin(a), sh[1] + 85 * Math.cos(a)]; const h = [e[0] + 80 * Math.sin(a + 1.7), e[1] + 80 * Math.cos(a + 1.7)]; return [sh, e, h]; };
+  $('legF').setAttribute('points', P(leg(0))); $('legB').setAttribute('points', P(leg(Math.PI)));
+  $('armF').setAttribute('points', P(arm(Math.PI))); $('armB').setAttribute('points', P(arm(0)));
+  $('torso').setAttribute('x1', hip[0]); $('torso').setAttribute('y1', hip[1] - 20 + bob); $('torso').setAttribute('x2', sh[0]); $('torso').setAttribute('y2', sh[1] + bob);
+  $('head').setAttribute('cx', 372); $('head').setAttribute('cy', 150 + bob);
+  $('pony').setAttribute('cx', 322 + Math.sin(t * w) * 8); $('pony').setAttribute('cy', 140 + bob);
+  $('belt').style.strokeDashoffset = t * 520;
+  // heart beat (scene 2)
+  const hb = document.getElementById('heart'); if (hb) { const q = ((t - 1.95) * 1.25) % 1; const s = 1 + .14 * Math.exp(-q * 9) + .07 * Math.exp(-Math.max(0, q - .22) * 9) * (q > .22);
+    hb.style.transform = `scale(${s})`; }
+};
+</script>
+  <!-- ========================== /SCENES ========================== -->
+</div>
+
+<script>
+// Optional overrides; duration defaults to the last scene's end.
+window.VIDEO = { width: 1080, height: 1920, fps: 30 };
+</script>
+
+<!-- ============================ ENGINE (don't edit) ============================ -->
+<script>
+(() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = {
+    out: (p) => 1 - Math.pow(1 - p, 3),
+    inOut: (p) => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+    back: (p) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); },
+  };
+  const num = (el, k, d) => el.dataset[k] !== undefined ? parseFloat(el.dataset[k]) : d;
+  const TRANS = 0.35;
+
+  // deterministic pseudo-random (frames must be identical for the same t)
+  const rand = (i) => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+  const scenes = [...document.querySelectorAll('.scene')].map((el, i) => ({
+    el, i, start: num(el, 'start', 0), end: num(el, 'end', 1), trans: el.dataset.trans || 'cut',
+  }));
+  const duration = window.VIDEO.duration || Math.max(...scenes.map((s) => s.end));
+  window.VIDEO.duration = duration;
+
+  // split karaoke captions into word spans
+  document.querySelectorAll('[data-anim~="words"]').forEach((el) => {
+    el.classList.add('words');
+    el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(' ');
+  });
+  // wind / speed streak backgrounds
+  document.querySelectorAll('.fx-streaks').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;';
+    const n = num(el, 'count', 30);
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i'); s.className = 'streak';
+      s.dataset.seed = k * 100 + i;
+      s.style.left = (rand(k * 100 + i) * 1080) + 'px';
+      s.style.height = (120 + rand(i + 7) * 260) + 'px';
+      s.style.opacity = .25 + rand(i + 3) * .6;
+      el.appendChild(s);
+    }
+  });
+
+  function animate(el, lt, sceneLen) {
+    const kinds = (el.dataset.anim || '').split(/\s+/).filter(Boolean);
+    const at = num(el, 'at', 0), dur = num(el, 'dur', .5);
+    const p = clamp((lt - at) / dur);
+    let op = 1, tf = '';
+    for (const k of kinds) {
+      switch (k) {
+        case 'fade': op *= ease.out(p); break;
+        case 'up': op *= ease.out(p); tf += ` translateY(${(1 - ease.out(p)) * 120}px)`; break;
+        case 'down': op *= ease.out(p); tf += ` translateY(${-(1 - ease.out(p)) * 120}px)`; break;
+        case 'left': op *= ease.out(p); tf += ` translateX(${(1 - ease.out(p)) * 300}px)`; break;
+        case 'right': op *= ease.out(p); tf += ` translateX(${-(1 - ease.out(p)) * 300}px)`; break;
+        case 'pop': op *= clamp(p * 3); tf += ` scale(${.3 + .7 * ease.back(p)})`; break;
+        case 'zoom': op *= ease.out(p); tf += ` scale(${1.5 - .5 * ease.out(p)})`; break;
+        case 'spin': op *= ease.out(p); tf += ` rotate(${(1 - ease.out(p)) * -180}deg)`; break;
+        case 'shake': { const a = 22 * Math.max(0, 1 - (lt - at) / 0.8); tf += ` translateX(${Math.sin(lt * 70) * a}px) rotate(${Math.sin(lt * 53) * a * .15}deg)`; break; }
+        case 'pulse': if (lt > at + dur) tf += ` scale(${1 + .05 * Math.sin((lt - at - dur) * 7)})`; break;
+        case 'strike': el.classList.add('strike'); el.style.setProperty('--strike', ease.out(p)); break;
+        case 'squash': { const q = lt - at; if (q < 0) { op = 0; break; } const k = Math.exp(-6 * q) * Math.cos(13 * q);
+          op *= clamp(q * 8); tf += ` scale(${1 + .38 * k}, ${1 - .38 * k})`; break; }
+        case 'glow': { const g = clamp((lt - at) / dur); el.style.textShadow = g > 0 ? `0 0 ${(18 + 14 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent)), 0 0 ${(50 + 30 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent))` : ''; break; }
+        case 'blur': op *= ease.out(p); el.style.filter = p < 1 ? `blur(${(1 - ease.out(p)) * 30}px)` : ''; break;
+        case 'draw': { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L * (1 - ease.inOut(p)); break; }
+        case 'float': tf += ` translateY(${Math.sin(lt * 2.4) * 28}px) rotate(${Math.sin(lt * 1.7) * 4}deg)`; break;
+        case 'words': {
+          const step = num(el, 'step', .18), ws = el.querySelectorAll('.w');
+          ws.forEach((w, i) => {
+            const wp = clamp((lt - at - i * step) / .22);
+            w.style.opacity = clamp(wp * 3);
+            w.style.transform = `scale(${.5 + .5 * ease.back(wp)})`;
+            w.classList.toggle('now', lt >= at + i * step && lt < at + (i + 1) * step + .05);
+          });
+          break;
+        }
+      }
+    }
+    const out = num(el, 'out', null);
+    if (out !== null) op *= 1 - clamp((lt - out) / .3);
+    el.style.opacity = op;
+    el.style.transform = tf;
+  }
+
+  function sceneTransition(s, lt) {
+    const p = ease.out(clamp(lt / TRANS));
+    const st = s.el.style;
+    st.opacity = 1; st.transform = ''; st.filter = '';
+    if (s.i === 0) return;
+    switch (s.trans) {
+      case 'fade': st.opacity = p; break;
+      case 'slide': st.transform = `translateX(${(1 - p) * 100}%)`; break;
+      case 'up': st.transform = `translateY(${(1 - p) * 100}%)`; break;
+      case 'zoom': st.opacity = p; st.transform = `scale(${1.25 - .25 * p})`; break;
+      case 'whip': st.transform = `translateX(${(1 - p) * -100}%)`; st.filter = p < 1 ? `blur(${(1 - p) * 30}px)` : ''; break;
+    }
+  }
+
+  // particles (deterministic floating dots)
+  document.querySelectorAll('.fx-particles').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;pointer-events:none;';
+    const n = num(el, 'count', 40);
+    for (let i = 0; i < n; i++) { const d = document.createElement('i'); const r = 3 + rand(k * 50 + i) * 9;
+      d.style.cssText = `position:absolute;width:${r}px;height:${r}px;border-radius:50%;background:${el.dataset.color || '#fff'};filter:blur(${rand(i + 9) * 3}px)`;
+      d.dataset.seed = k * 50 + i; el.appendChild(d); }
+  });
+  // embedded video clips (e.g. a rendered 3D shot): <video data-clip data-at="0.2" src="..." muted>
+  const clips = [...document.querySelectorAll('video[data-clip]')];
+  if (clips.length) {
+    window.VIDEO_READY = false;
+    Promise.all(clips.map((v) => { v.muted = true; v.preload = 'auto'; v.pause();
+      return v.readyState >= 2 ? null : new Promise((r) => { v.addEventListener('loadeddata', r, { once: true }); v.load(); }); }))
+      .then(() => { window.VIDEO_READY = true; });
+  }
+  const seek = (v, time) => new Promise((r) => {
+    if (Math.abs(v.currentTime - time) < 0.001) return r();
+    v.addEventListener('seeked', () => r(), { once: true }); v.currentTime = time; });
+
+  window.renderFrame = async (t) => {
+    const waits = [];
+    for (const s of scenes) {
+      const tail = s.i < scenes.length - 1 ? TRANS : 0;
+      const on = t >= s.start && t < s.end + tail;
+      s.el.style.display = on ? 'block' : 'none';
+      s.el.style.zIndex = s.i + 1;
+      if (!on) continue;
+      const lt = t - s.start, len = s.end - s.start;
+      sceneTransition(s, lt);
+      s.el.querySelectorAll('[data-anim]').forEach((el) => animate(el, lt, len));
+      s.el.querySelectorAll('[data-kb]').forEach((el) => {
+        const p = ease.inOut(clamp(lt / len)), m = el.dataset.kb;
+        el.style.transform = m === 'out' ? `scale(${1.18 - .18 * p})`
+          : m === 'left' ? `scale(1.12) translateX(${(.5 - p) * 6}%)`
+          : m === 'right' ? `scale(1.12) translateX(${(p - .5) * 6}%)`
+          : `scale(${1 + .18 * p})`;
+      });
+      s.el.querySelectorAll('[data-count]').forEach((el) => {
+        const [a, b, d] = el.dataset.count.split(':').map(Number);
+        const p = ease.out(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        el.textContent = (a + (b - a) * p).toFixed(d || 0);
+      });
+      s.el.querySelectorAll('[data-follow]').forEach((el) => {
+        const path = document.getElementById(el.dataset.follow); const L = path.getTotalLength();
+        const p = ease.inOut(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        const pt = path.getPointAtLength(L * p); el.setAttribute('cx', pt.x); el.setAttribute('cy', pt.y);
+      });
+      s.el.querySelectorAll('.fx-particles').forEach((fx) => {
+        fx.querySelectorAll('i').forEach((d) => { const sd = +d.dataset.seed;
+          const y = (rand(sd + 1) * 2100 - t * (30 + rand(sd + 2) * 70)) % 2100; const yy = y < 0 ? y + 2100 : y;
+          d.style.left = (rand(sd + 3) * 1080 + Math.sin(t * (0.5 + rand(sd + 4)) + sd) * 30) + 'px';
+          d.style.top = (yy - 90) + 'px'; d.style.opacity = (.15 + .5 * rand(sd + 6)) * (.6 + .4 * Math.sin(t * 2 + sd)); });
+      });
+      s.el.querySelectorAll('video[data-clip]').forEach((v) => {
+        const at = num(v, 'at', 0), d = v.duration || 0;
+        if (location.search.includes('render=1')) waits.push(seek(v, clamp(lt - at, 0, Math.max(0, d - 0.034))));
+        else if (lt >= at && v.paused) v.play().catch(() => {});
+      });
+      s.el.querySelectorAll('.fx-streaks').forEach((fx) => {
+        const speed = num(fx, 'speed', 900);
+        fx.querySelectorAll('.streak').forEach((st) => {
+          const seed = +st.dataset.seed, h = parseFloat(st.style.height);
+          const y = ((rand(seed + 11) * 2200 + t * speed * (.6 + rand(seed + 5) * .8)) % (1920 + h)) - h;
+          st.style.top = (1920 - y - h) + 'px'; // streaks rush UPWARD (wind)
+        });
+      });
+    }
+    // persistent overlays across scenes: <div class="hud" data-from="3" data-to="25">…</div> (absolute seconds)
+    document.querySelectorAll('.hud').forEach((h) => {
+      const f = num(h, 'from', 0), to = num(h, 'to', 1e9);
+      const p = clamp((t - f) / .3) * (1 - clamp((t - to) / .3));
+      h.style.opacity = p; h.style.transform = `translateY(${(1 - ease.out(clamp((t - f) / .4))) * -40}px)`; h.style.zIndex = 900;
+    });
+    const bar = document.querySelector('#progress i');
+    if (bar) bar.style.width = (100 * t / duration) + '%';
+    // custom per-page animation (characters, levers, charts): window.onFrame = (t, lt) => {...}
+    if (typeof window.onFrame === 'function') window.onFrame(t);
+    await Promise.all(waits);
+  };
+
+  // ---- preview mode (open the file in a browser) ----
+  if (!location.search.includes('render=1')) {
+    const stage = document.getElementById('stage');
+    const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920);
+      stage.style.transform = `scale(${k})`; document.body.style.height = innerHeight + 'px'; };
+    addEventListener('resize', fit); fit();
+    let t = 0, last = performance.now(), paused = false;
+    addEventListener('keydown', (e) => {
+      if (e.code === 'Space') paused = !paused;
+      if (e.key === 'ArrowRight') t = Math.min(duration, t + .5);
+      if (e.key === 'ArrowLeft') t = Math.max(0, t - .5);
+      if (e.key === 'r') t = 0;
+    });
+    const loop = (now) => { if (!paused) t = (t + (now - last) / 1000) % duration; last = now;
+      window.renderFrame(t); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  } else {
+    window.renderFrame(0);
+  }
+})();
+</script>
+</body>
+</html>
