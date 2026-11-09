@@ -77,7 +77,7 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
   shown between those absolute times. Style `.hud` yourself (position absolute, opacity 0).
 - `<div class="fx-particles" data-count="40" data-color="#f9a825"></div>`: soft floating particles.
 - Motion-design kinds: `letters` (each letter springs in with stretch, then settles crisp; `data-step`),
-  `reveal` (text rises through a mask). Transitions `iris` (circle mask, `data-iris-x/y`), `wipe`, `wipeup`.
+  `reveal` (text rises through a mask). Transitions `iris` (circle mask, `data-iris-x/y`), `wipe`, `wipeup`, `flip` (3D page flip).
 - Camera: wrap a scene's content in `<div class="cam" style="position:absolute;inset:0">` and set
   `data-cam="push|pull|drift"` on the section for a slow continuous camera move. `data-par="0.5"` = parallax drift.
 - Safe zones (9:16): keep text out of the top 12% (230px) and the bottom 20% (384px). Put HUD banners at top ≥ 240px.

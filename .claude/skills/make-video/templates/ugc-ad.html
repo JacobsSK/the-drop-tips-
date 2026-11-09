@@ -248,6 +248,7 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
       case 'up': st.transform = `translateY(${(1 - p) * 100}%)`; break;
       case 'zoom': st.opacity = p; st.transform = `scale(${1.25 - .25 * p})`; break;
       case 'whip': st.transform = `translateX(${(1 - p) * -100}%)`; st.filter = p < 1 ? `blur(${(1 - p) * 30}px)` : ''; break;
+      case 'flip': if (p < 1) { st.transform = `perspective(2200px) rotateY(${(1 - p) * -100}deg)`; st.transformOrigin = '0% 50%'; } else st.transformOrigin = ''; break;
       case 'iris': if (p < 1) st.clipPath = `circle(${p * 120}% at ${s.el.dataset.irisX || '50%'} ${s.el.dataset.irisY || '50%'})`; break;
       case 'wipe': if (p < 1) st.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`; break;
       case 'wipeup': if (p < 1) st.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; break;
