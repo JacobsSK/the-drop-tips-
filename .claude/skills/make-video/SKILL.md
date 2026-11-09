@@ -41,6 +41,8 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
    `--fps 30`, `--duration 15`, `--width/--height` (e.g. 1080×1080 for feed),
    `--from 9 --duration 12` to render only part of it. A 15s video takes ~30s.
    The script exits non-zero and prints `PAGE ERRORS` if the page threw. Fix those.
+   **Style frames first:** `render.js scene.html <outdir> --stills 1.5,7,12` saves full-size stills of the busiest
+   moments; look at them before the full render (one full render per request).
 5. **Review. Always look before delivering.**
    ```bash
    .claude/skills/make-video/scripts/review.sh videos/<slug>/<slug>.mp4 /tmp/sheet.png 0.75
@@ -74,6 +76,11 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
 - `<div class="hud" data-from="3" data-to="25">…</div>` outside the scenes: a persistent banner (price, series name, CTA)
   shown between those absolute times. Style `.hud` yourself (position absolute, opacity 0).
 - `<div class="fx-particles" data-count="40" data-color="#f9a825"></div>`: soft floating particles.
+- Motion-design kinds: `letters` (each letter springs in with stretch, then settles crisp; `data-step`),
+  `reveal` (text rises through a mask). Transitions `iris` (circle mask, `data-iris-x/y`), `wipe`, `wipeup`.
+- Camera: wrap a scene's content in `<div class="cam" style="position:absolute;inset:0">` and set
+  `data-cam="push|pull|drift"` on the section for a slow continuous camera move. `data-par="0.5"` = parallax drift.
+- Safe zones (9:16): keep text out of the top 12% (230px) and the bottom 20% (384px). Put HUD banners at top ≥ 240px.
 - `window.onFrame = (t) => {...}` in a `<script>` after the scenes: custom per-frame animation (a running figure,
   a lever, filling rings, volume bars). t is absolute seconds; keep it a pure function of t.
 - `<video data-clip data-at="0.2" src="clip.mp4" muted>` plays (a negative data-at starts the clip that many seconds in) a rendered clip (e.g. a 3D shot) inside a scene,

@@ -165,6 +165,11 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
   const duration = window.VIDEO.duration || Math.max(...scenes.map((s) => s.end));
   window.VIDEO.duration = duration;
 
+  // split kinetic letters into spans (words kept together)
+  document.querySelectorAll('[data-anim~="letters"]').forEach((el) => {
+    let i = 0; el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => '<span style="display:inline-block;white-space:nowrap">' +
+      [...w].map((c) => `<span class="l" data-i="${i++}" style="display:inline-block;transform-origin:50% 100%">${c}</span>`).join('') + '</span>').join(' ');
+  });
   // split karaoke captions into word spans
   document.querySelectorAll('[data-anim~="words"]').forEach((el) => {
     el.classList.add('words');
@@ -207,6 +212,12 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
         case 'glow': { const g = clamp((lt - at) / dur); el.style.textShadow = g > 0 ? `0 0 ${(18 + 14 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent)), 0 0 ${(50 + 30 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent))` : ''; break; }
         case 'blur': op *= ease.out(p); el.style.filter = p < 1 ? `blur(${(1 - ease.out(p)) * 30}px)` : ''; break;
         case 'draw': { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L * (1 - ease.inOut(p)); break; }
+        case 'reveal': { const e = ease.out(p); el.style.clipPath = `inset(${-10}% -10% ${(1 - e) * 110 - 10}% -10%)`; tf += ` translateY(${(1 - e) * 40}%)`; break; }
+        case 'letters': { const step = num(el, 'step', .035);
+          el.querySelectorAll('.l').forEach((c) => { const q = (lt - at - (+c.dataset.i) * step);
+            if (q < 0) { c.style.opacity = 0; return; } const k = Math.exp(-7 * q) * Math.cos(15 * q);
+            c.style.opacity = clamp(q * 10); c.style.transform = `scale(${1 - .45 * k}, ${1 + .6 * k}) translateY(${Math.max(0, 1 - q * 5) * 30}px)`; });
+          break; }
         case 'float': tf += ` translateY(${Math.sin(lt * 2.4) * 28}px) rotate(${Math.sin(lt * 1.7) * 4}deg)`; break;
         case 'words': {
           const step = num(el, 'step', .18), ws = el.querySelectorAll('.w');
@@ -229,7 +240,7 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
   function sceneTransition(s, lt) {
     const p = ease.out(clamp(lt / TRANS));
     const st = s.el.style;
-    st.opacity = 1; st.transform = ''; st.filter = '';
+    st.opacity = 1; st.transform = ''; st.filter = ''; st.clipPath = '';
     if (s.i === 0) return;
     switch (s.trans) {
       case 'fade': st.opacity = p; break;
@@ -237,6 +248,9 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
       case 'up': st.transform = `translateY(${(1 - p) * 100}%)`; break;
       case 'zoom': st.opacity = p; st.transform = `scale(${1.25 - .25 * p})`; break;
       case 'whip': st.transform = `translateX(${(1 - p) * -100}%)`; st.filter = p < 1 ? `blur(${(1 - p) * 30}px)` : ''; break;
+      case 'iris': if (p < 1) st.clipPath = `circle(${p * 120}% at ${s.el.dataset.irisX || '50%'} ${s.el.dataset.irisY || '50%'})`; break;
+      case 'wipe': if (p < 1) st.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`; break;
+      case 'wipeup': if (p < 1) st.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; break;
     }
   }
 
@@ -270,6 +284,11 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
       if (!on) continue;
       const lt = t - s.start, len = s.end - s.start;
       sceneTransition(s, lt);
+      // camera: data-cam="push" (slow push-in), "pull", "drift" on the scene's first child wrapper .cam
+      const cam = s.el.querySelector(':scope > .cam'); if (cam) { const k = clamp(lt / (len + TRANS)), m = s.el.dataset.cam || 'push';
+        cam.style.transform = m === 'pull' ? `scale(${1.08 - .08 * k})` : m === 'drift' ? `scale(1.06) translate(${(k - .5) * -30}px, ${(k - .5) * -12}px)` : `scale(${1 + .07 * k})`; }
+      // parallax: data-par="0.6" drifts an element up at that speed (px per 0.01s * 10)
+      s.el.querySelectorAll('[data-par]').forEach((el) => { el.style.translate = `0 ${-lt * 40 * parseFloat(el.dataset.par)}px`; });
       s.el.querySelectorAll('[data-anim]').forEach((el) => animate(el, lt, len));
       s.el.querySelectorAll('[data-kb]').forEach((el) => {
         const p = ease.inOut(clamp(lt / len)), m = el.dataset.kb;

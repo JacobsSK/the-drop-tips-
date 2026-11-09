@@ -97,6 +97,17 @@ function parseArgs(argv) {
   await page.evaluate(() => Promise.all([...document.images].map((img) =>
     img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))));
 
+  if (opt.stills) { // style frames: --stills 1.2,5,9.8 -> <out>/still_<t>.jpg (out is a folder)
+    fs.mkdirSync(output, { recursive: true });
+    for (const t of String(opt.stills).split(',').map(Number)) {
+      await page.evaluate(async (t) => { for (const a of document.getAnimations()) { a.pause(); a.currentTime = t * 1000; }
+        if (typeof window.renderFrame === 'function') await window.renderFrame(t); }, t);
+      await page.screenshot({ path: path.join(output, `still_${t}.jpg`), type: 'jpeg', quality: 92 });
+    }
+    await browser.close(); srv.close(); console.log('stills ->', output);
+    if (errors.length) { console.error('PAGE ERRORS:\n  ' + [...new Set(errors)].join('\n  ')); process.exit(1); }
+    return;
+  }
   const frames = Math.round((duration - from) * fps);
   const ffArgs = ['-y', '-loglevel', 'error',
     '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-'];
