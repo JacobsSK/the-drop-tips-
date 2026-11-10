@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Stop cooking two dinners — 30g Protein Plate Playbook</title>
+<!--
+  VIDEO PAGE TEMPLATE — copy this file, keep the ENGINE block, rewrite the SCENES block.
+  Open it in a browser to preview (loops in real time; Space = pause, ←/→ = scrub, R = restart).
+  Render it:  node ../scripts/render.js thisfile.html out.mp4 [--audio music.mp3]
+
+  Scene markup:
+    <section class="scene" data-start="0" data-end="2.5" data-trans="cut|fade|slide|zoom|whip|up"> ... </section>
+    Scenes must have an opaque background (later scenes paint over earlier ones).
+  Element animation (times are seconds RELATIVE to the scene start):
+    data-anim="pop"            one or more of: fade up down left right pop zoom words shake pulse float spin strike
+    data-at="0.3"              when the entrance starts (default 0)
+    data-dur="0.5"             entrance length (default 0.5)
+    data-out="2.0"             optional: when it exits (fades out over 0.3s)
+    data-step="0.16"           for "words": seconds between words (karaoke captions; current word highlighted)
+    data-kb="in|out|left|right"  Ken Burns move across the whole scene (for photos / backgrounds)
+    data-count="0:4.9:1"       number tween from:to:decimals, starting at data-at over data-dur
+-->
+<style>
+  @font-face { font-family: 'Emoji'; src: local('Noto Color Emoji'); }
+  :root {
+    --bg: #fff8ef; --ink: #ffffff; --muted: rgba(255,255,255,.72);
+    --accent: #f5a524; --hl: #ff6b4a; --hot: #ff6b4a;
+    --font: 'Inter Display', 'Inter', 'Liberation Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; background: var(--bg);
+           font-family: var(--font), 'Emoji'; color: var(--ink); transform-origin: 0 0; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; background: var(--bg); }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; padding: 0 90px; gap: 40px; }
+  [data-anim], [data-kb] { will-change: transform, opacity; }
+  .words .w { display: inline-block; margin: 0 .12em; }
+  .words .w.now { color: var(--hl); }
+  .strike { position: relative; display: inline-block; }
+  .strike::after { content: ''; position: absolute; left: -3%; top: 50%; height: .12em; border-radius: .06em;
+                   width: calc(106% * var(--strike, 0)); background: var(--hot); transform: rotate(-4deg); }
+  .full { position: absolute; inset: -6%; background-size: cover; background-position: center; }
+
+  /* type scale for 1080x1920 — keep text out of the bottom 380px and right 140px (TikTok/Reels UI) */
+  .h-xl { font-size: 132px; font-weight: 900; line-height: 1.0; letter-spacing: -3px; }
+  .h-l  { font-size: 104px; font-weight: 800; line-height: 1.05; letter-spacing: -2px; }
+  .h-m  { font-size: 72px;  font-weight: 800; line-height: 1.1; }
+  .body { font-size: 52px;  font-weight: 600; line-height: 1.25; color: var(--muted); }
+  .chip { display: inline-block; padding: 18px 34px; border-radius: 999px; font-size: 40px; font-weight: 700;
+          background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25); }
+  .caption { position: absolute; left: 70px; right: 140px; bottom: 470px; text-align: center;
+             font-size: 70px; font-weight: 900; line-height: 1.15;
+             text-shadow: 0 6px 0 rgba(0,0,0,.55), 0 0 30px rgba(0,0,0,.5); }
+  .btn { display: inline-block; padding: 40px 80px; border-radius: 999px; background: var(--accent); color: #04121f;
+         font-size: 64px; font-weight: 900; box-shadow: 0 20px 60px rgba(99,179,255,.5); }
+  #progress { position: absolute; top: 40px; left: 40px; right: 40px; height: 8px; border-radius: 8px;
+              background: rgba(255,255,255,.2); z-index: 999; overflow: hidden; }
+  #progress i { display: block; height: 100%; width: 0; background: #fff; }
+
+  .cream { background: #fff8ef; color: #1f4d3a; }
+  .green { background: radial-gradient(110% 70% at 30% 15%, #2f6b50 0%, #1f4d3a 55%, #12301f 100%); color: #fff; }
+  .coral { color: #ff6b4a; } .gold { color: #f5a524; } .dg { color: #1f4d3a; }
+  .cam { position: absolute; inset: 0; }
+  .plate { position: absolute; }
+  .gpill { display:inline-block; padding: 12px 34px; border-radius: 999px; background:#1f4d3a; color:#fff; font-size:64px; font-weight:900; }
+  .chipx { display:inline-flex; align-items:center; gap:18px; padding: 18px 34px; border-radius: 999px; background:#fff; color:#1f4d3a;
+           font-size:44px; font-weight:800; box-shadow:0 14px 34px rgba(31,77,58,.15); }
+  .chipx b { color:#ff6b4a; }
+  .phone { position:absolute; left:300px; top:560px; width:480px; height:880px; border-radius:64px; background:#14211b; padding:18px; box-shadow:0 50px 100px rgba(0,0,0,.25); }
+  .screen { width:100%; height:100%; border-radius:48px; overflow:hidden; background:#f4f6f5; color:#222; padding:70px 30px; font-family:'Inter'; display:flex; flex-direction:column; gap:16px; }
+  .log { display:flex; justify-content:space-between; background:#fff; border-radius:16px; padding:16px 20px; font-size:26px; font-weight:700; }
+  .wk { width:128px; height:170px; border-radius:24px; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:16px 0 20px;
+        font-size:36px; font-weight:800; color:#1f4d3a; box-shadow:0 12px 30px rgba(31,77,58,.12); }
+  .wk .m { font-size:60px; }
+  .title { font-size:112px; font-weight:900; line-height:1.0; letter-spacing:-2px; }
+  .pl { text-align:center; font-size:42px; font-weight:800; margin-top:12px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="progress"><i></i></div>
+
+  <!-- vo: h1 .25–1.49 | b1 1.89 | b2 4.03 b3 6.7 | b4 8.46 | b5 10.69 | c1 14.39–17.52 | end 18.72 -->
+  <section class="scene cream" data-start="0" data-end="1.75" data-trans="cut" data-cam="push">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center">
+        <div class="title dg" data-anim="letters" data-at="0.1" data-step="0.03">stop cooking</div>
+        <div class="title coral" data-anim="squash" data-at="0.7">two dinners.</div>
+      </div>
+      <svg viewBox="-540 -200 1080 450" width="1080" height="450" style="position:absolute;left:0;top:800px;overflow:visible">
+        <rect x="-500" y="160" width="1000" height="40" rx="20" fill="#3a3f45"/>
+        <g><g transform="translate(-240 0)"><rect x="-150" y="-40" width="300" height="200" rx="30" fill="#c2412d"/><rect x="-170" y="-60" width="340" height="40" rx="18" fill="#3a3f45"/>
+  <rect x="-210" y="0" width="60" height="26" rx="13" fill="#3a3f45"/><rect x="150" y="0" width="60" height="26" rx="13" fill="#3a3f45"/>
+  <path d="M-60 -90 c 20 -30 -20 -50 0 -80 M0 -95 c 20 -30 -20 -50 0 -80 M60 -90 c 20 -30 -20 -50 0 -80" stroke="#c9c2b6" stroke-width="10" fill="none" stroke-linecap="round" opacity=".7"/></g></g><g id="pot2"><g transform="translate(240 0)"><rect x="-150" y="-40" width="300" height="200" rx="30" fill="#2f6b50"/><rect x="-170" y="-60" width="340" height="40" rx="18" fill="#3a3f45"/>
+  <rect x="-210" y="0" width="60" height="26" rx="13" fill="#3a3f45"/><rect x="150" y="0" width="60" height="26" rx="13" fill="#3a3f45"/>
+  <path d="M-60 -90 c 20 -30 -20 -50 0 -80 M0 -95 c 20 -30 -20 -50 0 -80 M60 -90 c 20 -30 -20 -50 0 -80" stroke="#c9c2b6" stroke-width="10" fill="none" stroke-linecap="round" opacity=".7"/></g></g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="scene cream" data-start="1.75" data-end="8.3" data-trans="iris" data-cam="pull">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center">
+        <div class="h-m dg" data-anim="reveal" data-at="0.14">one turkey bolognese</div>
+        <div class="h-m coral" data-anim="reveal" data-at="1.0">for everyone</div>
+      </div>
+      <div style="position:absolute;left:90px;top:520px;width:900px;height:900px;border-radius:120px;background:#d9a066;box-shadow:inset 0 0 0 18px #c98d54"></div>
+      <div class="plate" style="left:150px;top:560px" data-plate="bolognese" data-size="300" data-anim="squash" data-at="0.5"></div>
+      <div class="plate" style="left:630px;top:560px" data-plate="bolognese" data-size="300" data-anim="squash" data-at="0.7"></div>
+      <div class="plate" style="left:150px;top:1060px" data-plate="bolognese" data-size="300" data-anim="squash" data-at="0.9"></div>
+      <div class="plate" style="left:540px;top:900px" data-plate="bolognese" data-steps="7.3:38" data-lbl="gY" data-size="480" data-anim="squash" data-at="2.3"></div>
+      <div style="position:absolute;left:600px;top:1390px;width:360px;text-align:center"><span class="gpill" style="font-size:64px" id="gY" data-anim="pop" data-at="5.0">0 g</span></div>
+      <div style="position:absolute;left:0;right:0;top:450px;text-align:center"><span class="chipx" style="font-size:40px" data-anim="squash" data-at="2.5">⭐ your plate: full portion + parmesan</span></div>
+    </div>
+  </section>
+
+  <section class="scene green" data-start="8.3" data-end="10.5" data-trans="wipe">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:280px;text-align:center">
+        <div class="h-m" data-anim="reveal" data-at="0.16">and the kids won't know<br>it's a</div>
+        <div class="title gold" data-anim="letters" data-at="0.8" data-step="0.03">protein meal.</div>
+      </div>
+      <div style="position:absolute;left:0;right:0;top:820px;text-align:center;font-size:260px" data-anim="squash" data-at="1.2">🤫</div>
+      <div style="position:absolute;left:0;right:0;top:1180px;display:flex;justify-content:center;gap:40px;font-size:120px">
+        <span data-anim="pop" data-at="1.5">😋</span><span data-anim="pop" data-at="1.65">😋</span><span data-anim="pop" data-at="1.8">😋</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene cream" data-start="10.5" data-end="14.2" data-trans="wipeup" data-cam="push">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center">
+        <div class="h-m dg" data-anim="reveal" data-at="0.19">family-friendly dinners</div>
+        <div class="h-m coral" data-anim="reveal" data-at="1.3">every gram worked out ✓</div>
+      </div>
+      <div id="dgrid" style="position:absolute;left:110px;right:110px;top:560px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;justify-items:center"></div>
+    </div>
+  </section>
+
+  <section class="scene green" data-start="14.2" data-end="18.72" data-trans="iris">
+    <div class="cam">
+      <div class="plate" style="left:-140px;top:1150px;opacity:.3" data-plate="bolognese" data-size="440" data-par="0.5"></div>
+      <div class="plate" style="left:780px;top:1180px;opacity:.3" data-plate="traybake" data-size="440" data-par="0.8"></div>
+      <div style="position:absolute;left:70px;right:70px;top:300px;text-align:center">
+        <div class="gold" style="font-size:170px;font-weight:900;line-height:1.05" data-anim="squash" data-at="0.2">45 plates</div>
+        <div style="font-size:52px;font-weight:800;color:#bfe3c9;margin-top:10px" data-anim="reveal" data-at="0.8">The 30g Protein Plate Playbook</div>
+        <div class="gold" style="font-size:130px;font-weight:900" data-anim="squash" data-at="1.4">$14</div>
+        <div class="btn" style="background:#ff6b4a;color:#fff;margin-top:20px" data-anim="squash" data-at="2.5">link in bio 👆</div>
+      </div>
+    </div>
+  </section>
+<script>
+window.afterFood = () => { const g = document.getElementById('dgrid'); if (!g) return; const k = ['bolognese', 'traybake', 'eggs', 'tuna', 'bolognese', 'traybake']; const gg = [38, 35, 31, 32, 38, 35];
+  g.innerHTML = k.map((x, i) => `<div data-anim="squash" data-at="${(0.4 + i * 0.15).toFixed(2)}">${window.plateSVG(x, (10.9 + 1.3 + i * 0.12).toFixed(2) + ':' + gg[i], '', 250)}</div>`).join(''); };
+window.onFrame = (t) => { window.ringFrame(t);
+  const c = (x) => Math.min(1, Math.max(0, x)), eo = (p) => 1 - Math.pow(1 - p, 3);
+  const p2 = document.getElementById('pot2'); if (p2) { const k = eo(c((t - 1.1) / .5)); p2.setAttribute('transform', `translate(${k * 700} ${-k * 60}) rotate(${k * 25})`); p2.style.opacity = 1 - k; }
+};
+</script>
+  <!-- ========================== /SCENES ========================== -->
+</div>
+
+<script>
+// Optional overrides; duration defaults to the last scene's end.
+window.VIDEO = { width: 1080, height: 1920, fps: 30 };
+</script>
+
+
+<script>
+// ---------- deterministic food illustrations + protein rings ----------
+(() => {
+  let seed = 1; const R = () => { const x = Math.sin(seed++ * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+  const ring = (steps, id) => `<circle r="262" fill="none" stroke="#f0e2cf" stroke-width="24"/>
+    <circle class="ring" data-steps="${steps}" data-lbl="${id}" r="262" fill="none" stroke="#f5a524" stroke-width="24" stroke-linecap="round" transform="rotate(-90)"/>`;
+  const dish = () => `<circle r="232" fill="#fff" style="filter:drop-shadow(0 18px 24px rgba(31,77,58,.18))"/><circle r="192" fill="#fbf7f0" stroke="#efe6d8" stroke-width="4"/>`;
+  const toast = (x, y, rot, jam) => `<g transform="translate(${x} ${y}) rotate(${rot})"><path d="M-80 -70 C -95 -110, -30 -120, 0 -100 C 30 -120, 95 -110, 80 -70 L 80 80 L -80 80 Z" fill="#c98a45"/>
+    <path d="M-66 -60 C -78 -92, -26 -100, 0 -84 C 26 -100, 78 -92, 66 -60 L 66 68 L -66 68 Z" fill="#f2cf8f"/>${jam ? '<path d="M-40 -20 C -10 -45, 40 -30, 35 10 C 30 45, -30 45, -45 15 Z" fill="#c92d45" opacity=".9"/>' : ''}</g>`;
+  const egg = (x, y) => `<g transform="translate(${x} ${y})"><path d="M-62 -10 C -70 -50, -20 -66, 10 -55 C 55 -60, 70 -20, 58 15 C 50 55, -10 62, -40 45 C -66 35, -58 15, -62 -10 Z" fill="#fff" stroke="#eee" stroke-width="3"/><circle cx="2" cy="-2" r="26" fill="#f5b400"/><circle cx="-6" cy="-10" r="7" fill="#ffd96a"/></g>`;
+  const S = {
+    toast: () => dish() + toast(-55, 15, -8, true) + toast(70, -10, 10, false),
+    yogurt: (parts = 'y h a b') => { seed = 3; let o = (parts.includes('nodish') ? '' : dish()) + (parts.includes('y') ? `<g class="pt-y"><circle r="178" fill="#f7f4ec"/><circle r="170" fill="#fffdf8"/></g>` : '');
+      if (parts.includes('h')) { o += '<g class="pt-h">'; for (let i = 0; i < 70; i++) { const a = R() * 6.28, r = 40 + R() * 70; o += `<circle cx="${Math.cos(a) * r - 40}" cy="${Math.sin(a) * r + 40}" r="5" fill="#7c8f4e"/>`; } o += '</g>'; }
+      if (parts.includes('a')) { o += '<g class="pt-a">'; for (let i = 0; i < 7; i++) { const a = -0.8 + i * .32; o += `<ellipse cx="${Math.cos(a) * 120 + 20}" cy="${Math.sin(a) * 120 - 40}" rx="26" ry="15" fill="#b9773f" transform="rotate(${a * 57 + 60} ${Math.cos(a) * 120 + 20} ${Math.sin(a) * 120 - 40})"/>`; } o += '</g>'; }
+      if (parts.includes('b')) { o += '<g class="pt-b">'; for (let i = 0; i < 12; i++) { const a = 2.2 + i * .28, r = 110 + R() * 30; o += `<circle cx="${Math.cos(a) * r}" cy="${Math.sin(a) * r}" r="${17 + R() * 6}" fill="${i % 3 ? '#3f3a8f' : '#d23a4f'}"/>`; } o += '</g>'; }
+      return o; },
+    eggs: () => { seed = 9; let o = dish() + toast(0, 0, -6, false) + egg(-25, -30) + egg(40, 40);
+      for (let i = 0; i < 9; i++) o += `<rect x="${-120 + R() * 220}" y="${-120 + R() * 230}" width="26" height="26" rx="5" fill="#fff" stroke="#d9d4c7" stroke-width="3" transform="rotate(${R() * 40})"/>`;
+      for (let i = 0; i < 14; i++) o += `<circle cx="${-130 + R() * 260}" cy="${-130 + R() * 260}" r="5" fill="#3d8a3a"/>`; return o; },
+    tuna: () => { seed = 21; let o = dish();
+      for (let i = 0; i < 26; i++) { const a = R() * 6.28, r = R() * 150; o += `<ellipse cx="${Math.cos(a) * r}" cy="${Math.sin(a) * r}" rx="${30 + R() * 22}" ry="${16 + R() * 10}" fill="${i % 2 ? '#6aa84f' : '#3d7a35'}" transform="rotate(${R() * 180} ${Math.cos(a) * r} ${Math.sin(a) * r})"/>`; }
+      for (let i = 0; i < 16; i++) { const a = R() * 6.28, r = R() * 130; o += `<ellipse cx="${Math.cos(a) * r}" cy="${Math.sin(a) * r}" rx="17" ry="11" fill="#f1e6cf" stroke="#ddcfb1" stroke-width="2"/>`; }
+      for (let i = 0; i < 10; i++) { const a = R() * 6.28, r = R() * 90; o += `<path d="M${Math.cos(a) * r} ${Math.sin(a) * r} q 20 -16 36 0 q -14 18 -36 0" fill="#d9a07f"/>`; }
+      o += '<path d="M120 -150 A 50 50 0 0 1 175 -95 L 120 -95 Z" fill="#f7d649" stroke="#e5be2b" stroke-width="4"/>'; return o; },
+    bolognese: () => { seed = 33; let o = dish();
+      for (let i = 0; i < 30; i++) { const a = R() * 6.28, r = 40 + R() * 120; const x = Math.cos(a) * r, y = Math.sin(a) * r;
+        o += `<path d="M${x - 60} ${y} c 20 -40 40 40 60 0 s 40 40 60 0" fill="none" stroke="#f0c46a" stroke-width="9" stroke-linecap="round" transform="rotate(${R() * 180} ${x} ${y})"/>`; }
+      o += '<path d="M-95 -20 C -90 -100, 60 -110, 95 -40 C 120 30, 40 100, -30 90 C -90 80, -100 40, -95 -20 Z" fill="#b5341f"/>';
+      for (let i = 0; i < 30; i++) o += `<circle cx="${-70 + R() * 150}" cy="${-70 + R() * 140}" r="${6 + R() * 6}" fill="#7f2414"/>`;
+      for (let i = 0; i < 24; i++) o += `<circle cx="${-80 + R() * 170}" cy="${-80 + R() * 160}" r="4" fill="#fff6d6"/>`;
+      o += '<path d="M20 -60 c 30 -30 60 -10 50 20 c -30 10 -50 0 -50 -20 Z" fill="#3d8a3a"/>'; return o; },
+
+    chicken: () => dish() + `<path d="M-150 20 C -150 -80, -20 -120, 80 -90 C 170 -60, 180 40, 110 90 C 40 140, -150 120, -150 20 Z" fill="#e8c08a" stroke="#c9945a" stroke-width="6"/>
+      <path d="M-100 0 C -40 -40, 40 -50, 110 -30 M-90 50 C -20 20, 60 20, 120 30" stroke="#d4a46b" stroke-width="8" fill="none" stroke-linecap="round"/>`,
+    fish: () => dish() + `<path d="M-170 0 C -100 -80, 80 -90, 150 -20 L 200 -70 L 190 0 L 200 70 L 150 20 C 80 90, -100 80, -170 0 Z" fill="#f2d2b6" stroke="#d9a989" stroke-width="6"/>
+      <path d="M-60 -50 q 20 50 0 100 M0 -60 q 20 60 0 120 M60 -55 q 20 55 0 110" stroke="#e3b897" stroke-width="7" fill="none"/><circle cx="-60" cy="-120" r="26" fill="#f7d649"/>`,
+    steak: () => dish() + `<path d="M-160 -30 C -150 -120, 60 -140, 150 -60 C 200 0, 140 110, 30 115 C -90 120, -170 60, -160 -30 Z" fill="#8a3b22" stroke="#5e2414" stroke-width="7"/>
+      <path d="M-110 -60 L 90 40 M-130 0 L 60 90 M-60 -100 L 130 -10" stroke="#5e2414" stroke-width="12" opacity=".6"/>`,
+    salad: () => { seed = 51; let o = dish(); for (let i = 0; i < 30; i++) { const a = R() * 6.28, r = R() * 160; o += `<ellipse cx="${Math.cos(a) * r}" cy="${Math.sin(a) * r}" rx="${30 + R() * 22}" ry="${16 + R() * 10}" fill="${['#7bc06a', '#4f9a45', '#a6d68b'][i % 3]}" transform="rotate(${R() * 180} ${Math.cos(a) * r} ${Math.sin(a) * r})"/>`; }
+      for (let i = 0; i < 7; i++) { const a = R() * 6.28, r = R() * 120; o += `<circle cx="${Math.cos(a) * r}" cy="${Math.sin(a) * r}" r="20" fill="#e2453b"/>`; } return o; },
+    pasta: () => { seed = 61; let o = dish(); for (let i = 0; i < 34; i++) { const a = R() * 6.28, r = 30 + R() * 130; const x = Math.cos(a) * r, y = Math.sin(a) * r;
+        o += `<path d="M${x - 60} ${y} c 20 -40 40 40 60 0 s 40 40 60 0" fill="none" stroke="#f0c46a" stroke-width="9" stroke-linecap="round" transform="rotate(${R() * 180} ${x} ${y})"/>`; }
+      for (let i = 0; i < 8; i++) o += `<circle cx="${-60 + R() * 120}" cy="${-60 + R() * 120}" r="${9 + R() * 6}" fill="#e2453b" opacity=".9"/>`; return o; },
+    wrap: () => { seed = 71; let o = dish();
+      for (const [x, r] of [[-70, -18], [80, 14]]) { o += `<g transform="translate(${x} 0) rotate(${r})"><rect x="-70" y="-150" width="140" height="300" rx="60" fill="#efd9a8" stroke="#d6b67a" stroke-width="6"/>
+        <ellipse cx="0" cy="-130" rx="58" ry="28" fill="#fff"/>`;
+        for (let i = 0; i < 6; i++) o += `<ellipse cx="${-30 + R() * 60}" cy="${-140 + R() * 20}" rx="16" ry="9" fill="${i % 2 ? '#6aa84f' : '#e8c08a'}"/>`; o += '</g>'; } return o; },
+    traybake: () => { seed = 81; let o = `<rect x="-250" y="-190" width="500" height="380" rx="30" fill="#5b5f66" style="filter:drop-shadow(0 18px 24px rgba(31,77,58,.2))"/><rect x="-225" y="-165" width="450" height="330" rx="20" fill="#3f4247"/>`;
+      for (const [x, y] of [[-120, -60], [40, -80], [-60, 70], [120, 50]]) o += `<path d="M${x - 60} ${y} C ${x - 60} ${y - 50}, ${x + 50} ${y - 60}, ${x + 60} ${y} C ${x + 60} ${y + 45}, ${x - 50} ${y + 50}, ${x - 60} ${y} Z" fill="#c9843f" stroke="#9b5f27" stroke-width="5"/>`;
+      for (let i = 0; i < 5; i++) o += `<circle cx="${-170 + R() * 340}" cy="${-130 + R() * 260}" r="26" fill="#f7d649" stroke="#e8c12a" stroke-width="5"/>`;
+      for (let i = 0; i < 10; i++) o += `<circle cx="${-190 + R() * 380}" cy="${-140 + R() * 280}" r="12" fill="#fff6e0"/>`;
+      for (let i = 0; i < 14; i++) o += `<ellipse cx="${-190 + R() * 380}" cy="${-140 + R() * 280}" rx="12" ry="6" fill="#3d8a3a"/>`; return o; },
+    board: () => `<rect x="-260" y="-170" width="520" height="340" rx="40" fill="#d9a066" style="filter:drop-shadow(0 18px 24px rgba(31,77,58,.2))"/><rect x="-240" y="-150" width="480" height="300" rx="30" fill="#e6b47d"/>
+      <path d="M-150 20 C -150 -80, -20 -120, 80 -90 C 170 -60, 180 40, 110 90 C 40 140, -150 120, -150 20 Z" fill="#f0c993" stroke="#c9945a" stroke-width="6"/>
+      <path d="M-100 0 C -40 -40, 40 -50, 110 -30 M-90 50 C -20 20, 60 20, 120 30" stroke="#d4a46b" stroke-width="8" fill="none" stroke-linecap="round"/>`,
+  };
+  window.plateSVG = (kind, steps, id, size, extra) => `<svg viewBox="-300 -300 600 600" width="${size}" height="${size}" style="overflow:visible">${steps ? ring(steps, id) : ''}${S[kind](extra)}</svg>`;
+  if (window.afterFood) window.afterFood();
+  document.querySelectorAll('[data-plate]').forEach((el) => { el.innerHTML = plateSVG(el.dataset.plate, el.dataset.steps || '', el.dataset.lbl || '', +el.dataset.size || 480, el.dataset.parts === undefined ? undefined : el.dataset.parts) + el.innerHTML; });
+})();
+window.ringFrame = (t) => {
+  const L = 2 * Math.PI * 262, eo = (p) => 1 - Math.pow(1 - p, 3);
+  document.querySelectorAll('.ring').forEach((r) => { let g = 0, prev = 0;
+    for (const st of r.dataset.steps.split(',')) { const [tk, gk] = st.split(':').map(Number); if (t >= tk) { g = prev + (gk - prev) * eo(Math.min(1, (t - tk) / .7)); } prev = gk; }
+    r.style.strokeDasharray = `${L * Math.min(1, g / 40)} ${L}`; r.style.opacity = g > .2 ? 1 : 0;
+    if (r.dataset.lbl) { const l = document.getElementById(r.dataset.lbl); if (l) l.textContent = Math.round(g) + ' g'; } });
+};
+</script>
+<!-- ============================ ENGINE (don't edit) ============================ -->
+<script>
+(() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = {
+    out: (p) => 1 - Math.pow(1 - p, 3),
+    inOut: (p) => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+    back: (p) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); },
+  };
+  const num = (el, k, d) => el.dataset[k] !== undefined ? parseFloat(el.dataset[k]) : d;
+  const TRANS = 0.35;
+
+  // deterministic pseudo-random (frames must be identical for the same t)
+  const rand = (i) => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+  const scenes = [...document.querySelectorAll('.scene')].map((el, i) => ({
+    el, i, start: num(el, 'start', 0), end: num(el, 'end', 1), trans: el.dataset.trans || 'cut',
+  }));
+  const duration = window.VIDEO.duration || Math.max(...scenes.map((s) => s.end));
+  window.VIDEO.duration = duration;
+
+  // split kinetic letters into spans (words kept together)
+  document.querySelectorAll('[data-anim~="letters"]').forEach((el) => {
+    let i = 0; el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => '<span style="display:inline-block;white-space:nowrap">' +
+      [...w].map((c) => `<span class="l" data-i="${i++}" style="display:inline-block;transform-origin:50% 100%">${c}</span>`).join('') + '</span>').join(' ');
+  });
+  // split karaoke captions into word spans
+  document.querySelectorAll('[data-anim~="words"]').forEach((el) => {
+    el.classList.add('words');
+    el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(' ');
+  });
+  // wind / speed streak backgrounds
+  document.querySelectorAll('.fx-streaks').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;';
+    const n = num(el, 'count', 30);
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i'); s.className = 'streak';
+      s.dataset.seed = k * 100 + i;
+      s.style.left = (rand(k * 100 + i) * 1080) + 'px';
+      s.style.height = (120 + rand(i + 7) * 260) + 'px';
+      s.style.opacity = .25 + rand(i + 3) * .6;
+      el.appendChild(s);
+    }
+  });
+
+  function animate(el, lt, sceneLen) {
+    const kinds = (el.dataset.anim || '').split(/\s+/).filter(Boolean);
+    const at = num(el, 'at', 0), dur = num(el, 'dur', .5);
+    const p = clamp((lt - at) / dur);
+    let op = 1, tf = '';
+    for (const k of kinds) {
+      switch (k) {
+        case 'fade': op *= ease.out(p); break;
+        case 'up': op *= ease.out(p); tf += ` translateY(${(1 - ease.out(p)) * 120}px)`; break;
+        case 'down': op *= ease.out(p); tf += ` translateY(${-(1 - ease.out(p)) * 120}px)`; break;
+        case 'left': op *= ease.out(p); tf += ` translateX(${(1 - ease.out(p)) * 300}px)`; break;
+        case 'right': op *= ease.out(p); tf += ` translateX(${-(1 - ease.out(p)) * 300}px)`; break;
+        case 'pop': op *= clamp(p * 3); tf += ` scale(${.3 + .7 * ease.back(p)})`; break;
+        case 'zoom': op *= ease.out(p); tf += ` scale(${1.5 - .5 * ease.out(p)})`; break;
+        case 'spin': op *= ease.out(p); tf += ` rotate(${(1 - ease.out(p)) * -180}deg)`; break;
+        case 'shake': { const a = 22 * Math.max(0, 1 - (lt - at) / 0.8); tf += ` translateX(${Math.sin(lt * 70) * a}px) rotate(${Math.sin(lt * 53) * a * .15}deg)`; break; }
+        case 'pulse': if (lt > at + dur) tf += ` scale(${1 + .05 * Math.sin((lt - at - dur) * 7)})`; break;
+        case 'strike': el.classList.add('strike'); el.style.setProperty('--strike', ease.out(p)); break;
+        case 'squash': { const q = lt - at; if (q < 0) { op = 0; break; } const k = Math.exp(-6 * q) * Math.cos(13 * q);
+          op *= clamp(q * 8); tf += ` scale(${1 + .38 * k}, ${1 - .38 * k})`; break; }
+        case 'glow': { const g = clamp((lt - at) / dur); el.style.textShadow = g > 0 ? `0 0 ${(18 + 14 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent)), 0 0 ${(50 + 30 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent))` : ''; break; }
+        case 'blur': op *= ease.out(p); el.style.filter = p < 1 ? `blur(${(1 - ease.out(p)) * 30}px)` : ''; break;
+        case 'draw': { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L * (1 - ease.inOut(p)); break; }
+        case 'reveal': { const e = ease.out(p); el.style.clipPath = `inset(${-10}% -10% ${(1 - e) * 110 - 10}% -10%)`; tf += ` translateY(${(1 - e) * 40}%)`; break; }
+        case 'letters': { const step = num(el, 'step', .035);
+          el.querySelectorAll('.l').forEach((c) => { const q = (lt - at - (+c.dataset.i) * step);
+            if (q < 0) { c.style.opacity = 0; return; } const k = Math.exp(-7 * q) * Math.cos(15 * q);
+            c.style.opacity = clamp(q * 10); c.style.transform = `scale(${1 - .45 * k}, ${1 + .6 * k}) translateY(${Math.max(0, 1 - q * 5) * 30}px)`; });
+          break; }
+        case 'float': tf += ` translateY(${Math.sin(lt * 2.4) * 28}px) rotate(${Math.sin(lt * 1.7) * 4}deg)`; break;
+        case 'words': {
+          const step = num(el, 'step', .18), ws = el.querySelectorAll('.w');
+          ws.forEach((w, i) => {
+            const wp = clamp((lt - at - i * step) / .22);
+            w.style.opacity = clamp(wp * 3);
+            w.style.transform = `scale(${.5 + .5 * ease.back(wp)})`;
+            w.classList.toggle('now', lt >= at + i * step && lt < at + (i + 1) * step + .05);
+          });
+          break;
+        }
+      }
+    }
+    const out = num(el, 'out', null);
+    if (out !== null) op *= 1 - clamp((lt - out) / .3);
+    el.style.opacity = op;
+    el.style.transform = tf;
+  }
+
+  function sceneTransition(s, lt) {
+    const p = ease.out(clamp(lt / TRANS));
+    const st = s.el.style;
+    st.opacity = 1; st.transform = ''; st.filter = ''; st.clipPath = '';
+    if (s.i === 0) return;
+    switch (s.trans) {
+      case 'fade': st.opacity = p; break;
+      case 'slide': st.transform = `translateX(${(1 - p) * 100}%)`; break;
+      case 'up': st.transform = `translateY(${(1 - p) * 100}%)`; break;
+      case 'zoom': st.opacity = p; st.transform = `scale(${1.25 - .25 * p})`; break;
+      case 'whip': st.transform = `translateX(${(1 - p) * -100}%)`; st.filter = p < 1 ? `blur(${(1 - p) * 30}px)` : ''; break;
+      case 'flip': if (p < 1) { st.transform = `perspective(2200px) rotateY(${(1 - p) * -100}deg)`; st.transformOrigin = '0% 50%'; } else st.transformOrigin = ''; break;
+      case 'iris': if (p < 1) st.clipPath = `circle(${p * 120}% at ${s.el.dataset.irisX || '50%'} ${s.el.dataset.irisY || '50%'})`; break;
+      case 'wipe': if (p < 1) st.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`; break;
+      case 'wipeup': if (p < 1) st.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; break;
+    }
+  }
+
+  // particles (deterministic floating dots)
+  document.querySelectorAll('.fx-particles').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;pointer-events:none;';
+    const n = num(el, 'count', 40);
+    for (let i = 0; i < n; i++) { const d = document.createElement('i'); const r = 3 + rand(k * 50 + i) * 9;
+      d.style.cssText = `position:absolute;width:${r}px;height:${r}px;border-radius:50%;background:${el.dataset.color || '#fff'};filter:blur(${rand(i + 9) * 3}px)`;
+      d.dataset.seed = k * 50 + i; el.appendChild(d); }
+  });
+  // embedded video clips (e.g. a rendered 3D shot): <video data-clip data-at="0.2" src="..." muted>
+  const clips = [...document.querySelectorAll('video[data-clip]')];
+  if (clips.length) {
+    window.VIDEO_READY = false;
+    Promise.all(clips.map((v) => { v.muted = true; v.preload = 'auto'; v.pause();
+      return v.readyState >= 2 ? null : new Promise((r) => { v.addEventListener('loadeddata', r, { once: true }); v.load(); }); }))
+      .then(() => { window.VIDEO_READY = true; });
+  }
+  const seek = (v, time) => new Promise((r) => {
+    if (Math.abs(v.currentTime - time) < 0.001) return r();
+    v.addEventListener('seeked', () => r(), { once: true }); v.currentTime = time; });
+
+  window.renderFrame = async (t) => {
+    const waits = [];
+    for (const s of scenes) {
+      const tail = s.i < scenes.length - 1 ? TRANS : 0;
+      const on = t >= s.start && t < s.end + tail;
+      s.el.style.display = on ? 'block' : 'none';
+      s.el.style.zIndex = s.i + 1;
+      if (!on) continue;
+      const lt = t - s.start, len = s.end - s.start;
+      sceneTransition(s, lt);
+      // camera: data-cam="push" (slow push-in), "pull", "drift" on the scene's first child wrapper .cam
+      const cam = s.el.querySelector(':scope > .cam'); if (cam) { const k = clamp(lt / (len + TRANS)), m = s.el.dataset.cam || 'push';
+        cam.style.transform = m === 'pull' ? `scale(${1.08 - .08 * k})` : m === 'drift' ? `scale(1.06) translate(${(k - .5) * -30}px, ${(k - .5) * -12}px)` : `scale(${1 + .07 * k})`; }
+      // parallax: data-par="0.6" drifts an element up at that speed (px per 0.01s * 10)
+      s.el.querySelectorAll('[data-par]').forEach((el) => { el.style.translate = `0 ${-lt * 40 * parseFloat(el.dataset.par)}px`; });
+      s.el.querySelectorAll('[data-anim]').forEach((el) => animate(el, lt, len));
+      s.el.querySelectorAll('[data-kb]').forEach((el) => {
+        const p = ease.inOut(clamp(lt / len)), m = el.dataset.kb;
+        el.style.transform = m === 'out' ? `scale(${1.18 - .18 * p})`
+          : m === 'left' ? `scale(1.12) translateX(${(.5 - p) * 6}%)`
+          : m === 'right' ? `scale(1.12) translateX(${(p - .5) * 6}%)`
+          : `scale(${1 + .18 * p})`;
+      });
+      s.el.querySelectorAll('[data-count]').forEach((el) => {
+        const [a, b, d] = el.dataset.count.split(':').map(Number);
+        const p = ease.out(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        el.textContent = (a + (b - a) * p).toFixed(d || 0);
+      });
+      s.el.querySelectorAll('[data-follow]').forEach((el) => {
+        const path = document.getElementById(el.dataset.follow); const L = path.getTotalLength();
+        const p = ease.inOut(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        const pt = path.getPointAtLength(L * p); el.setAttribute('cx', pt.x); el.setAttribute('cy', pt.y);
+      });
+      s.el.querySelectorAll('.fx-particles').forEach((fx) => {
+        fx.querySelectorAll('i').forEach((d) => { const sd = +d.dataset.seed;
+          const y = (rand(sd + 1) * 2100 - t * (30 + rand(sd + 2) * 70)) % 2100; const yy = y < 0 ? y + 2100 : y;
+          d.style.left = (rand(sd + 3) * 1080 + Math.sin(t * (0.5 + rand(sd + 4)) + sd) * 30) + 'px';
+          d.style.top = (yy - 90) + 'px'; d.style.opacity = (.15 + .5 * rand(sd + 6)) * (.6 + .4 * Math.sin(t * 2 + sd)); });
+      });
+      s.el.querySelectorAll('video[data-clip]').forEach((v) => {
+        const at = num(v, 'at', 0), d = v.duration || 0;
+        if (location.search.includes('render=1')) waits.push(seek(v, clamp(lt - at, 0, Math.max(0, d - 0.034))));
+        else if (lt >= at && v.paused) v.play().catch(() => {});
+      });
+      s.el.querySelectorAll('.fx-streaks').forEach((fx) => {
+        const speed = num(fx, 'speed', 900);
+        fx.querySelectorAll('.streak').forEach((st) => {
+          const seed = +st.dataset.seed, h = parseFloat(st.style.height);
+          const y = ((rand(seed + 11) * 2200 + t * speed * (.6 + rand(seed + 5) * .8)) % (1920 + h)) - h;
+          st.style.top = (1920 - y - h) + 'px'; // streaks rush UPWARD (wind)
+        });
+      });
+    }
+    // persistent overlays across scenes: <div class="hud" data-from="3" data-to="25">…</div> (absolute seconds)
+    document.querySelectorAll('.hud').forEach((h) => {
+      const f = num(h, 'from', 0), to = num(h, 'to', 1e9);
+      const p = clamp((t - f) / .3) * (1 - clamp((t - to) / .3));
+      h.style.opacity = p; h.style.transform = `translateY(${(1 - ease.out(clamp((t - f) / .4))) * -40}px)`; h.style.zIndex = 900;
+    });
+    const bar = document.querySelector('#progress i');
+    if (bar) bar.style.width = (100 * t / duration) + '%';
+    // custom per-page animation (characters, levers, charts): window.onFrame = (t, lt) => {...}
+    if (typeof window.onFrame === 'function') window.onFrame(t);
+    await Promise.all(waits);
+  };
+
+  // ---- preview mode (open the file in a browser) ----
+  if (!location.search.includes('render=1')) {
+    const stage = document.getElementById('stage');
+    const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920);
+      stage.style.transform = `scale(${k})`; document.body.style.height = innerHeight + 'px'; };
+    addEventListener('resize', fit); fit();
+    let t = 0, last = performance.now(), paused = false;
+    addEventListener('keydown', (e) => {
+      if (e.code === 'Space') paused = !paused;
+      if (e.key === 'ArrowRight') t = Math.min(duration, t + .5);
+      if (e.key === 'ArrowLeft') t = Math.max(0, t - .5);
+      if (e.key === 'r') t = 0;
+    });
+    const loop = (now) => { if (!paused) t = (t + (now - last) / 1000) % duration; last = now;
+      window.renderFrame(t); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  } else {
+    window.renderFrame(0);
+  }
+})();
+</script>
+</body>
+</html>

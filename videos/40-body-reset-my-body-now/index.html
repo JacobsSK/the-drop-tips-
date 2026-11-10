@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>This is just my body now — 40+ Body Reset</title>
+<!--
+  VIDEO PAGE TEMPLATE — copy this file, keep the ENGINE block, rewrite the SCENES block.
+  Open it in a browser to preview (loops in real time; Space = pause, ←/→ = scrub, R = restart).
+  Render it:  node ../scripts/render.js thisfile.html out.mp4 [--audio music.mp3]
+
+  Scene markup:
+    <section class="scene" data-start="0" data-end="2.5" data-trans="cut|fade|slide|zoom|whip|up"> ... </section>
+    Scenes must have an opaque background (later scenes paint over earlier ones).
+  Element animation (times are seconds RELATIVE to the scene start):
+    data-anim="pop"            one or more of: fade up down left right pop zoom words shake pulse float spin strike
+    data-at="0.3"              when the entrance starts (default 0)
+    data-dur="0.5"             entrance length (default 0.5)
+    data-out="2.0"             optional: when it exits (fades out over 0.3s)
+    data-step="0.16"           for "words": seconds between words (karaoke captions; current word highlighted)
+    data-kb="in|out|left|right"  Ken Burns move across the whole scene (for photos / backgrounds)
+    data-count="0:4.9:1"       number tween from:to:decimals, starting at data-at over data-dur
+-->
+<style>
+  @font-face { font-family: 'Emoji'; src: local('Noto Color Emoji'); }
+  :root {
+    --bg: #5c0033; --ink: #ffffff; --muted: rgba(255,255,255,.72);
+    --accent: #f9a825; --hl: #f9a825; --hot: #e0103a;
+    --font: 'Inter Display', 'Inter', 'Liberation Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; background: var(--bg);
+           font-family: var(--font), 'Emoji'; color: var(--ink); transform-origin: 0 0; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; background: var(--bg); }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; padding: 0 90px; gap: 40px; }
+  [data-anim], [data-kb] { will-change: transform, opacity; }
+  .words .w { display: inline-block; margin: 0 .12em; }
+  .words .w.now { color: var(--hl); }
+  .strike { position: relative; display: inline-block; }
+  .strike::after { content: ''; position: absolute; left: -3%; top: 50%; height: .12em; border-radius: .06em;
+                   width: calc(106% * var(--strike, 0)); background: var(--hot); transform: rotate(-4deg); }
+  .full { position: absolute; inset: -6%; background-size: cover; background-position: center; }
+
+  /* type scale for 1080x1920 — keep text out of the bottom 380px and right 140px (TikTok/Reels UI) */
+  .h-xl { font-size: 132px; font-weight: 900; line-height: 1.0; letter-spacing: -3px; }
+  .h-l  { font-size: 104px; font-weight: 800; line-height: 1.05; letter-spacing: -2px; }
+  .h-m  { font-size: 72px;  font-weight: 800; line-height: 1.1; }
+  .body { font-size: 52px;  font-weight: 600; line-height: 1.25; color: var(--muted); }
+  .chip { display: inline-block; padding: 18px 34px; border-radius: 999px; font-size: 40px; font-weight: 700;
+          background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25); }
+  .caption { position: absolute; left: 70px; right: 140px; bottom: 470px; text-align: center;
+             font-size: 70px; font-weight: 900; line-height: 1.15;
+             text-shadow: 0 6px 0 rgba(0,0,0,.55), 0 0 30px rgba(0,0,0,.5); }
+  .btn { display: inline-block; padding: 40px 80px; border-radius: 999px; background: var(--accent); color: #04121f;
+         font-size: 64px; font-weight: 900; box-shadow: 0 20px 60px rgba(99,179,255,.5); }
+  #progress { position: absolute; top: 40px; left: 40px; right: 40px; height: 8px; border-radius: 8px;
+              background: rgba(255,255,255,.2); z-index: 999; overflow: hidden; }
+  #progress i { display: block; height: 100%; width: 0; background: #fff; }
+
+  .plum { background: radial-gradient(110% 70% at 20% 15%, #c2185b 0%, #8b1050 45%, #5c0033 100%); }
+  .deep { background: radial-gradient(120% 80% at 80% 20%, #8b1050 0%, #4a0029 70%, #2e0019 100%); }
+  .cream { background: #fff7f2; color: #5c0033; }
+  .clipbg { background: #2e0019; }
+  .gold { color: #f9a825; } .mag { color: #c2185b; }
+  .cam { position: absolute; inset: 0; }
+  .clip { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+  .phone { position:absolute; left:300px; top:650px; width:470px; height:860px; border-radius:64px; background:#1a0a12; padding:18px;
+           box-shadow: 0 50px 100px rgba(92,0,51,.35), inset 0 0 0 3px #3a2030; }
+  .screen { position:relative; width:100%; height:100%; border-radius:48px; overflow:hidden; background:#fff; color:#222; font-family:'Inter'; }
+  .scr { position:absolute; inset:0; padding:70px 34px 30px; display:flex; flex-direction:column; gap:22px; }
+  .appbtn { border-radius:20px; padding:22px; text-align:center; font-weight:800; font-size:30px; background:#6c47ff; color:#fff; }
+  .opt { border:3px solid #ddd; border-radius:18px; padding:18px 22px; font-size:28px; font-weight:700; }
+  .stamp { position:absolute; left:320px; top:900px; width:440px; text-align:center; font-size:150px; font-weight:900; color:#e0103a;
+           border:14px solid #e0103a; border-radius:30px; transform:rotate(-12deg); background:rgba(255,247,242,.55); letter-spacing:6px; }
+  .lab { position:absolute; left:0; right:0; top:530px; text-align:center; font-size:56px; font-weight:800; }
+  .ch { position:absolute; left:140px; width:800px; height:200px; border-radius:34px; background:#fff; color:#5c0033; display:flex; align-items:center; gap:30px;
+        padding:0 44px; font-size:52px; font-weight:800; box-shadow:0 26px 60px rgba(92,0,51,.25); border-left:16px solid #c2185b; }
+  .ch .ic { font-size:84px; }
+  .receipt { width:760px; background:#fff; color:#2b1020; border-radius:20px; padding:44px 54px; box-shadow:0 40px 90px rgba(92,0,51,.3);
+             font-family:'JetBrains Mono','Inter',monospace; font-size:36px; line-height:1.7; text-align:left; }
+  .receipt .rw { display:flex; justify-content:space-between; } .receipt hr { border:none; border-top:4px dashed #d9c3cc; margin:16px 0; }
+  .tag { display:inline-block; padding:22px 44px; border-radius:999px; font-size:62px; font-weight:900; background:#fff; color:#8b1050; }
+  .plate { width:250px; height:250px; border-radius:50%; background:#fff; box-shadow:0 20px 50px rgba(92,0,51,.2), inset 0 0 0 14px #f3e3ea;
+           display:flex; align-items:center; justify-content:center; font-size:120px; }
+  .pl { text-align:center; font-size:40px; font-weight:800; margin-top:14px; }
+  .card3 { position:absolute; left:110px; width:860px; height:270px; border-radius:40px; background:#fff; color:#5c0033; display:flex; align-items:center; gap:34px; padding:0 46px;
+           box-shadow:0 30px 70px rgba(0,0,0,.3); }
+  .card3 .n { font-size:110px; font-weight:900; color:#c2185b; width:80px; }
+  .card3 .ic { font-size:96px; } .card3 b { display:block; font-size:54px; } .card3 span.s { font-size:40px; font-weight:700; color:#8b4a6a; }
+  .chk { display:flex; align-items:center; gap:30px; width:860px; padding:30px 44px; border-radius:34px; background:#fff; font-size:60px; font-weight:900; color:#5c0033;
+         box-shadow:0 20px 50px rgba(92,0,51,.15); }
+  .chk .k { width:76px; height:76px; border-radius:50%; background:#c2185b; color:#fff; display:flex; align-items:center; justify-content:center; font-size:46px; }
+  .neon { font-size:120px; font-weight:900; color:#ffd1e6; letter-spacing:4px;
+          text-shadow:0 0 8px #fff, 0 0 22px #ff3d8b, 0 0 48px #ff3d8b, 0 0 90px #ff1f72; }
+  .emo { width:270px; padding:30px 0; border-radius:36px; background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.22); text-align:center; font-size:44px; font-weight:800; }
+  .emo div { font-size:120px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="progress"><i></i></div>
+
+  <!-- vo: h1 .25–2.85 h2 3.05 | b1 4.1 b2 6.42 | b3 8.11 b4 9.37 | b5 11.23 b6 13.7–17.95 | c1 18.4 c2 20.5 | end 25.5 -->
+  <section class="scene deep" data-start="0" data-end="3.95" data-trans="cut" data-cam="push">
+    <div class="cam">
+      <div style="position:absolute;left:80px;right:80px;top:330px;text-align:center">
+        <div style="font-size:260px;font-weight:900;color:#f9a825;line-height:.6;height:150px" data-anim="pop" data-at="0.05">“</div>
+        <div style="font-size:112px;font-weight:800;font-style:italic;line-height:1.1;color:#fff" data-anim="reveal" data-at="0.2" data-dur="0.6">
+          <span data-anim="strike" data-at="3.0" data-dur="0.3">this is just my body now.</span></div>
+      </div>
+      <div style="position:absolute;left:0;right:0;top:1050px;text-align:center">
+        <div class="gold" style="font-size:190px;font-weight:900;line-height:1" data-anim="squash glow" data-at="3.1">it isn't.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene plum" data-start="3.95" data-end="8.0" data-trans="iris" data-cam="drift">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center"><div class="h-m" data-anim="reveal" data-at="0.15">after 40, your body<br><span class="gold">changed the rules</span></div></div>
+      <div style="position:absolute;left:0;right:0;top:620px;display:flex;flex-direction:column;align-items:center;gap:36px">
+        <div class="chk" style="width:760px" data-anim="squash" data-at="2.47"><span class="k">1</span>〰️ hormones</div>
+        <div class="chk" style="width:760px" data-anim="squash" data-at="2.95"><span class="k">2</span>💪 muscle</div>
+        <div class="chk" style="width:760px" data-anim="squash" data-at="3.4"><span class="k">3</span>🌙 sleep</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene cream" data-start="8.0" data-end="11.1" data-trans="wipe" data-cam="push">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center">
+        <div class="h-l" style="color:#5c0033" data-anim="letters" data-at="0.11" data-step="0.03">you didn't stop trying.</div>
+        <div class="h-m mag" style="margin-top:24px" data-anim="reveal" data-at="1.37">your old plan just stopped fitting.</div>
+      </div>
+      <svg viewBox="0 0 700 600" width="700" height="600" style="position:absolute;left:190px;top:760px">
+        <rect x="120" y="330" width="460" height="200" rx="30" fill="#5c0033"/>
+        <circle cx="350" cy="330" r="110" fill="#fff7f2"/>
+        <g id="peg"><rect x="250" y="40" width="200" height="200" rx="18" fill="#f9a825" stroke="#c77f00" stroke-width="8"/></g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="scene deep" data-start="11.1" data-end="18.25" data-trans="whip" data-cam="push">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center"><div class="h-m" data-anim="reveal" data-at="0.13">the <span style="color:#ff8aa6">old key</span> vs the <span class="gold">new key</span></div></div>
+      <svg viewBox="-300 -300 600 600" width="560" height="560" style="position:absolute;left:260px;top:420px;overflow:visible">
+        <path id="shackle" d="M -120 -40 L -120 -150 A 120 120 0 0 1 120 -150 L 120 -40" fill="none" stroke="#d9c4cf" stroke-width="44"/>
+        <rect x="-190" y="-50" width="380" height="300" rx="50" fill="#f9a825" id="lockbody"/>
+        <circle cx="0" cy="70" r="36" fill="#5c0033"/><rect x="-14" y="80" width="28" height="80" rx="10" fill="#5c0033"/>
+      </svg>
+      <div id="oldkey" style="position:absolute;left:0;top:1010px;width:1080px;text-align:center">
+        <span class="tag" style="background:#3a1427;color:#ff8aa6;border:4px solid #ff8aa6">🗝️ eat less + more cardio</span>
+      </div>
+      <div id="newkey" style="position:absolute;left:0;top:1010px;width:1080px;text-align:center;opacity:0">
+        <span class="tag" style="background:#f9a825;color:#5c0033">🔑 the new key</span>
+      </div>
+      <div style="position:absolute;left:40px;right:40px;top:1160px;display:flex;flex-wrap:wrap;justify-content:center;gap:18px">
+        <span class="tag" style="font-size:44px" data-anim="squash" data-at="2.65">🍳 protein first</span>
+        <span class="tag" style="font-size:44px" data-anim="squash" data-at="3.9">🏋️‍♀️ strength</span>
+        <span class="tag" style="font-size:44px" data-anim="squash" data-at="5.1">😴 sleep</span>
+        <span class="tag" style="font-size:44px" data-anim="squash" data-at="5.85">⬇️ small deficit</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene clipbg" data-start="18.25" data-end="25.5" data-trans="iris">
+    <video class="clip" data-clip data-at="0" src="assets/3d-drop.mp4" muted></video>
+    <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center">
+      <div style="font-size:84px;font-weight:900;line-height:1.08;color:#fff;white-space:nowrap" data-anim="letters" data-at="0.15" data-step="0.03">work with your body,</div>
+      <div class="gold" style="font-size:84px;font-weight:900;line-height:1.08" data-anim="letters" data-at="1.0" data-step="0.03">not against it.</div>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:1400px;display:flex;justify-content:center;gap:26px;align-items:center">
+      <span class="tag" style="background:#f9a825;color:#5c0033" data-anim="squash" data-at="2.6">$19</span>
+      <div class="btn" style="background:#fff;color:#8b1050" data-anim="squash" data-at="4.4">link in bio 👆</div>
+    </div>
+  </section>
+<script>
+window.onFrame = (t) => {
+  const c = (x) => Math.min(1, Math.max(0, x)), eo = (p) => 1 - Math.pow(1 - p, 3);
+  const peg = document.getElementById('peg'); if (peg) { const q = t - 9.5; const drop = eo(c((t - 8.6) / .6)) * 60;
+    const sh = q > 0 ? Math.sin(q * 30) * 14 * Math.exp(-q * 1.5) : 0; peg.setAttribute('transform', `translate(${sh} ${drop})`); }
+  const ok = document.getElementById('oldkey'), nk = document.getElementById('newkey');
+  if (ok) { const q = t - 11.6; const sh = q > 0 && q < 1.6 ? Math.sin(q * 34) * 22 : 0; const fall = eo(c((t - 13.1) / .5));
+    ok.style.transform = `translate(${sh}px, ${fall * 260}px) rotate(${fall * 14}deg)`; ok.style.opacity = 1 - fall;
+    const nin = eo(c((t - 13.75) / .5)); nk.style.opacity = nin; nk.style.transform = `translateX(${(1 - nin) * 400}px)`;
+    const open = eo(c((t - 17.6) / .45)); document.getElementById('shackle').setAttribute('transform', `translate(0 ${-open * 70}) rotate(${-open * 18} 120 -40)`);
+    document.getElementById('lockbody').style.filter = open > 0 ? `drop-shadow(0 0 ${open * 60}px #ffc400)` : ''; }
+};
+</script>
+  <!-- ========================== /SCENES ========================== -->
+</div>
+
+<script>
+// Optional overrides; duration defaults to the last scene's end.
+window.VIDEO = { width: 1080, height: 1920, fps: 30 };
+</script>
+
+<!-- ============================ ENGINE (don't edit) ============================ -->
+<script>
+(() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = {
+    out: (p) => 1 - Math.pow(1 - p, 3),
+    inOut: (p) => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+    back: (p) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); },
+  };
+  const num = (el, k, d) => el.dataset[k] !== undefined ? parseFloat(el.dataset[k]) : d;
+  const TRANS = 0.35;
+
+  // deterministic pseudo-random (frames must be identical for the same t)
+  const rand = (i) => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+  const scenes = [...document.querySelectorAll('.scene')].map((el, i) => ({
+    el, i, start: num(el, 'start', 0), end: num(el, 'end', 1), trans: el.dataset.trans || 'cut',
+  }));
+  const duration = window.VIDEO.duration || Math.max(...scenes.map((s) => s.end));
+  window.VIDEO.duration = duration;
+
+  // split kinetic letters into spans (words kept together)
+  document.querySelectorAll('[data-anim~="letters"]').forEach((el) => {
+    let i = 0; el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => '<span style="display:inline-block;white-space:nowrap">' +
+      [...w].map((c) => `<span class="l" data-i="${i++}" style="display:inline-block;transform-origin:50% 100%">${c}</span>`).join('') + '</span>').join(' ');
+  });
+  // split karaoke captions into word spans
+  document.querySelectorAll('[data-anim~="words"]').forEach((el) => {
+    el.classList.add('words');
+    el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(' ');
+  });
+  // wind / speed streak backgrounds
+  document.querySelectorAll('.fx-streaks').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;';
+    const n = num(el, 'count', 30);
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i'); s.className = 'streak';
+      s.dataset.seed = k * 100 + i;
+      s.style.left = (rand(k * 100 + i) * 1080) + 'px';
+      s.style.height = (120 + rand(i + 7) * 260) + 'px';
+      s.style.opacity = .25 + rand(i + 3) * .6;
+      el.appendChild(s);
+    }
+  });
+
+  function animate(el, lt, sceneLen) {
+    const kinds = (el.dataset.anim || '').split(/\s+/).filter(Boolean);
+    const at = num(el, 'at', 0), dur = num(el, 'dur', .5);
+    const p = clamp((lt - at) / dur);
+    let op = 1, tf = '';
+    for (const k of kinds) {
+      switch (k) {
+        case 'fade': op *= ease.out(p); break;
+        case 'up': op *= ease.out(p); tf += ` translateY(${(1 - ease.out(p)) * 120}px)`; break;
+        case 'down': op *= ease.out(p); tf += ` translateY(${-(1 - ease.out(p)) * 120}px)`; break;
+        case 'left': op *= ease.out(p); tf += ` translateX(${(1 - ease.out(p)) * 300}px)`; break;
+        case 'right': op *= ease.out(p); tf += ` translateX(${-(1 - ease.out(p)) * 300}px)`; break;
+        case 'pop': op *= clamp(p * 3); tf += ` scale(${.3 + .7 * ease.back(p)})`; break;
+        case 'zoom': op *= ease.out(p); tf += ` scale(${1.5 - .5 * ease.out(p)})`; break;
+        case 'spin': op *= ease.out(p); tf += ` rotate(${(1 - ease.out(p)) * -180}deg)`; break;
+        case 'shake': { const a = 22 * Math.max(0, 1 - (lt - at) / 0.8); tf += ` translateX(${Math.sin(lt * 70) * a}px) rotate(${Math.sin(lt * 53) * a * .15}deg)`; break; }
+        case 'pulse': if (lt > at + dur) tf += ` scale(${1 + .05 * Math.sin((lt - at - dur) * 7)})`; break;
+        case 'strike': el.classList.add('strike'); el.style.setProperty('--strike', ease.out(p)); break;
+        case 'squash': { const q = lt - at; if (q < 0) { op = 0; break; } const k = Math.exp(-6 * q) * Math.cos(13 * q);
+          op *= clamp(q * 8); tf += ` scale(${1 + .38 * k}, ${1 - .38 * k})`; break; }
+        case 'glow': { const g = clamp((lt - at) / dur); el.style.textShadow = g > 0 ? `0 0 ${(18 + 14 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent)), 0 0 ${(50 + 30 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent))` : ''; break; }
+        case 'blur': op *= ease.out(p); el.style.filter = p < 1 ? `blur(${(1 - ease.out(p)) * 30}px)` : ''; break;
+        case 'draw': { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L * (1 - ease.inOut(p)); break; }
+        case 'reveal': { const e = ease.out(p); el.style.clipPath = `inset(${-10}% -10% ${(1 - e) * 110 - 10}% -10%)`; tf += ` translateY(${(1 - e) * 40}%)`; break; }
+        case 'letters': { const step = num(el, 'step', .035);
+          el.querySelectorAll('.l').forEach((c) => { const q = (lt - at - (+c.dataset.i) * step);
+            if (q < 0) { c.style.opacity = 0; return; } const k = Math.exp(-7 * q) * Math.cos(15 * q);
+            c.style.opacity = clamp(q * 10); c.style.transform = `scale(${1 - .45 * k}, ${1 + .6 * k}) translateY(${Math.max(0, 1 - q * 5) * 30}px)`; });
+          break; }
+        case 'float': tf += ` translateY(${Math.sin(lt * 2.4) * 28}px) rotate(${Math.sin(lt * 1.7) * 4}deg)`; break;
+        case 'words': {
+          const step = num(el, 'step', .18), ws = el.querySelectorAll('.w');
+          ws.forEach((w, i) => {
+            const wp = clamp((lt - at - i * step) / .22);
+            w.style.opacity = clamp(wp * 3);
+            w.style.transform = `scale(${.5 + .5 * ease.back(wp)})`;
+            w.classList.toggle('now', lt >= at + i * step && lt < at + (i + 1) * step + .05);
+          });
+          break;
+        }
+      }
+    }
+    const out = num(el, 'out', null);
+    if (out !== null) op *= 1 - clamp((lt - out) / .3);
+    el.style.opacity = op;
+    el.style.transform = tf;
+  }
+
+  function sceneTransition(s, lt) {
+    const p = ease.out(clamp(lt / TRANS));
+    const st = s.el.style;
+    st.opacity = 1; st.transform = ''; st.filter = ''; st.clipPath = '';
+    if (s.i === 0) return;
+    switch (s.trans) {
+      case 'fade': st.opacity = p; break;
+      case 'slide': st.transform = `translateX(${(1 - p) * 100}%)`; break;
+      case 'up': st.transform = `translateY(${(1 - p) * 100}%)`; break;
+      case 'zoom': st.opacity = p; st.transform = `scale(${1.25 - .25 * p})`; break;
+      case 'whip': st.transform = `translateX(${(1 - p) * -100}%)`; st.filter = p < 1 ? `blur(${(1 - p) * 30}px)` : ''; break;
+      case 'flip': if (p < 1) { st.transform = `perspective(2200px) rotateY(${(1 - p) * -100}deg)`; st.transformOrigin = '0% 50%'; } else st.transformOrigin = ''; break;
+      case 'iris': if (p < 1) st.clipPath = `circle(${p * 120}% at ${s.el.dataset.irisX || '50%'} ${s.el.dataset.irisY || '50%'})`; break;
+      case 'wipe': if (p < 1) st.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`; break;
+      case 'wipeup': if (p < 1) st.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; break;
+    }
+  }
+
+  // particles (deterministic floating dots)
+  document.querySelectorAll('.fx-particles').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;pointer-events:none;';
+    const n = num(el, 'count', 40);
+    for (let i = 0; i < n; i++) { const d = document.createElement('i'); const r = 3 + rand(k * 50 + i) * 9;
+      d.style.cssText = `position:absolute;width:${r}px;height:${r}px;border-radius:50%;background:${el.dataset.color || '#fff'};filter:blur(${rand(i + 9) * 3}px)`;
+      d.dataset.seed = k * 50 + i; el.appendChild(d); }
+  });
+  // embedded video clips (e.g. a rendered 3D shot): <video data-clip data-at="0.2" src="..." muted>
+  const clips = [...document.querySelectorAll('video[data-clip]')];
+  if (clips.length) {
+    window.VIDEO_READY = false;
+    Promise.all(clips.map((v) => { v.muted = true; v.preload = 'auto'; v.pause();
+      return v.readyState >= 2 ? null : new Promise((r) => { v.addEventListener('loadeddata', r, { once: true }); v.load(); }); }))
+      .then(() => { window.VIDEO_READY = true; });
+  }
+  const seek = (v, time) => new Promise((r) => {
+    if (Math.abs(v.currentTime - time) < 0.001) return r();
+    v.addEventListener('seeked', () => r(), { once: true }); v.currentTime = time; });
+
+  window.renderFrame = async (t) => {
+    const waits = [];
+    for (const s of scenes) {
+      const tail = s.i < scenes.length - 1 ? TRANS : 0;
+      const on = t >= s.start && t < s.end + tail;
+      s.el.style.display = on ? 'block' : 'none';
+      s.el.style.zIndex = s.i + 1;
+      if (!on) continue;
+      const lt = t - s.start, len = s.end - s.start;
+      sceneTransition(s, lt);
+      // camera: data-cam="push" (slow push-in), "pull", "drift" on the scene's first child wrapper .cam
+      const cam = s.el.querySelector(':scope > .cam'); if (cam) { const k = clamp(lt / (len + TRANS)), m = s.el.dataset.cam || 'push';
+        cam.style.transform = m === 'pull' ? `scale(${1.08 - .08 * k})` : m === 'drift' ? `scale(1.06) translate(${(k - .5) * -30}px, ${(k - .5) * -12}px)` : `scale(${1 + .07 * k})`; }
+      // parallax: data-par="0.6" drifts an element up at that speed (px per 0.01s * 10)
+      s.el.querySelectorAll('[data-par]').forEach((el) => { el.style.translate = `0 ${-lt * 40 * parseFloat(el.dataset.par)}px`; });
+      s.el.querySelectorAll('[data-anim]').forEach((el) => animate(el, lt, len));
+      s.el.querySelectorAll('[data-kb]').forEach((el) => {
+        const p = ease.inOut(clamp(lt / len)), m = el.dataset.kb;
+        el.style.transform = m === 'out' ? `scale(${1.18 - .18 * p})`
+          : m === 'left' ? `scale(1.12) translateX(${(.5 - p) * 6}%)`
+          : m === 'right' ? `scale(1.12) translateX(${(p - .5) * 6}%)`
+          : `scale(${1 + .18 * p})`;
+      });
+      s.el.querySelectorAll('[data-count]').forEach((el) => {
+        const [a, b, d] = el.dataset.count.split(':').map(Number);
+        const p = ease.out(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        el.textContent = (a + (b - a) * p).toFixed(d || 0);
+      });
+      s.el.querySelectorAll('[data-follow]').forEach((el) => {
+        const path = document.getElementById(el.dataset.follow); const L = path.getTotalLength();
+        const p = ease.inOut(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        const pt = path.getPointAtLength(L * p); el.setAttribute('cx', pt.x); el.setAttribute('cy', pt.y);
+      });
+      s.el.querySelectorAll('.fx-particles').forEach((fx) => {
+        fx.querySelectorAll('i').forEach((d) => { const sd = +d.dataset.seed;
+          const y = (rand(sd + 1) * 2100 - t * (30 + rand(sd + 2) * 70)) % 2100; const yy = y < 0 ? y + 2100 : y;
+          d.style.left = (rand(sd + 3) * 1080 + Math.sin(t * (0.5 + rand(sd + 4)) + sd) * 30) + 'px';
+          d.style.top = (yy - 90) + 'px'; d.style.opacity = (.15 + .5 * rand(sd + 6)) * (.6 + .4 * Math.sin(t * 2 + sd)); });
+      });
+      s.el.querySelectorAll('video[data-clip]').forEach((v) => {
+        const at = num(v, 'at', 0), d = v.duration || 0;
+        if (location.search.includes('render=1')) waits.push(seek(v, clamp(lt - at, 0, Math.max(0, d - 0.034))));
+        else if (lt >= at && v.paused) v.play().catch(() => {});
+      });
+      s.el.querySelectorAll('.fx-streaks').forEach((fx) => {
+        const speed = num(fx, 'speed', 900);
+        fx.querySelectorAll('.streak').forEach((st) => {
+          const seed = +st.dataset.seed, h = parseFloat(st.style.height);
+          const y = ((rand(seed + 11) * 2200 + t * speed * (.6 + rand(seed + 5) * .8)) % (1920 + h)) - h;
+          st.style.top = (1920 - y - h) + 'px'; // streaks rush UPWARD (wind)
+        });
+      });
+    }
+    // persistent overlays across scenes: <div class="hud" data-from="3" data-to="25">…</div> (absolute seconds)
+    document.querySelectorAll('.hud').forEach((h) => {
+      const f = num(h, 'from', 0), to = num(h, 'to', 1e9);
+      const p = clamp((t - f) / .3) * (1 - clamp((t - to) / .3));
+      h.style.opacity = p; h.style.transform = `translateY(${(1 - ease.out(clamp((t - f) / .4))) * -40}px)`; h.style.zIndex = 900;
+    });
+    const bar = document.querySelector('#progress i');
+    if (bar) bar.style.width = (100 * t / duration) + '%';
+    // custom per-page animation (characters, levers, charts): window.onFrame = (t, lt) => {...}
+    if (typeof window.onFrame === 'function') window.onFrame(t);
+    await Promise.all(waits);
+  };
+
+  // ---- preview mode (open the file in a browser) ----
+  if (!location.search.includes('render=1')) {
+    const stage = document.getElementById('stage');
+    const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920);
+      stage.style.transform = `scale(${k})`; document.body.style.height = innerHeight + 'px'; };
+    addEventListener('resize', fit); fit();
+    let t = 0, last = performance.now(), paused = false;
+    addEventListener('keydown', (e) => {
+      if (e.code === 'Space') paused = !paused;
+      if (e.key === 'ArrowRight') t = Math.min(duration, t + .5);
+      if (e.key === 'ArrowLeft') t = Math.max(0, t - .5);
+      if (e.key === 'r') t = 0;
+    });
+    const loop = (now) => { if (!paused) t = (t + (now - last) / 1000) % duration; last = now;
+      window.renderFrame(t); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  } else {
+    window.renderFrame(0);
+  }
+})();
+</script>
+</body>
+</html>

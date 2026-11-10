@@ -82,3 +82,62 @@ Are you doing 30-30-30? What's your lunch? 👇
 
 **YouTube Shorts title**
 The 30-30-30 rule is missing two meals
+
+---
+
+# Round 4
+
+## Video 5: "Starving after your healthy lunch?" (hungry-lunch-v1.mp4, 22s)
+
+**Big-fish angle:** hunger. Why-ladder: 30 g plates → hit protein → feel full and strong → **stop being hungry an hour after eating "healthy"**.
+
+**TikTok / Instagram Reels caption**
+
+Starving an hour after your "healthy" lunch? 🍪 It's probably not the size; it's the protein. A plain salad has barely any, and protein is what keeps you full for longer.
+
+Two tins and a lemon 🥫🍋 Tuna and white bean salad: 32 g of protein, no cooking.
+
+No-cook lunches, quick dinners, 45 plates in The 30g Protein Plate Playbook. $14, link in bio 🔗
+
+What's your go-to lunch? 👇
+
+**Hashtags**
+#highproteinlunch #nocooklunch #womenover40 #proteinforwomen #perimenopause #menopausenutrition #lunchideas #easylunch #over40
+
+**YouTube Shorts title**
+Hungry an hour after a healthy lunch? Check the protein
+
+**Hooks to test next on this angle**
+1. "Starving an hour after your healthy lunch?" (used)
+2. "If the 4 pm biscuit always wins, look at your lunch."
+3. "Your salad isn't the problem. What's missing from it is."
+4. "Two tins and a lemon. 32 grams of protein. No cooking."
+
+## Video 6: "Stop cooking two dinners" (two-dinners-v1.mp4, 19s)
+
+**Big-fish angle:** time and family. Why-ladder: protein plates → eat well → without extra work → **one dinner the whole family eats**.
+
+**TikTok / Instagram Reels caption**
+
+Stop cooking two dinners 🍝 One turkey bolognese for everyone. Your plate gets the full portion plus parmesan: 38 g of protein. And the kids won't know it's a "protein meal" 🤫
+
+Family-friendly dinners with every gram already worked out: 45 plates in The 30g Protein Plate Playbook. $14, link in bio 🔗
+
+Tag someone who cooks two dinners every night 👇
+
+**Hashtags**
+#familydinner #easydinnerideas #highproteindinner #womenover40 #momsover40 #proteinforwomen #perimenopause #dinnerideas #over40
+
+**YouTube Shorts title**
+Stop cooking two dinners (38g protein, the whole family eats it)
+
+**Hooks to test next on this angle**
+1. "Stop cooking two dinners." (used)
+2. "One pot. Whole family. 38 grams of protein on your plate."
+3. "The kids don't know it's a protein meal."
+4. "If you're cooking 'your' food and 'their' food, stop."
+
+## What decides if these scale (check after 48–72 h)
+- **Watch past 3 s low** → test hook 2 or 3 above on the same video.
+- **Watch time good but no clicks** → try "Comment PLATE" in place of "link in bio".
+- **Saves high** → these work as "save this" content; post more single-plate recipes in the same style.
