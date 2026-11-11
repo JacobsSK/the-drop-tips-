@@ -141,3 +141,70 @@ Stop cooking two dinners (38g protein, the whole family eats it)
 - **Watch past 3 s low** → test hook 2 or 3 above on the same video.
 - **Watch time good but no clicks** → try "Comment PLATE" in place of "link in bio".
 - **Saves high** → these work as "save this" content; post more single-plate recipes in the same style.
+
+---
+
+# Round 5
+
+## Video 7: "Bored of chicken breast & shakes?" (bored-chicken-v1.mp4, 25s)
+
+**Big-fish angle:** food you actually enjoy. Why-ladder: 45 plates → hit protein → stick with it → **eat more protein without hating every meal**.
+
+**TikTok / Instagram Reels caption**
+
+Bored of chicken breast and protein shakes? 🥱 Eating more protein shouldn't feel like a punishment.
+
+🐟 Sardine & tomato toast: 33 g
+🍔 Lettuce-wrap cheeseburger: 36 g
+🥣 Porridge for breakfast: 33 g
+🌮 Fish tacos, turkey bolognese, egg muffins… plus vegetarian and vegan plates 🌱
+
+45 plates of real food, every one 30 g+. The 30g Protein Plate Playbook, $14, link in bio 🔗
+
+Which one are you making first? 👇
+
+**Hashtags**
+#highproteinmeals #proteinideas #womenover40 #proteinforwomen #perimenopause #menopausenutrition #easymeals #notboring #over40
+
+**YouTube Shorts title**
+Bored of chicken breast? 30g+ protein meals that aren't
+
+**Hooks to test next on this angle**
+1. "Bored of chicken breast and protein shakes?" (used)
+2. "High protein doesn't have to mean bland."
+3. "A cheeseburger with 36 grams of protein."
+4. "If you've had chicken and broccoli 4 nights in a row, stop."
+
+## Video 8: "3 plates. 100 g of protein. Zero tracking." (100g-day-v1.mp4, 25s)
+
+**Big-fish angle:** hitting her protein goal without effort. Why-ladder: done-for-you plates → no maths → **hit 100 g a day without an app**.
+
+**TikTok / Instagram Reels caption**
+
+3 plates. 100 g of protein. Zero tracking 📵
+
+🌅 Breakfast: Greek yogurt bowl, 33 g
+☀️ Lunch: tuna & white bean salad, 32 g
+🌙 Dinner: turkey bolognese, 38 g
+
+That's 103 g, and you never opened an app. The Playbook's first 7 days land between 105 and 126 g, every day.
+
+The 30g Protein Plate Playbook, $14, link in bio 🔗
+
+Save this as your easy day 📌
+
+**Hashtags**
+#100gprotein #fulldayofeating #highprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #whatieatinaday #over40
+
+**YouTube Shorts title**
+100g of protein, 3 plates, zero tracking
+
+**Hooks to test next on this angle**
+1. "3 plates. 100 grams of protein. Zero tracking." (used)
+2. "Full day of eating: 103 g of protein, no app."
+3. "How to hit 100 g of protein without counting anything."
+4. "Your protein target is 3 plates, not 30 log entries."
+
+## What decides if these scale (check after 48–72 h)
+- "Full day of eating" formats tend to get saves; if saves are high, make a new day each week.
+- Good watch time but no clicks → try "Comment PLATE" in place of "link in bio".

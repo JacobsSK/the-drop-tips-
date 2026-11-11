@@ -116,3 +116,72 @@ Started over every Monday? Week 1 only needs 6 things
 - **Good watch time, few profile visits or link clicks** → the CTA or offer is the problem: try "Comment RESET" or lead with "$19, once".
 - **Clicks but no sales** → check the Gumroad page (first line, cover, the file buyers receive).
 - Put money behind an angle only after it wins organically.
+
+---
+
+# Round 5
+
+## "The scale went up? Wait." (40-body-reset-scale/scale-v1.mp4, 27s)
+
+**Big-fish angle:** the moment almost everyone quits. Why-ladder: progress tracker → see progress → keep going → **don't quit when the scale goes up**.
+
+**TikTok / Instagram Reels caption**
+
+The scale went up this week and you want to quit? Wait ✋
+
+Your weight can swing 1–3 kg in a single day: water, hormones, food, digestion. None of that is fat. And when you start lifting, your muscles can hold extra water for a while, so the number might even go up.
+
+Track what tells the real story: ⚡ energy, 😴 sleep, 💪 strength, 👖 how your clothes fit.
+
+The 40+ Body Reset comes with printable trackers for all of it. $19, link in bio 🔗
+
+Save this for the next time the scale scares you 📌
+
+**Hashtags**
+#scalevictory #nonscalevictory #womenover40 #perimenopause #menopause #strengthtraining #over40fitness #midlifewomen #dontquit
+
+**YouTube Shorts title**
+The scale went up? Wait. (women over 40)
+
+**Hooks to test next on this angle**
+1. "If the scale went up this week and you want to quit, wait." (used)
+2. "The scale is the worst way to judge your first 30 days."
+3. "Up 1 kg overnight? That's not fat."
+4. "Started lifting and gained weight? Read this."
+
+## "Every diet works until day 31" (40-body-reset-day31/day31-v1.mp4, 30s)
+
+**Big-fish angle:** keeping the results. Why-ladder: 30-day plan → lose fat → keep it off → **this being the last reset she ever does**.
+
+**TikTok / Instagram Reels caption**
+
+Every diet works… until day 31 📅 That's when most people go back to their old habits and expect the results to stay.
+
+The 40+ Body Reset doesn't stop at 30 days. "Life After Day 30" has its own chapter:
+🏋️‍♀️ keep 2–3 strength sessions a week
+👟 keep your steps above 7,500
+🍳 keep your protein
+🍞 flex the carbs, keep the weekly average
+
+And if progress stalls, there are 5 checks to run, in order.
+
+30 days and what comes after. $19, link in bio 🔗
+
+What day do you usually quit? 👇
+
+**Hashtags**
+#womenover40 #maintenance #perimenopause #menopause #over40fitness #habits #fatlossover40 #midlifewomen #yoyodieting
+
+**YouTube Shorts title**
+Every diet works until day 31
+
+**Hooks to test next on this angle**
+1. "Every diet works, until day 31." (used)
+2. "The diet wasn't the problem. Day 31 was."
+3. "If you've lost the same 5 kg three times, watch this."
+4. "What to do on day 31, so this is your last reset."
+
+## What decides if these scale (check after 48–72 h)
+- Low watch past 3 s → try hook 2 or 3 above.
+- Strong saves on the scale video → this is "save this" content; make more reassurance videos.
+- Clicks but no sales → check the Gumroad page and that buyers get the fixed PDF.
