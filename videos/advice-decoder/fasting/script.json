@@ -1,0 +1,5 @@
+[["h1","Fasting after forty. Yes or no?",0],["h2","Answer three questions.",0.2],
+ ["q1","One. Do you have a history of disordered eating, or diabetes, or take medicine with food?",0.4],["v1","If yes, not without your doctor.",0.2],
+ ["q2","Two. Are you sleeping badly, or really stressed right now?",0.4],["v2","If yes, not right now. Eat three regular meals, with a twelve hour overnight gap.",0.2],
+ ["q3","Three. Can you still fit three meals of about thirty grams of protein into your window?",0.4],["v3","If yes, try it gently. If not, skip it.",0.2],
+ ["p1","That's one page. There are ten of these.",0.45],["c1","The Menopause Advice Decoder. Link in bio.",0.2]]

@@ -185,3 +185,17 @@ Every diet works until day 31
 - Low watch past 3 s → try hook 2 or 3 above.
 - Strong saves on the scale video → this is "save this" content; make more reassurance videos.
 - Clicks but no sales → check the Gumroad page and that buyers get the fixed PDF.
+
+---
+
+# Round 6
+
+## "Wall Pilates won't save your metabolism" (40-body-reset-wall-pilates, 22s)
+
+**Caption:** Wall Pilates won't save your metabolism. Muscle will. 💪 Gentle movement is a great start, but after 40 you lose muscle every year, and muscle needs something to push against. That's strength training: goblet squats, push-ups, rows, glute bridges. The 40+ Body Reset has a full sample workout you can start this week. $19, link in bio 🔗 Are you team Pilates or team weights? 👇
+
+**Hashtags:** #wallpilates #strengthtraining #womenover40 #perimenopause #menopause #liftingweights #over40fitness #midlifewomen #musclematters
+
+**Shorts title:** Wall Pilates vs strength training after 40
+
+**Hooks to test:** "Wall Pilates is a start, not a strategy." / "The 28-day challenge you don't need after 40." / "Your muscles need weight, not just a wall."

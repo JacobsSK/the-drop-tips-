@@ -208,3 +208,17 @@ Save this as your easy day 📌
 ## What decides if these scale (check after 48–72 h)
 - "Full day of eating" formats tend to get saves; if saves are high, make a new day each week.
 - Good watch time but no clicks → try "Comment PLATE" in place of "link in bio".
+
+---
+
+# Round 6
+
+## Video 9: "What 30 g of protein actually looks like" (what-30g, 23s)
+
+**Caption:** What 30 g of protein actually looks like. No shakes 🚫🥤 ✋ A palm-sized piece of cooked chicken: about 30 g. 🍳 3 eggs, 2 slices of toast and feta: 31 g. 🥣 A cup of Greek yogurt with hemp seeds, almonds and berries: 33 g. 45 plates like this, already worked out, in The 30g Protein Plate Playbook. $14, link in bio 🔗 Save this 📌
+
+**Hashtags:** #30gprotein #proteinforwomen #womenover40 #highprotein #perimenopause #menopausenutrition #whatieatinaday #proteinideas #over40
+
+**Shorts title:** What 30g of protein actually looks like (no shakes)
+
+**Hooks to test:** "This is 30 grams of protein. So is this." / "You don't need a shake to hit 30 g." / "3 ways to hit 30 g of protein, no powder."
