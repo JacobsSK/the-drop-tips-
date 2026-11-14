@@ -211,3 +211,15 @@ Every diet works until day 31
 **Hashtags:** #beginnerworkout #strengthtraining #womenover40 #perimenopause #menopause #liftingforbeginners #over40fitness #midlifewomen #startstrong
 
 **Shorts title:** Never lifted a weight? Start here (women over 40)
+
+---
+
+# Round 8
+
+## "The 80% rule" (40-body-reset-80-percent, 21s)
+
+**Caption:** You don't have to be perfect to see results after 40 😮‍💨 The 40+ Body Reset uses the 80% rule: if you eat 21 meals a week, 17 good ones and 4 flexible ones still work. Chasing 100% usually ends in 0% consistency. 30 days, no perfection required. $19, link in bio 🔗 Who needed to hear this today? 👇
+
+**Hashtags:** #8020rule #womenover40 #perimenopause #menopause #consistency #nodiet #over40fitness #midlifewomen #progressnotperfection
+
+**Shorts title:** The 80% rule: you don't have to be perfect after 40

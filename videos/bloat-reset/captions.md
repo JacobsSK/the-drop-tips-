@@ -32,3 +32,13 @@ Product: https://milajacobs.gumroad.com/l/dhjhdv ($9 on Gumroad. Your hooks doc 
 **Hashtags:** #bloating #bloatingtips #sparklingwater #womenover40 #perimenopause #menopausebelly #guthealth #healthyhabits #over40
 
 **Shorts title:** 3 "healthy" habits that could be bloating you after 40
+
+---
+
+## Video 4: "Is it bloat or belly fat? Here's how to tell" (bloat-or-fat, 21s) — doc Script D / hook #4
+
+**Caption:** Is it bloat or belly fat? Here's how to tell 🎈🧈 Bloat feels tight and drum-like, comes and goes, and gets worse after meals. Fat is soft, pinchable and there all day. Most women over 40 have some of both, and they need different fixes. Take the 2-minute self-check in Bloat or Belly Fat? The 7-Day Reset. $9, link in bio 🔗 Bloat, fat, or both? 👇
+
+**Hashtags:** #bloatorfat #bloating #bellyfat #womenover40 #perimenopause #menopausebelly #guthealth #bloatingrelief #over40
+
+**Shorts title:** Is it bloat or belly fat? Here's how to tell

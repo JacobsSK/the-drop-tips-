@@ -37,3 +37,17 @@ That's one page. There are 10 of these in The Menopause Advice Decoder. $17, lin
 **Shorts title:** Before you buy a menopause supplement, check the label for this
 
 Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
+
+---
+
+## Video 4: "Should you lift weights after 40? The 3-question test" (lift, 26s) — doc Script E / hook #6
+
+**Caption:** Should you lift weights after 40? Here's the 3-question test 🏋️‍♀️
+1️⃣ Osteoporosis, an injury or joint pain? Yes, still, but get a physio or trainer to set it up.
+2️⃣ Haven't lifted in 6 months? Start with 2 full-body sessions a week.
+3️⃣ Weights still going up? Keep going. Stuck? Time to go heavier.
+10 questions like this, about a minute each, in The Menopause Advice Decoder. $17, link in bio 🔗
+
+**Hashtags:** #strengthtraining #liftingover40 #womenover40 #perimenopause #menopause #menopausefitness #menopauseadvice #midlifewomen #over40
+
+**Shorts title:** Should you lift weights after 40? The 3-question test

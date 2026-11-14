@@ -234,3 +234,15 @@ Save this as your easy day 📌
 **Hashtags:** #proteinbreakfast #eggsontoast #womenover40 #highprotein #proteinforwomen #perimenopause #easybreakfast #menopausenutrition #over40
 
 **Shorts title:** If you can make eggs on toast, you can eat 30g of protein
+
+---
+
+# Round 8
+
+## Video 11: "Vegetarian or vegan? You can still hit 30 g" (vegetarian, 21s)
+
+**Caption:** Vegetarian or vegan over 40 and struggling with protein? 🌱 You can still hit 30 g a plate: tofu scramble, tempeh satay, lentil bolognese. Every one 30 g or more, with the grams worked out for you. Plus 42 more plates in The 30g Protein Plate Playbook. $14, link in bio 🔗
+
+**Hashtags:** #vegetarianprotein #veganprotein #plantbasedprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #highprotein #over40
+
+**Shorts title:** Vegetarian or vegan? You can still hit 30g of protein a plate
