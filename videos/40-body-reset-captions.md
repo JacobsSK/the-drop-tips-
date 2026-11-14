@@ -199,3 +199,15 @@ Every diet works until day 31
 **Shorts title:** Wall Pilates vs strength training after 40
 
 **Hooks to test:** "Wall Pilates is a start, not a strategy." / "The 28-day challenge you don't need after 40." / "Your muscles need weight, not just a wall."
+
+---
+
+# Round 7
+
+## "Never lifted a weight? Start here." (40-body-reset-never-lifted, 22s)
+
+**Caption:** Never lifted a weight? Start here 🏋️‍♀️ You don't need any experience to begin. The 40+ Body Reset starts with one full-body session: goblet squats, push-ups (hands raised is fine), dumbbell rows, glute bridges and a plank. 3 times a week in week 1, then a little more challenge each week. $19, link in bio 🔗 Save this for your first session 📌
+
+**Hashtags:** #beginnerworkout #strengthtraining #womenover40 #perimenopause #menopause #liftingforbeginners #over40fitness #midlifewomen #startstrong
+
+**Shorts title:** Never lifted a weight? Start here (women over 40)

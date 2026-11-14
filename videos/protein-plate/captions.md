@@ -222,3 +222,15 @@ Save this as your easy day 📌
 **Shorts title:** What 30g of protein actually looks like (no shakes)
 
 **Hooks to test:** "This is 30 grams of protein. So is this." / "You don't need a shake to hit 30 g." / "3 ways to hit 30 g of protein, no powder."
+
+---
+
+# Round 7
+
+## Video 10: "If you can make eggs on toast…" (eggs-on-toast, 18s)
+
+**Caption:** If you can make eggs on toast, you can eat 30 g of protein 🍳 3 eggs, 2 slices of toast, a little feta: 31 g. No powder, no app. Every plate in The 30g Protein Plate Playbook is this simple: pick one, copy it, done. 45 plates, $14, link in bio 🔗
+
+**Hashtags:** #proteinbreakfast #eggsontoast #womenover40 #highprotein #proteinforwomen #perimenopause #easybreakfast #menopausenutrition #over40
+
+**Shorts title:** If you can make eggs on toast, you can eat 30g of protein

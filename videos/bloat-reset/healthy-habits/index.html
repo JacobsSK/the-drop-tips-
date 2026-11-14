@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>3 healthy habits — Bloat or Belly Fat?</title>
+<!--
+  VIDEO PAGE TEMPLATE — copy this file, keep the ENGINE block, rewrite the SCENES block.
+  Open it in a browser to preview (loops in real time; Space = pause, ←/→ = scrub, R = restart).
+  Render it:  node ../scripts/render.js thisfile.html out.mp4 [--audio music.mp3]
+
+  Scene markup:
+    <section class="scene" data-start="0" data-end="2.5" data-trans="cut|fade|slide|zoom|whip|up"> ... </section>
+    Scenes must have an opaque background (later scenes paint over earlier ones).
+  Element animation (times are seconds RELATIVE to the scene start):
+    data-anim="pop"            one or more of: fade up down left right pop zoom words shake pulse float spin strike
+    data-at="0.3"              when the entrance starts (default 0)
+    data-dur="0.5"             entrance length (default 0.5)
+    data-out="2.0"             optional: when it exits (fades out over 0.3s)
+    data-step="0.16"           for "words": seconds between words (karaoke captions; current word highlighted)
+    data-kb="in|out|left|right"  Ken Burns move across the whole scene (for photos / backgrounds)
+    data-count="0:4.9:1"       number tween from:to:decimals, starting at data-at over data-dur
+-->
+<style>
+  @font-face { font-family: 'Emoji'; src: local('Noto Color Emoji'); }
+  :root {
+    --bg: #d4e8fb; --ink: #ffffff; --muted: rgba(255,255,255,.72);
+    --accent: #ff6b4a; --hl: #ff6b4a; --hot: #e2453b;
+    --font: 'Inter Display', 'Inter', 'Liberation Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; background: var(--bg);
+           font-family: var(--font), 'Emoji'; color: var(--ink); transform-origin: 0 0; }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: none; background: var(--bg); }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; padding: 0 90px; gap: 40px; }
+  [data-anim], [data-kb] { will-change: transform, opacity; }
+  .words .w { display: inline-block; margin: 0 .12em; }
+  .words .w.now { color: var(--hl); }
+  .strike { position: relative; display: inline-block; }
+  .strike::after { content: ''; position: absolute; left: -3%; top: 50%; height: .12em; border-radius: .06em;
+                   width: calc(106% * var(--strike, 0)); background: var(--hot); transform: rotate(-4deg); }
+  .full { position: absolute; inset: -6%; background-size: cover; background-position: center; }
+
+  /* type scale for 1080x1920 — keep text out of the bottom 380px and right 140px (TikTok/Reels UI) */
+  .h-xl { font-size: 132px; font-weight: 900; line-height: 1.0; letter-spacing: -3px; }
+  .h-l  { font-size: 104px; font-weight: 800; line-height: 1.05; letter-spacing: -2px; }
+  .h-m  { font-size: 72px;  font-weight: 800; line-height: 1.1; }
+  .body { font-size: 52px;  font-weight: 600; line-height: 1.25; color: var(--muted); }
+  .chip { display: inline-block; padding: 18px 34px; border-radius: 999px; font-size: 40px; font-weight: 700;
+          background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25); }
+  .caption { position: absolute; left: 70px; right: 140px; bottom: 470px; text-align: center;
+             font-size: 70px; font-weight: 900; line-height: 1.15;
+             text-shadow: 0 6px 0 rgba(0,0,0,.55), 0 0 30px rgba(0,0,0,.5); }
+  .btn { display: inline-block; padding: 40px 80px; border-radius: 999px; background: var(--accent); color: #04121f;
+         font-size: 64px; font-weight: 900; box-shadow: 0 20px 60px rgba(99,179,255,.5); }
+  #progress { position: absolute; top: 40px; left: 40px; right: 40px; height: 8px; border-radius: 8px;
+              background: rgba(255,255,255,.2); z-index: 999; overflow: hidden; }
+  #progress i { display: block; height: 100%; width: 0; background: #fff; }
+
+  .cam { position:absolute; inset:0; }
+  .pill { display:inline-block; padding:20px 40px; border-radius:999px; font-size:52px; font-weight:900; }
+  .card { display:flex; align-items:center; gap:28px; width:880px; padding:28px 40px; border-radius:34px; font-size:54px; font-weight:800; }
+  .sky { background: radial-gradient(110% 70% at 30% 15%, #eaf4ff 0%, #d4e8fb 55%, #bcd8f3 100%); color:#173b5c; }
+  .night { background: radial-gradient(110% 70% at 70% 15%, #3c4f86 0%, #1f2b55 55%, #121a37 100%); color:#fff; }
+  .mint { background: radial-gradient(110% 70% at 30% 15%, #3fb59b 0%, #1f8a77 55%, #135e52 100%); color:#fff; }
+  .navy { color:#173b5c; } .mintc { color:#1f8a77; } .coral { color:#ff6b4a; } .sun { color:#ffb84d; }
+  .tape { position:absolute; height:110px; border-radius:16px; background:#ffd84d; box-shadow:0 18px 40px rgba(23,59,92,.25); overflow:hidden; }
+  .tape i { position:absolute; top:0; width:4px; background:#173b5c; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="progress"><i></i></div>
+
+  <!-- vo: h1 .25–3.09 | o1 3.54 o2 4.98 | t1 6.26 t2 8.0 | r1 12.74 r2 15.18 | c1 16.56 c2 19.06 | end 23.33 -->
+  <section class="scene sky" data-start="0" data-end="3.35" data-trans="cut" data-cam="push">
+    <div class="cam">
+      <div style="position:absolute;left:0;right:0;top:260px;text-align:center"><div class="coral" style="font-size:420px;font-weight:900;line-height:.9" data-anim="squash" data-at="0.1">3</div></div>
+      <div style="position:absolute;left:60px;right:60px;top:720px;text-align:center">
+        <div class="h-l navy" data-anim="letters" data-at="0.4" data-step="0.03">"healthy" habits</div>
+        <div class="h-m navy" style="margin-top:16px" data-anim="reveal" data-at="1.4">that could be <span class="coral">bloating you</span> after 40</div>
+      </div>
+    </div>
+  </section>
+  <section class="scene night" data-start="3.35" data-end="6.1" data-trans="slide" data-cam="push">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center"><span class="sun" style="font-size:120px;font-weight:900">1</span><div class="h-l" data-anim="reveal" data-at="0.2">sparkling water</div></div>
+      <svg viewBox="0 0 400 560" width="400" height="560" style="position:absolute;left:340px;top:640px" data-anim="squash" data-at="0.3">
+        <path d="M60 20 L340 20 L300 540 L100 540 Z" fill="rgba(200,230,255,.25)" stroke="#d6ecff" stroke-width="10"/>
+        <path d="M78 140 L322 140 L300 530 L100 530 Z" fill="rgba(140,200,255,.35)"/><g id="bubbles"></g></svg>
+      <div style="position:absolute;left:0;right:0;top:1300px;text-align:center"><span class="pill" style="background:#ffb84d;color:#1f2b55" data-anim="squash" data-at="1.63">🫧 bubbles are gas</span></div>
+    </div>
+  </section>
+  <section class="scene sky" data-start="6.1" data-end="12.55" data-trans="slide" data-cam="drift">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center"><span class="coral" style="font-size:120px;font-weight:900">2</span><div class="h-l navy" data-anim="reveal" data-at="0.16">sugar-free gum &amp; mints</div></div>
+      <div style="position:absolute;left:0;right:0;top:700px;display:flex;justify-content:center;gap:40px;font-size:180px"><span data-anim="squash" data-at="0.4">🍬</span><span data-anim="squash" data-at="0.6">🫙</span></div>
+      <div style="position:absolute;left:0;right:0;top:980px;display:flex;justify-content:center;gap:20px">
+        <span class="pill" style="background:#fff;color:#173b5c;box-shadow:0 14px 34px rgba(23,59,92,.15)" data-anim="squash" data-at="2.6">sorbitol</span>
+        <span class="pill" style="background:#fff;color:#173b5c;box-shadow:0 14px 34px rgba(23,59,92,.15)" data-anim="squash" data-at="3.3">xylitol</span></div>
+      <div style="position:absolute;left:60px;right:60px;top:1140px;text-align:center"><div class="h-m navy" data-anim="reveal" data-at="4.4">→ can <span class="coral">ferment in your gut</span></div></div>
+    </div>
+  </section>
+  <section class="scene night" data-start="12.55" data-end="16.4" data-trans="slide" data-cam="push">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:250px;text-align:center"><span class="sun" style="font-size:120px;font-weight:900">3</span><div class="h-m" data-anim="reveal" data-at="0.19">lunch at your desk<br>in <span class="sun">5 minutes</span></div></div>
+      <div style="position:absolute;left:0;right:0;top:720px;text-align:center"><div id="clock" style="font-size:200px;font-weight:900;font-family:'JetBrains Mono','Inter';color:#ff8a7a">5:00</div></div>
+      <div style="position:absolute;left:0;right:0;top:980px;text-align:center;font-size:160px" data-anim="squash" data-at="0.8">🥪💻</div>
+      <div style="position:absolute;left:0;right:0;top:1260px;text-align:center"><span class="pill" style="background:#ffb84d;color:#1f2b55" data-anim="squash" data-at="2.63">💨 you swallow more air</span></div>
+    </div>
+  </section>
+  <section class="scene mint" data-start="16.4" data-end="23.33" data-trans="iris">
+    <div class="cam">
+      <div style="position:absolute;left:60px;right:60px;top:260px;text-align:center">
+        <div class="h-m" style="color:#d6fff4" data-anim="reveal" data-at="0.16">day 1 of the 7-day reset</div>
+        <div style="font-size:120px;font-weight:900;color:#ffd84d" data-anim="letters" data-at="0.8" data-step="0.04">cuts the fizz. 🫧✕</div></div>
+      <div style="position:absolute;left:60px;right:60px;top:660px;display:flex;justify-content:space-between" id="days7"></div>
+      <div style="position:absolute;left:0;right:0;top:960px;text-align:center">
+        <div style="font-size:84px;font-weight:900" data-anim="reveal" data-at="2.66">Bloat or Belly Fat?</div>
+        <div style="display:flex;justify-content:center;gap:24px;margin-top:30px">
+          <span class="pill" style="background:#ffd84d;color:#135e52;font-size:64px" data-anim="squash" data-at="3.6">$9</span>
+          <span class="pill" style="background:#fff;color:#135e52" data-anim="squash" data-at="4.7">link in bio 👆</span></div>
+      </div>
+    </div>
+  </section>
+<script>
+(() => { document.getElementById('days7').innerHTML = [1,2,3,4,5,6,7].map((d, i) => `<div data-anim="pop" data-at="${(0.3 + i * 0.12).toFixed(2)}" style="width:118px;height:118px;border-radius:24px;background:${i ? 'rgba(255,255,255,.25)' : '#ffd84d'};color:${i ? '#fff' : '#135e52'};font-size:52px;font-weight:900;display:flex;align-items:center;justify-content:center">${d}</div>`).join('');
+  let b = ''; for (let i = 0; i < 18; i++) b += `<circle class="bb" data-i="${i}" r="${8 + (i * 7) % 10}" fill="none" stroke="#fff" stroke-width="5"/>`; document.getElementById('bubbles').innerHTML = b; })();
+window.onFrame = (t) => {
+  document.querySelectorAll('.bb').forEach((c) => { const i = +c.dataset.i; const y = 520 - ((t * 140 + i * 47) % 380); c.setAttribute('cx', 110 + (i * 53) % 180 + Math.sin(t * 3 + i) * 10); c.setAttribute('cy', y); });
+  const k = document.getElementById('clock'); if (k) { const s = Math.max(0, 300 - Math.max(0, t - 12.8) * 95); k.textContent = Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
+};
+</script>
+  <!-- ========================== /SCENES ========================== -->
+</div>
+
+<script>
+// Optional overrides; duration defaults to the last scene's end.
+window.VIDEO = { width: 1080, height: 1920, fps: 30 };
+</script>
+
+<!-- ============================ ENGINE (don't edit) ============================ -->
+<script>
+(() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = {
+    out: (p) => 1 - Math.pow(1 - p, 3),
+    inOut: (p) => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+    back: (p) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); },
+  };
+  const num = (el, k, d) => el.dataset[k] !== undefined ? parseFloat(el.dataset[k]) : d;
+  const TRANS = 0.35;
+
+  // deterministic pseudo-random (frames must be identical for the same t)
+  const rand = (i) => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+  const scenes = [...document.querySelectorAll('.scene')].map((el, i) => ({
+    el, i, start: num(el, 'start', 0), end: num(el, 'end', 1), trans: el.dataset.trans || 'cut',
+  }));
+  const duration = window.VIDEO.duration || Math.max(...scenes.map((s) => s.end));
+  window.VIDEO.duration = duration;
+
+  // split kinetic letters into spans (words kept together)
+  document.querySelectorAll('[data-anim~="letters"]').forEach((el) => {
+    let i = 0; el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => '<span style="display:inline-block;white-space:nowrap">' +
+      [...w].map((c) => `<span class="l" data-i="${i++}" style="display:inline-block;transform-origin:50% 100%">${c}</span>`).join('') + '</span>').join(' ');
+  });
+  // split karaoke captions into word spans
+  document.querySelectorAll('[data-anim~="words"]').forEach((el) => {
+    el.classList.add('words');
+    el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(' ');
+  });
+  // wind / speed streak backgrounds
+  document.querySelectorAll('.fx-streaks').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;';
+    const n = num(el, 'count', 30);
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i'); s.className = 'streak';
+      s.dataset.seed = k * 100 + i;
+      s.style.left = (rand(k * 100 + i) * 1080) + 'px';
+      s.style.height = (120 + rand(i + 7) * 260) + 'px';
+      s.style.opacity = .25 + rand(i + 3) * .6;
+      el.appendChild(s);
+    }
+  });
+
+  function animate(el, lt, sceneLen) {
+    const kinds = (el.dataset.anim || '').split(/\s+/).filter(Boolean);
+    const at = num(el, 'at', 0), dur = num(el, 'dur', .5);
+    const p = clamp((lt - at) / dur);
+    let op = 1, tf = '';
+    for (const k of kinds) {
+      switch (k) {
+        case 'fade': op *= ease.out(p); break;
+        case 'up': op *= ease.out(p); tf += ` translateY(${(1 - ease.out(p)) * 120}px)`; break;
+        case 'down': op *= ease.out(p); tf += ` translateY(${-(1 - ease.out(p)) * 120}px)`; break;
+        case 'left': op *= ease.out(p); tf += ` translateX(${(1 - ease.out(p)) * 300}px)`; break;
+        case 'right': op *= ease.out(p); tf += ` translateX(${-(1 - ease.out(p)) * 300}px)`; break;
+        case 'pop': op *= clamp(p * 3); tf += ` scale(${.3 + .7 * ease.back(p)})`; break;
+        case 'zoom': op *= ease.out(p); tf += ` scale(${1.5 - .5 * ease.out(p)})`; break;
+        case 'spin': op *= ease.out(p); tf += ` rotate(${(1 - ease.out(p)) * -180}deg)`; break;
+        case 'shake': { const a = 22 * Math.max(0, 1 - (lt - at) / 0.8); tf += ` translateX(${Math.sin(lt * 70) * a}px) rotate(${Math.sin(lt * 53) * a * .15}deg)`; break; }
+        case 'pulse': if (lt > at + dur) tf += ` scale(${1 + .05 * Math.sin((lt - at - dur) * 7)})`; break;
+        case 'strike': el.classList.add('strike'); el.style.setProperty('--strike', ease.out(p)); break;
+        case 'squash': { const q = lt - at; if (q < 0) { op = 0; break; } const k = Math.exp(-6 * q) * Math.cos(13 * q);
+          op *= clamp(q * 8); tf += ` scale(${1 + .38 * k}, ${1 - .38 * k})`; break; }
+        case 'glow': { const g = clamp((lt - at) / dur); el.style.textShadow = g > 0 ? `0 0 ${(18 + 14 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent)), 0 0 ${(50 + 30 * Math.sin(lt * 4)) * g}px var(--glow, var(--accent))` : ''; break; }
+        case 'blur': op *= ease.out(p); el.style.filter = p < 1 ? `blur(${(1 - ease.out(p)) * 30}px)` : ''; break;
+        case 'draw': { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L * (1 - ease.inOut(p)); break; }
+        case 'reveal': { const e = ease.out(p); el.style.clipPath = `inset(${-10}% -10% ${(1 - e) * 110 - 10}% -10%)`; tf += ` translateY(${(1 - e) * 40}%)`; break; }
+        case 'letters': { const step = num(el, 'step', .035);
+          el.querySelectorAll('.l').forEach((c) => { const q = (lt - at - (+c.dataset.i) * step);
+            if (q < 0) { c.style.opacity = 0; return; } const k = Math.exp(-7 * q) * Math.cos(15 * q);
+            c.style.opacity = clamp(q * 10); c.style.transform = `scale(${1 - .45 * k}, ${1 + .6 * k}) translateY(${Math.max(0, 1 - q * 5) * 30}px)`; });
+          break; }
+        case 'float': tf += ` translateY(${Math.sin(lt * 2.4) * 28}px) rotate(${Math.sin(lt * 1.7) * 4}deg)`; break;
+        case 'words': {
+          const step = num(el, 'step', .18), ws = el.querySelectorAll('.w');
+          ws.forEach((w, i) => {
+            const wp = clamp((lt - at - i * step) / .22);
+            w.style.opacity = clamp(wp * 3);
+            w.style.transform = `scale(${.5 + .5 * ease.back(wp)})`;
+            w.classList.toggle('now', lt >= at + i * step && lt < at + (i + 1) * step + .05);
+          });
+          break;
+        }
+      }
+    }
+    const out = num(el, 'out', null);
+    if (out !== null) op *= 1 - clamp((lt - out) / .3);
+    el.style.opacity = op;
+    el.style.transform = tf;
+  }
+
+  function sceneTransition(s, lt) {
+    const p = ease.out(clamp(lt / TRANS));
+    const st = s.el.style;
+    st.opacity = 1; st.transform = ''; st.filter = ''; st.clipPath = '';
+    if (s.i === 0) return;
+    switch (s.trans) {
+      case 'fade': st.opacity = p; break;
+      case 'slide': st.transform = `translateX(${(1 - p) * 100}%)`; break;
+      case 'up': st.transform = `translateY(${(1 - p) * 100}%)`; break;
+      case 'zoom': st.opacity = p; st.transform = `scale(${1.25 - .25 * p})`; break;
+      case 'whip': st.transform = `translateX(${(1 - p) * -100}%)`; st.filter = p < 1 ? `blur(${(1 - p) * 30}px)` : ''; break;
+      case 'flip': if (p < 1) { st.transform = `perspective(2200px) rotateY(${(1 - p) * -100}deg)`; st.transformOrigin = '0% 50%'; } else st.transformOrigin = ''; break;
+      case 'iris': if (p < 1) st.clipPath = `circle(${p * 120}% at ${s.el.dataset.irisX || '50%'} ${s.el.dataset.irisY || '50%'})`; break;
+      case 'wipe': if (p < 1) st.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`; break;
+      case 'wipeup': if (p < 1) st.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; break;
+    }
+  }
+
+  // particles (deterministic floating dots)
+  document.querySelectorAll('.fx-particles').forEach((el, k) => {
+    el.style.cssText += 'position:absolute;inset:0;pointer-events:none;';
+    const n = num(el, 'count', 40);
+    for (let i = 0; i < n; i++) { const d = document.createElement('i'); const r = 3 + rand(k * 50 + i) * 9;
+      d.style.cssText = `position:absolute;width:${r}px;height:${r}px;border-radius:50%;background:${el.dataset.color || '#fff'};filter:blur(${rand(i + 9) * 3}px)`;
+      d.dataset.seed = k * 50 + i; el.appendChild(d); }
+  });
+  // embedded video clips (e.g. a rendered 3D shot): <video data-clip data-at="0.2" src="..." muted>
+  const clips = [...document.querySelectorAll('video[data-clip]')];
+  if (clips.length) {
+    window.VIDEO_READY = false;
+    Promise.all(clips.map((v) => { v.muted = true; v.preload = 'auto'; v.pause();
+      return v.readyState >= 2 ? null : new Promise((r) => { v.addEventListener('loadeddata', r, { once: true }); v.load(); }); }))
+      .then(() => { window.VIDEO_READY = true; });
+  }
+  const seek = (v, time) => new Promise((r) => {
+    if (Math.abs(v.currentTime - time) < 0.001) return r();
+    v.addEventListener('seeked', () => r(), { once: true }); v.currentTime = time; });
+
+  window.renderFrame = async (t) => {
+    const waits = [];
+    for (const s of scenes) {
+      const tail = s.i < scenes.length - 1 ? TRANS : 0;
+      const on = t >= s.start && t < s.end + tail;
+      s.el.style.display = on ? 'block' : 'none';
+      s.el.style.zIndex = s.i + 1;
+      if (!on) continue;
+      const lt = t - s.start, len = s.end - s.start;
+      sceneTransition(s, lt);
+      // camera: data-cam="push" (slow push-in), "pull", "drift" on the scene's first child wrapper .cam
+      const cam = s.el.querySelector(':scope > .cam'); if (cam) { const k = clamp(lt / (len + TRANS)), m = s.el.dataset.cam || 'push';
+        cam.style.transform = m === 'pull' ? `scale(${1.08 - .08 * k})` : m === 'drift' ? `scale(1.06) translate(${(k - .5) * -30}px, ${(k - .5) * -12}px)` : `scale(${1 + .07 * k})`; }
+      // parallax: data-par="0.6" drifts an element up at that speed (px per 0.01s * 10)
+      s.el.querySelectorAll('[data-par]').forEach((el) => { el.style.translate = `0 ${-lt * 40 * parseFloat(el.dataset.par)}px`; });
+      s.el.querySelectorAll('[data-anim]').forEach((el) => animate(el, lt, len));
+      s.el.querySelectorAll('[data-kb]').forEach((el) => {
+        const p = ease.inOut(clamp(lt / len)), m = el.dataset.kb;
+        el.style.transform = m === 'out' ? `scale(${1.18 - .18 * p})`
+          : m === 'left' ? `scale(1.12) translateX(${(.5 - p) * 6}%)`
+          : m === 'right' ? `scale(1.12) translateX(${(p - .5) * 6}%)`
+          : `scale(${1 + .18 * p})`;
+      });
+      s.el.querySelectorAll('[data-count]').forEach((el) => {
+        const [a, b, d] = el.dataset.count.split(':').map(Number);
+        const p = ease.out(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        el.textContent = (a + (b - a) * p).toFixed(d || 0);
+      });
+      s.el.querySelectorAll('[data-follow]').forEach((el) => {
+        const path = document.getElementById(el.dataset.follow); const L = path.getTotalLength();
+        const p = ease.inOut(clamp((lt - num(el, 'at', 0)) / num(el, 'dur', 1)));
+        const pt = path.getPointAtLength(L * p); el.setAttribute('cx', pt.x); el.setAttribute('cy', pt.y);
+      });
+      s.el.querySelectorAll('.fx-particles').forEach((fx) => {
+        fx.querySelectorAll('i').forEach((d) => { const sd = +d.dataset.seed;
+          const y = (rand(sd + 1) * 2100 - t * (30 + rand(sd + 2) * 70)) % 2100; const yy = y < 0 ? y + 2100 : y;
+          d.style.left = (rand(sd + 3) * 1080 + Math.sin(t * (0.5 + rand(sd + 4)) + sd) * 30) + 'px';
+          d.style.top = (yy - 90) + 'px'; d.style.opacity = (.15 + .5 * rand(sd + 6)) * (.6 + .4 * Math.sin(t * 2 + sd)); });
+      });
+      s.el.querySelectorAll('video[data-clip]').forEach((v) => {
+        const at = num(v, 'at', 0), d = v.duration || 0;
+        if (location.search.includes('render=1')) waits.push(seek(v, clamp(lt - at, 0, Math.max(0, d - 0.034))));
+        else if (lt >= at && v.paused) v.play().catch(() => {});
+      });
+      s.el.querySelectorAll('.fx-streaks').forEach((fx) => {
+        const speed = num(fx, 'speed', 900);
+        fx.querySelectorAll('.streak').forEach((st) => {
+          const seed = +st.dataset.seed, h = parseFloat(st.style.height);
+          const y = ((rand(seed + 11) * 2200 + t * speed * (.6 + rand(seed + 5) * .8)) % (1920 + h)) - h;
+          st.style.top = (1920 - y - h) + 'px'; // streaks rush UPWARD (wind)
+        });
+      });
+    }
+    // persistent overlays across scenes: <div class="hud" data-from="3" data-to="25">…</div> (absolute seconds)
+    document.querySelectorAll('.hud').forEach((h) => {
+      const f = num(h, 'from', 0), to = num(h, 'to', 1e9);
+      const p = clamp((t - f) / .3) * (1 - clamp((t - to) / .3));
+      h.style.opacity = p; h.style.transform = `translateY(${(1 - ease.out(clamp((t - f) / .4))) * -40}px)`; h.style.zIndex = 900;
+    });
+    const bar = document.querySelector('#progress i');
+    if (bar) bar.style.width = (100 * t / duration) + '%';
+    // custom per-page animation (characters, levers, charts): window.onFrame = (t, lt) => {...}
+    if (typeof window.onFrame === 'function') window.onFrame(t);
+    await Promise.all(waits);
+  };
+
+  // ---- preview mode (open the file in a browser) ----
+  if (!location.search.includes('render=1')) {
+    const stage = document.getElementById('stage');
+    const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920);
+      stage.style.transform = `scale(${k})`; document.body.style.height = innerHeight + 'px'; };
+    addEventListener('resize', fit); fit();
+    let t = 0, last = performance.now(), paused = false;
+    addEventListener('keydown', (e) => {
+      if (e.code === 'Space') paused = !paused;
+      if (e.key === 'ArrowRight') t = Math.min(duration, t + .5);
+      if (e.key === 'ArrowLeft') t = Math.max(0, t - .5);
+      if (e.key === 'r') t = 0;
+    });
+    const loop = (now) => { if (!paused) t = (t + (now - last) / 1000) % duration; last = now;
+      window.renderFrame(t); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  } else {
+    window.renderFrame(0);
+  }
+})();
+</script>
+</body>
+</html>

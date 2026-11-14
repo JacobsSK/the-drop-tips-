@@ -25,3 +25,15 @@ That's one page. There are 10 of these in The Menopause Advice Decoder. $17, lin
 ## Notes
 - The doc suggests a 10-part "Yes or no?" series, one flowchart per video. The fasting video is part 1; supplements and lifting are next.
 - Keep HRT neutral ("a conversation for your doctor") and never name supplement brands, as the doc says.
+
+---
+
+## Video 3: "Before you buy a menopause supplement, check the label" (supplements, 26s) — doc Script D / hook #5
+
+**Caption:** Before you buy a menopause supplement, check the label 🔍 If it promises to burn belly fat or "balance your hormones", put it back: nothing has good evidence for that. If you take medicine or have had breast cancer, ask your pharmacist before any herbal product. What can matter? Filling a real gap, like vitamin D in winter ☀️ That's one of 10 flowcharts in The Menopause Advice Decoder. $17, link in bio 🔗
+
+**Hashtags:** #menopausesupplements #menopause #perimenopause #womenover40 #supplementtips #wellnessmyths #menopausesupport #midlifewomen #over40
+
+**Shorts title:** Before you buy a menopause supplement, check the label for this
+
+Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.

@@ -22,3 +22,13 @@ Product: https://milajacobs.gumroad.com/l/dhjhdv ($9 on Gumroad. Your hooks doc 
 - No bellies, no before/afters: these videos show jeans, a tape measure and icons only.
 - No flat-stomach or weight-loss promises: "calm the bloat" and "find out", never "flat belly in 7 days".
 - Consider mentioning the red-flags page ("includes when bloating needs a doctor") in a pinned comment.
+
+---
+
+## Video 3: "3 'healthy' habits that could be bloating you" (healthy-habits, 23s) — doc Script C / hook #5
+
+**Caption:** 3 "healthy" habits that could be bloating you after 40 🫧 1) Sparkling water: bubbles are gas. 2) Sugar-free gum and mints: often sweetened with sorbitol or xylitol, which can ferment in your gut. 3) Lunch at your desk in 5 minutes: you swallow more air. Day 1 of the 7-Day Reset cuts the fizz. Bloat or Belly Fat?, $9, link in bio 🔗 Which one surprised you? 👇
+
+**Hashtags:** #bloating #bloatingtips #sparklingwater #womenover40 #perimenopause #menopausebelly #guthealth #healthyhabits #over40
+
+**Shorts title:** 3 "healthy" habits that could be bloating you after 40
