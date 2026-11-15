@@ -51,3 +51,15 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #strengthtraining #liftingover40 #womenover40 #perimenopause #menopause #menopausefitness #menopauseadvice #midlifewomen #over40
 
 **Shorts title:** Should you lift weights after 40? The 3-question test
+
+---
+
+# Round 9 (comment keyword: DECODE)
+
+## Video 5: "They're both right" (both-right, 21s) — doc Script B / hook #2
+
+**Caption:** One expert says fast. Another says it wrecks your hormones. They're both right 🤯 They're right for different women. Sleeping well and eating enough protein? Gentle fasting can work. Exhausted and stressed? It can backfire. The question was never "what works?" It's "what works for me?" The Menopause Advice Decoder: 10 one-page flowcharts, $17. Comment DECODE and I'll send you the 10 flowcharts 📩
+
+**Hashtags:** #intermittentfasting #menopauseadvice #womenover40 #perimenopause #menopause #fastingover40 #menopausesupport #midlifewomen #over40
+
+**Shorts title:** One expert says fast, another says don't. They're both right.

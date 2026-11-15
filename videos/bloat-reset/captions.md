@@ -42,3 +42,15 @@ Product: https://milajacobs.gumroad.com/l/dhjhdv ($9 on Gumroad. Your hooks doc 
 **Hashtags:** #bloatorfat #bloating #bellyfat #womenover40 #perimenopause #menopausebelly #guthealth #bloatingrelief #over40
 
 **Shorts title:** Is it bloat or belly fat? Here's how to tell
+
+---
+
+# Round 9 (comment keyword: TAPE)
+
+## Video 5: "This guide might tell you it's not bloat" (honest, 18s) — doc Script E / hook #8
+
+**Caption:** This guide might tell you it's not bloat 🤔 Most debloat products promise a flat stomach. This one starts with a test. If your belly is mostly bloat, the 7 days will calm it. If it's mostly fat, you'll know, and you'll stop wasting money on the wrong fix. Bloat or Belly Fat? The 7-Day Reset, $9. Comment TAPE and I'll send you the 7-day reset 📩
+
+**Hashtags:** #bloating #bellyfat #womenover40 #perimenopause #menopausebelly #guthealth #honestreview #bloatorfat #over40
+
+**Shorts title:** This guide might tell you it's not bloat

@@ -246,3 +246,15 @@ Save this as your easy day 📌
 **Hashtags:** #vegetarianprotein #veganprotein #plantbasedprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #highprotein #over40
 
 **Shorts title:** Vegetarian or vegan? You can still hit 30g of protein a plate
+
+---
+
+# Round 9 (comment keyword: PLATE)
+
+## Video 12: "Eating the same 3 meals every day? Good." (same-meals, 19s)
+
+**Caption:** Eating the same 3 meals every day? Good. 🔁 Repeating meals isn't boring; it's the easiest way to hit your protein. 🥣 Yogurt bowl: 33 g. 🥗 Tuna salad: 32 g. 🍝 Turkey bolognese: 38 g. That's 103 g a day. Pick 3 plates you like and repeat them; there are 45 to choose from in The 30g Protein Plate Playbook. Comment PLATE and I'll send you all 45 📩
+
+**Hashtags:** #mealrepeat #highprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #easymeals #mealprepideas #over40
+
+**Shorts title:** Eating the same 3 meals every day? Good.

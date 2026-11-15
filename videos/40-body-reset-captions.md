@@ -223,3 +223,15 @@ Every diet works until day 31
 **Hashtags:** #8020rule #womenover40 #perimenopause #menopause #consistency #nodiet #over40fitness #midlifewomen #progressnotperfection
 
 **Shorts title:** The 80% rule: you don't have to be perfect after 40
+
+---
+
+# Round 9 (comment keyword: RESET)
+
+## "3 numbers that matter more than the scale" (40-body-reset-3-numbers, 19s)
+
+**Caption:** 3 numbers that matter more than the scale after 40 ⚖️✕ 🍳 Protein: 0.7–1.0 g per lb of bodyweight, every day. 😴 Sleep: 7–9 hours a night. 👟 Steps: 8,000–10,000 a day. The 40+ Body Reset builds your 30 days around all three. Comment RESET and I'll send you the link 📩
+
+**Hashtags:** #womenover40 #perimenopause #menopause #proteingoals #sleepbetter #10ksteps #over40fitness #midlifewomen #nonscalevictory
+
+**Shorts title:** 3 numbers that matter more than the scale after 40
