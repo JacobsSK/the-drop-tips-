@@ -80,6 +80,8 @@ Paths below are relative to this skill's folder (`.claude/skills/make-video/`).
   `reveal` (text rises through a mask). Transitions `iris` (circle mask, `data-iris-x/y`), `wipe`, `wipeup`, `flip` (3D page flip).
 - Camera: wrap a scene's content in `<div class="cam" style="position:absolute;inset:0">` and set
   `data-cam="push|pull|drift"` on the section for a slow continuous camera move. `data-par="0.5"` = parallax drift.
+- `window.PUNCHES = [3.1, 7.9]` (in a script inside the scenes): quick camera zoom-pulses at those absolute times (land them on key words / big
+  numbers). Needs the scene's `.cam` wrapper.
 - Safe zones (9:16): keep text out of the top 12% (230px) and the bottom 20% (384px). Put HUD banners at top ≥ 240px.
 - `window.onFrame = (t) => {...}` in a `<script>` after the scenes: custom per-frame animation (a running figure,
   a lever, filling rings, volume bars). t is absolute seconds; keep it a pure function of t.
@@ -142,6 +144,11 @@ scenes (`--duration`), normalize the clip, concat. Add audio last:
 `ffmpeg -i joined.mp4 -i music.mp3 -c:v copy -c:a aac -shortest final.mp4`.
 
 ## Audio
+
+**Music bed:** `scripts/music.py make music.wav --duration <video length> --mood warm|bright|calm [--bpm 96]` synthesises
+a royalty-free track (no samples, no licences) normalised to -26 LUFS. Then
+`scripts/music.py duck mix.mp3 music.wav final.mp3` puts it under the voice + SFX mix with sidechain ducking (music dips
+whenever the voice speaks) and render with `--audio final.mp3`. warm = coaching, bright = recipes/lists, calm = honest/reassuring.
 
 **Scripts (preferred):**
 - `scripts/voice.py <script.json> <outdir> --models <kokoro dir> [--voice af_heart] [--speed 1.08]`:

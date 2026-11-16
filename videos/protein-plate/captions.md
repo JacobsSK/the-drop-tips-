@@ -258,3 +258,15 @@ Save this as your easy day 📌
 **Hashtags:** #mealrepeat #highprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #easymeals #mealprepideas #over40
 
 **Shorts title:** Eating the same 3 meals every day? Good.
+
+---
+
+# Round 10 (comment keyword: PLATE) — now with music bed
+
+## Video 13: "No time for breakfast? Make it once, on Sunday." (egg-muffins, 18s)
+
+**Caption:** No time for breakfast? ⏰ Make it once, on Sunday. Egg muffins keep for 4 days, and each breakfast hits 34 g of protein. Grab and go. 🧁 It's one of 15 breakfasts in The 30g Protein Plate Playbook, every one 30 g or more. Comment PLATE and I'll send you all 45 📩
+
+**Hashtags:** #mealprep #eggmuffins #proteinbreakfast #womenover40 #busymom #highprotein #perimenopause #breakfastideas #over40
+
+**Shorts title:** No time for breakfast? Make it once on Sunday (34g protein)

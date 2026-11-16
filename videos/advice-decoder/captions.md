@@ -63,3 +63,15 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #intermittentfasting #menopauseadvice #womenover40 #perimenopause #menopause #fastingover40 #menopausesupport #midlifewomen #over40
 
 **Shorts title:** One expert says fast, another says don't. They're both right.
+
+---
+
+# Round 10 (comment keyword: DECODE) — now with music bed
+
+## Video 6: "Right for your friend, wrong for you" (your-friend, 25s) — doc hook #9
+
+**Caption:** The menopause advice that's right for your friend might be wrong for you 👯‍♀️ Her sleep, her stress, her health history aren't yours. So the Decoder doesn't give everyone the same answer. Each question is a one-page flowchart: answer 3 questions about your own life and land on one of 4 verdicts: go for it, with care, skip it, or see a professional. Comment DECODE and I'll send you all 10 📩 Tag the friend whose advice you've been following 👇
+
+**Hashtags:** #menopauseadvice #menopause #perimenopause #womenover40 #girlfriends #menopausesupport #midlifewomen #notonesizefitsall #over40
+
+**Shorts title:** The menopause advice that's right for your friend might be wrong for you

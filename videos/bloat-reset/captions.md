@@ -54,3 +54,15 @@ Product: https://milajacobs.gumroad.com/l/dhjhdv ($9 on Gumroad. Your hooks doc 
 **Hashtags:** #bloating #bellyfat #womenover40 #perimenopause #menopausebelly #guthealth #honestreview #bloatorfat #over40
 
 **Shorts title:** This guide might tell you it's not bloat
+
+---
+
+# Round 10 (comment keyword: TAPE) — now with music bed
+
+## Video 6: "Don't diet for a belly that might not be fat" (dont-diet, 19s) — doc hook #7
+
+**Caption:** Don't diet for a belly that might not be fat 🙅‍♀️ Fat doesn't change between breakfast and bedtime. Bloat does. So if your waist grows through the day, cutting calories won't fix that part. Find out first: the tape test takes one day and a tape measure 📏 Bloat or Belly Fat? The 7-Day Reset, $9. Comment TAPE and I'll send you the 7-day reset 📩
+
+**Hashtags:** #bloating #nodiet #womenover40 #perimenopause #menopausebelly #guthealth #bloatorfat #tapetest #over40
+
+**Shorts title:** Don't diet for a belly that might not be fat

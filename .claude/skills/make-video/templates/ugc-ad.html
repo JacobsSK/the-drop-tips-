@@ -287,7 +287,10 @@ window.VIDEO = { width: 1080, height: 1920, fps: 30 };
       sceneTransition(s, lt);
       // camera: data-cam="push" (slow push-in), "pull", "drift" on the scene's first child wrapper .cam
       const cam = s.el.querySelector(':scope > .cam'); if (cam) { const k = clamp(lt / (len + TRANS)), m = s.el.dataset.cam || 'push';
-        cam.style.transform = m === 'pull' ? `scale(${1.08 - .08 * k})` : m === 'drift' ? `scale(1.06) translate(${(k - .5) * -30}px, ${(k - .5) * -12}px)` : `scale(${1 + .07 * k})`; }
+        cam.style.transform = m === 'pull' ? `scale(${1.08 - .08 * k})` : m === 'drift' ? `scale(1.06) translate(${(k - .5) * -30}px, ${(k - .5) * -12}px)` : `scale(${1 + .07 * k})`;
+        // punches: window.VIDEO.punches = [t, ...] → quick zoom-pulse on key words / beats (absolute seconds)
+        let pk = 0; for (const p of (window.VIDEO.punches || window.PUNCHES || [])) if (t >= p) pk += .055 * Math.exp(-(t - p) * 9) * Math.cos((t - p) * 6);
+        if (pk) cam.style.transform += ` scale(${1 + pk})`; }
       // parallax: data-par="0.6" drifts an element up at that speed (px per 0.01s * 10)
       s.el.querySelectorAll('[data-par]').forEach((el) => { el.style.translate = `0 ${-lt * 40 * parseFloat(el.dataset.par)}px`; });
       s.el.querySelectorAll('[data-anim]').forEach((el) => animate(el, lt, len));

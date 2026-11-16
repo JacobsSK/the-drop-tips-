@@ -235,3 +235,15 @@ Every diet works until day 31
 **Hashtags:** #womenover40 #perimenopause #menopause #proteingoals #sleepbetter #10ksteps #over40fitness #midlifewomen #nonscalevictory
 
 **Shorts title:** 3 numbers that matter more than the scale after 40
+
+---
+
+# Round 10 (comment keyword: RESET) — now with music bed
+
+## "Stop telling yourself you're trying to lose weight" (40-body-reset-identity, 21s)
+
+**Caption:** Stop telling yourself "I'm trying to lose weight." Motivation comes and goes; the changes that last come from who you think you are. Try: "I'm someone who takes care of her body." 💛 Every protein breakfast, every walk, every early night is a vote for that person. ✓ The 40+ Body Reset: 30 days of votes. Comment RESET and I'll send you the 30-day plan 📩
+
+**Hashtags:** #mindsetshift #identity #womenover40 #perimenopause #menopause #healthyhabits #over40fitness #midlifewomen #selfcare
+
+**Shorts title:** Stop saying "I'm trying to lose weight" (say this instead)
