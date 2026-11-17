@@ -270,3 +270,15 @@ Save this as your easy day 📌
 **Hashtags:** #mealprep #eggmuffins #proteinbreakfast #womenover40 #busymom #highprotein #perimenopause #breakfastideas #over40
 
 **Shorts title:** No time for breakfast? Make it once on Sunday (34g protein)
+
+---
+
+# Round 11 (comment keyword: PLATE)
+
+## Video 14: "Don't like one ingredient? Don't skip the plate." (swap-line, 19s)
+
+**Caption:** Don't like one ingredient? Don't skip the whole plate 🙅‍♀️ No tuna? No feta? Not an egg person? Every plate in The 30g Protein Plate Playbook has a swap line: what to use instead, and how much protein it changes. So you keep the plate and never guess the maths ⇄ Comment PLATE and I'll send you all 45 📩
+
+**Hashtags:** #pickyeater #mealideas #highprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #foodswaps #over40
+
+**Shorts title:** Don't like one ingredient? Don't skip the plate

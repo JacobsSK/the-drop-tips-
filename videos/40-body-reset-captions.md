@@ -247,3 +247,15 @@ Every diet works until day 31
 **Hashtags:** #mindsetshift #identity #womenover40 #perimenopause #menopause #healthyhabits #over40fitness #midlifewomen #selfcare
 
 **Shorts title:** Stop saying "I'm trying to lose weight" (say this instead)
+
+---
+
+# Round 11 (comment keyword: RESET)
+
+## "Always quit in week 3?" (40-body-reset-week3, 21s)
+
+**Caption:** Always quit in week 3? You're not alone 😮‍💨 Motivation is often lowest in week 3: the honeymoon is over and the results aren't loud yet. So The 40+ Body Reset warns you before it happens, and gives you a short list of non-negotiables for every week. Week 3 is where people either transform, or almost did 🦋 Comment RESET and I'll send you the plan 📩
+
+**Hashtags:** #week3 #dontquit #womenover40 #perimenopause #menopause #consistency #over40fitness #midlifewomen #30daychallenge
+
+**Shorts title:** Always quit in week 3? Read this first

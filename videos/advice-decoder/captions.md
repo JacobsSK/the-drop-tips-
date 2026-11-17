@@ -75,3 +75,15 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #menopauseadvice #menopause #perimenopause #womenover40 #girlfriends #menopausesupport #midlifewomen #notonesizefitsall #over40
 
 **Shorts title:** The menopause advice that's right for your friend might be wrong for you
+
+---
+
+# Round 11 (comment keyword: DECODE)
+
+## Video 7: "Don't walk into your doctor's appointment empty-handed" (doctor, 19s)
+
+**Caption:** 10 minutes with your doctor, and you forget half your questions? 🩺 Don't walk in empty-handed. The Menopause Advice Decoder has a page to prep your appointment, so your questions are written down before you go 📋 And every flowchart tells you when the honest answer is "see a professional". Comment DECODE and I'll send it to you 📩
+
+**Hashtags:** #menopause #perimenopause #doctorsappointment #womenover40 #menopausesupport #womenshealth #menopauseadvice #midlifewomen #over40
+
+**Shorts title:** Don't walk into your menopause appointment empty-handed

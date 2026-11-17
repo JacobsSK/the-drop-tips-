@@ -66,3 +66,17 @@ Product: https://milajacobs.gumroad.com/l/dhjhdv ($9 on Gumroad. Your hooks doc 
 **Hashtags:** #bloating #nodiet #womenover40 #perimenopause #menopausebelly #guthealth #bloatorfat #tapetest #over40
 
 **Shorts title:** Don't diet for a belly that might not be fat
+
+---
+
+# Round 11 (comment keyword: TAPE)
+
+## Video 7: "Don't cut foods forever to fix your bloating" (bring-back, 20s)
+
+**Caption:** Don't cut foods forever to fix your bloating 🧅🧄🫘 Onions, garlic and beans can bloat some people, but they also feed your good gut bacteria 💚 So the 7-Day Reset is a short test, not a new diet. After 7 days you bring foods back one at a time and find your own triggers 🔍 Comment TAPE and I'll send you the 7-day reset 📩
+
+**Hashtags:** #bloating #guthealth #nodiet #womenover40 #perimenopause #menopausebelly #foodtriggers #bloatingrelief #over40
+
+**Shorts title:** Don't cut foods forever to fix bloating
+
+Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
