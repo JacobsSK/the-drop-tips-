@@ -80,3 +80,15 @@ Product: https://milajacobs.gumroad.com/l/dhjhdv ($9 on Gumroad. Your hooks doc 
 **Shorts title:** Don't cut foods forever to fix bloating
 
 Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
+
+---
+
+# Round 12 (comment keyword: TAPE)
+
+## Video 8: "What happens on day 7" (day7, 21s)
+
+**Caption:** Here's what happens on day 7 of the bloat reset 📏 You do the tape test again. If the gap between morning and night has shrunk, bloat was a big part of your picture, and now you know your triggers. If what's left is fat, the guide says so, honestly, and points you to a plan for that. Either way, you finally know 💡 Comment TAPE and I'll send you the 7-day reset 📩
+
+**Hashtags:** #bloating #bloatorfat #womenover40 #perimenopause #menopausebelly #guthealth #tapetest #7dayreset #over40
+
+**Shorts title:** What happens on day 7 of the bloat reset

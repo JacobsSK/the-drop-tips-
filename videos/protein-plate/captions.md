@@ -282,3 +282,15 @@ Save this as your easy day 📌
 **Hashtags:** #pickyeater #mealideas #highprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #foodswaps #over40
 
 **Shorts title:** Don't like one ingredient? Don't skip the plate
+
+---
+
+# Round 12 (comment keyword: PLATE)
+
+## Video 15: "Eating out? You can still hit 30 g." (eating-out, 16s)
+
+**Caption:** Eating out and worried about your protein? 🍽️ The Playbook has a cheat sheet: what 10 g of protein looks like. Learn it once, then 3 tens make 30, and you can build a 30 g plate anywhere, even in a restaurant 🍴 Comment PLATE and I'll send you the Playbook 📩
+
+**Hashtags:** #eatingout #proteintips #womenover40 #highprotein #proteinforwomen #perimenopause #restauranthacks #menopausenutrition #over40
+
+**Shorts title:** Eating out? How to still hit 30g of protein

@@ -87,3 +87,15 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #menopause #perimenopause #doctorsappointment #womenover40 #menopausesupport #womenshealth #menopauseadvice #midlifewomen #over40
 
 **Shorts title:** Don't walk into your menopause appointment empty-handed
+
+---
+
+# Round 12 (comment keyword: DECODE)
+
+## Video 8: "Stop asking which expert is right" (which-expert, 20s) — doc hook #3
+
+**Caption:** Stop asking which menopause expert is right 🛑 "Fast!" "Never fast." "Cut carbs!" "Eat carbs." "Lift heavy!" "Just walk." Ask a better question: what's right for me? Answer 3 honest questions about your own life and each flowchart lands on one verdict, made for you. Fasting, HIIT, carbs, lifting, supplements, HRT, and 4 more. Comment DECODE and I'll send you all 10 📩
+
+**Hashtags:** #menopauseadvice #menopause #perimenopause #womenover40 #menopausesupport #conflictingadvice #midlifewomen #womenshealth #over40
+
+**Shorts title:** Stop asking which menopause expert is right. Ask this instead.

@@ -259,3 +259,15 @@ Every diet works until day 31
 **Hashtags:** #week3 #dontquit #womenover40 #perimenopause #menopause #consistency #over40fitness #midlifewomen #30daychallenge
 
 **Shorts title:** Always quit in week 3? Read this first
+
+---
+
+# Round 12 (comment keyword: RESET)
+
+## "Stack it" (40-body-reset-habit-stack, 21s)
+
+**Caption:** The easiest way to build a new habit after 40? Stack it 🧱 Attach the new habit to something you already do: "After I make my morning coffee, I'll drink a full glass of water first." ☕→💧 The coffee is the cue, the water is the routine, and no willpower is needed. The 40+ Body Reset is full of small habits like this. Comment RESET and I'll send you the plan 📩
+
+**Hashtags:** #habitstacking #healthyhabits #womenover40 #perimenopause #menopause #morningroutine #over40fitness #midlifewomen #atomichabits
+
+**Shorts title:** The easiest way to build a habit after 40: stack it
