@@ -283,3 +283,15 @@ Every diet works until day 31
 **Hashtags:** #bodygratitude #selflove #womenover40 #perimenopause #menopause #bodykindness #over40fitness #midlifewomen #mindset
 
 **Shorts title:** You can't hate yourself into a body you love
+
+---
+
+# Round 14 (comment keyword: RESET)
+
+## "That glass of wine at 9 pm" (40-body-reset-wine, 21s)
+
+**Caption:** That glass of wine at 9 pm? 🍷 After 40, it might cost you more than the calories. Alcohol can fragment your sleep and raise cortisol, the stress hormone linked to belly fat. The 40+ Body Reset doesn't ban it: in week 2 it's one drink, max, that week, and go easy in the 3 hours before bed. No bans, just a plan. Comment RESET and I'll send you the plan 📩
+
+**Hashtags:** #wineover40 #sleepbetter #womenover40 #perimenopause #menopause #cortisol #bellyfat #midlifewomen #sobercurious
+
+**Shorts title:** That 9pm glass of wine might cost more than calories after 40

@@ -111,3 +111,15 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #menopausebooks #menopause #perimenopause #womenover40 #menopausesupport #menopauseadvice #busywomen #midlifewomen #over40
 
 **Shorts title:** Menopause books are 300 pages. You need a decision tonight.
+
+---
+
+# Round 14 (comment keyword: DECODE)
+
+## Video 10: "HIIT after 40? It depends on your recovery" (hiit, 19s) — doc hook #7
+
+**Caption:** HIIT after 40? ⚡ It depends on your recovery, not your fitness. Sleeping badly and stressed? More intensity can backfire. Recovering well? It can work for you. The Decoder's HIIT page asks 3 questions about you and lands on one verdict. Comment DECODE and I'll send you all 10 📩
+
+**Hashtags:** #hiit #hiitover40 #womenover40 #perimenopause #menopause #menopausefitness #recovery #midlifewomen #over40
+
+**Shorts title:** HIIT after 40? It depends on your recovery, not your fitness

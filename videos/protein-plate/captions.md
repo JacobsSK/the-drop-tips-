@@ -308,3 +308,15 @@ Save this as your easy day 📌
 **Shorts title:** Low-protein day? Don't start over, top it up
 
 Note: the meal numbers on screen are labelled "today (example)".
+
+---
+
+# Round 14 (comment keyword: PLATE)
+
+## Video 17: "How much protein do YOU need?" (your-number, 18s)
+
+**Caption:** How much protein do you actually need after 40? 🤔 Not your friend's number. Not an influencer's number. Yours. It depends on your body weight, and the Playbook's Find Your Number page works it out for you in kg or lb. Then the plates do the rest 🍽️ Comment PLATE and I'll send you the Playbook 📩
+
+**Hashtags:** #proteingoals #howmuchprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #highprotein #nutritiontips #over40
+
+**Shorts title:** How much protein do you actually need after 40?

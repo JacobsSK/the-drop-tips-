@@ -104,3 +104,15 @@ Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
 **Hashtags:** #bloating #womenshealth #womenover40 #perimenopause #menopause #guthealth #listentoyourbody #bloatingrelief #over40
 
 **Shorts title:** Most bloating is everyday stuff. But not all of it.
+
+---
+
+# Round 14 (comment keyword: TAPE)
+
+## Video 10: "Why only one change a day?" (one-change, 18s)
+
+**Caption:** Why does the bloat reset change only one thing a day? ☝️ Because if you change everything at once, you never find out what worked. Day 1: cut the fizz. Then one small change each day after that. By day 7, you know what actually made the difference ✓ Bloat or Belly Fat? The 7-Day Reset, $9. Comment TAPE and I'll send you the 7-day reset 📩
+
+**Hashtags:** #bloating #oneatatime #womenover40 #perimenopause #menopausebelly #guthealth #bloatingrelief #7dayreset #over40
+
+**Shorts title:** Why the bloat reset changes only one thing a day
