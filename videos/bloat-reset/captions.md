@@ -92,3 +92,15 @@ Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
 **Hashtags:** #bloating #bloatorfat #womenover40 #perimenopause #menopausebelly #guthealth #tapetest #7dayreset #over40
 
 **Shorts title:** What happens on day 7 of the bloat reset
+
+---
+
+# Round 13 (comment keyword: TAPE)
+
+## Video 9: "When bloating needs a doctor" (red-flags, 17s)
+
+**Caption:** Most bloating is everyday stuff (fizz, gum, eating fast, salt, late dinners), but not all of it 🚩 The 7-Day Reset includes a page on when bloating needs a doctor, not a diet. Because a guide that sells you a fix should also tell you when it's not the right fix 🤝 Bloat or Belly Fat?, $9. Comment TAPE and I'll send you the 7-day reset 📩
+
+**Hashtags:** #bloating #womenshealth #womenover40 #perimenopause #menopause #guthealth #listentoyourbody #bloatingrelief #over40
+
+**Shorts title:** Most bloating is everyday stuff. But not all of it.

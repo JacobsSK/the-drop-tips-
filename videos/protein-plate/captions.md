@@ -294,3 +294,17 @@ Save this as your easy day 📌
 **Hashtags:** #eatingout #proteintips #womenover40 #highprotein #proteinforwomen #perimenopause #restauranthacks #menopausenutrition #over40
 
 **Shorts title:** Eating out? How to still hit 30g of protein
+
+---
+
+# Round 13 (comment keyword: PLATE)
+
+## Video 16: "Low-protein day? Don't start over." (add-ons, 15s)
+
+**Caption:** Had a low-protein day? Don't start over 💚 The 30g Protein Plate Playbook has 20 quick protein add-ons, from +2 g to +23 g. Top up any meal and you're back on track. No restart, no guilt. Comment PLATE and I'll send you the Playbook 📩
+
+**Hashtags:** #proteintips #highprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #nostartover #easyprotein #over40
+
+**Shorts title:** Low-protein day? Don't start over, top it up
+
+Note: the meal numbers on screen are labelled "today (example)".

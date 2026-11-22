@@ -99,3 +99,15 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #menopauseadvice #menopause #perimenopause #womenover40 #menopausesupport #conflictingadvice #midlifewomen #womenshealth #over40
 
 **Shorts title:** Stop asking which menopause expert is right. Ask this instead.
+
+---
+
+# Round 13 (comment keyword: DECODE)
+
+## Video 9: "300 pages vs a decision tonight" (one-page, 18s)
+
+**Caption:** Menopause books are brilliant 📚 But they're 300 pages, and you need a decision tonight. The Menopause Advice Decoder is one page per question, about a minute each: 3 questions, 1 verdict, the evidence in brief, and one simple action to try ✅ Comment DECODE and I'll send you all 10 📩
+
+**Hashtags:** #menopausebooks #menopause #perimenopause #womenover40 #menopausesupport #menopauseadvice #busywomen #midlifewomen #over40
+
+**Shorts title:** Menopause books are 300 pages. You need a decision tonight.

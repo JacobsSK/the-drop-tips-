@@ -271,3 +271,15 @@ Every diet works until day 31
 **Hashtags:** #habitstacking #healthyhabits #womenover40 #perimenopause #menopause #morningroutine #over40fitness #midlifewomen #atomichabits
 
 **Shorts title:** The easiest way to build a habit after 40: stack it
+
+---
+
+# Round 13 (comment keyword: RESET)
+
+## "The week 4 gratitude list" (40-body-reset-gratitude, 17s)
+
+**Caption:** The 40+ Body Reset isn't just protein and squats. In week 4 there's one task that surprises people: write a gratitude list. What your body has done, not just how it looks 💛 Because you can't hate yourself into a body you love. Comment RESET and I'll send you the plan 📩
+
+**Hashtags:** #bodygratitude #selflove #womenover40 #perimenopause #menopause #bodykindness #over40fitness #midlifewomen #mindset
+
+**Shorts title:** You can't hate yourself into a body you love
