@@ -320,3 +320,17 @@ Note: the meal numbers on screen are labelled "today (example)".
 **Hashtags:** #proteingoals #howmuchprotein #womenover40 #proteinforwomen #perimenopause #menopausenutrition #highprotein #nutritiontips #over40
 
 **Shorts title:** How much protein do you actually need after 40?
+
+---
+
+# Round 15 (comment keyword: PLATE)
+
+## Video 18: "10 minutes on Sunday" (sunday-plan, 15s)
+
+**Caption:** 10 minutes on Sunday ⏱ That's all it takes to plan a week of 30 g meals. Pick your plates, fill in the printable weekly planner, and the protein grocery list tells you what to buy 🛒 No Monday-morning guessing. Comment PLATE and I'll send you the Playbook 📩
+
+**Hashtags:** #mealplanning #sundayreset #mealprep #highprotein #womenover40 #proteinforwomen #perimenopause #weeklyplanner #over40
+
+**Shorts title:** 10 minutes on Sunday = a week of 30g protein meals
+
+Note: the grocery list items on screen are labelled "example".

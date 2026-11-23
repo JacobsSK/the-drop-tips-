@@ -295,3 +295,15 @@ Every diet works until day 31
 **Hashtags:** #wineover40 #sleepbetter #womenover40 #perimenopause #menopause #cortisol #bellyfat #midlifewomen #sobercurious
 
 **Shorts title:** That 9pm glass of wine might cost more than calories after 40
+
+---
+
+# Round 15 (comment keyword: RESET)
+
+## "Your 3 pm coffee" (40-body-reset-coffee, 20s)
+
+**Caption:** Your 3 pm coffee? ☕ Half of it can still be in your system at 9. Caffeine has a 5–6 hour half-life. That's why The 40+ Body Reset's sleep list says no caffeine after 2 pm, and keep your bedroom cool, around 18 °C ❄️ Better sleep tonight, less hunger tomorrow 🌙 Comment RESET and I'll send you the plan 📩
+
+**Hashtags:** #caffeine #sleepbetter #womenover40 #perimenopause #menopause #coffeelover #sleeptips #midlifewomen #over40
+
+**Shorts title:** Your 3pm coffee is still in your system at 9pm

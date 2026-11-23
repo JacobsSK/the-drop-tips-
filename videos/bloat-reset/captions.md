@@ -116,3 +116,15 @@ Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
 **Hashtags:** #bloating #oneatatime #womenover40 #perimenopause #menopausebelly #guthealth #bloatingrelief #7dayreset #over40
 
 **Shorts title:** Why the bloat reset changes only one thing a day
+
+---
+
+# Round 15 (comment keyword: TAPE)
+
+## Video 11: "Dinner at 9 pm, bloated by morning?" (late-dinner, 20s)
+
+**Caption:** Eating dinner at 9 pm and waking up bloated? 🌙 Late dinners are one of the everyday bloat causes most women never connect. So are fizzy drinks, chewing gum, eating fast, constipation and salty food. The 7-Day Reset tests them one at a time. Bloat or Belly Fat?, $9. Comment TAPE and I'll send you the 7-day reset 📩
+
+**Hashtags:** #bloating #latedinner #womenover40 #perimenopause #menopausebelly #guthealth #bloatingtips #morningbloat #over40
+
+**Shorts title:** Dinner at 9pm and waking up bloated?

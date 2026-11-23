@@ -123,3 +123,15 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #hiit #hiitover40 #womenover40 #perimenopause #menopause #menopausefitness #recovery #midlifewomen #over40
 
 **Shorts title:** HIIT after 40? It depends on your recovery, not your fitness
+
+---
+
+# Round 15 (comment keyword: DECODE)
+
+## Video 11: "What do the 4 colours mean?" (colours, 19s)
+
+**Caption:** What do the 4 colours in The Menopause Advice Decoder mean? 🟢 Green: go for it. 🟠 Amber: with care. 🔴 Red: skip it. 🔵 Blue: see a professional. Every one of the 10 flowcharts lands on one of these four, based on 3 questions about your life. Comment DECODE and I'll send you all 10 📩
+
+**Hashtags:** #menopauseadvice #menopause #perimenopause #womenover40 #menopausesupport #decisionmaking #midlifewomen #womenshealth #over40
+
+**Shorts title:** What the 4 colours in the Menopause Advice Decoder mean
