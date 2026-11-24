@@ -307,3 +307,15 @@ Every diet works until day 31
 **Hashtags:** #caffeine #sleepbetter #womenover40 #perimenopause #menopause #coffeelover #sleeptips #midlifewomen #over40
 
 **Shorts title:** Your 3pm coffee is still in your system at 9pm
+
+---
+
+# Round 16 (comment keyword: RESET)
+
+## "5 stress fixes that are actually fat-loss tools" (40-body-reset-stress, 23s)
+
+**Caption:** 5 stress fixes that are actually fat-loss tools after 40 🧘‍♀️ Chronic stress keeps cortisol high, and high cortisol promotes belly fat storage. So the 40+ Body Reset builds these in: 🌬️ 4-7-8 breathing, 🧘‍♀️ 10 minutes of meditation, 📓 journalling, 🌳 20 minutes outdoors, 💞 time with your people. Managing stress is part of the plan, not a bonus. Comment RESET and I'll send you the plan 📩
+
+**Hashtags:** #cortisol #stressrelief #womenover40 #perimenopause #menopausebelly #478breathing #over40fitness #midlifewomen #bellyfat
+
+**Shorts title:** 5 stress fixes that are actually fat-loss tools after 40

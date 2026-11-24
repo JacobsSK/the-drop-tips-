@@ -334,3 +334,15 @@ Note: the meal numbers on screen are labelled "today (example)".
 **Shorts title:** 10 minutes on Sunday = a week of 30g protein meals
 
 Note: the grocery list items on screen are labelled "example".
+
+---
+
+# Round 16 (comment keyword: PLATE)
+
+## Video 19: "No time to cook?" (15-minutes, 16s)
+
+**Caption:** No time to cook? ⏱ 31 of the 45 plates in The 30g Protein Plate Playbook take 15 minutes or less. That includes 🥫 no-cook lunches, 📦 meal-prep options and 👨‍👩‍👧 family-friendly dinners, and every single plate is 30 g of protein or more 💪 $14. Comment PLATE and I'll send you the Playbook 📩
+
+**Hashtags:** #quickmeals #15minutemeals #highprotein #proteinforwomen #womenover40 #perimenopause #easyrecipes #mealprep #busymom
+
+**Shorts title:** No time to cook? 31 high-protein plates in 15 minutes or less

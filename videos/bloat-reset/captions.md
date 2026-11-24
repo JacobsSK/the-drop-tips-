@@ -128,3 +128,15 @@ Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
 **Hashtags:** #bloating #latedinner #womenover40 #perimenopause #menopausebelly #guthealth #bloatingtips #morningbloat #over40
 
 **Shorts title:** Dinner at 9pm and waking up bloated?
+
+---
+
+# Round 16 (comment keyword: TAPE)
+
+## Video 12: "Jeans fit at breakfast, not at dinner?" (jeans, 20s)
+
+**Caption:** If your jeans fit at breakfast and not at dinner, watch this 👖 Fat doesn't appear between breakfast and dinner. Bloat does. Measure your waist in the morning and again at night: a difference of about 2 cm or more means bloat is part of your picture 📏 And the fix isn't a bigger size. Bloat or Belly Fat? The 7-Day Reset, $9. Comment TAPE and I'll send you the 7-day reset 📩
+
+**Hashtags:** #bloating #jeansdontfit #womenover40 #perimenopause #menopausebelly #bloatorfat #guthealth #bloatingrelief #over40
+
+**Shorts title:** Jeans fit at breakfast but not at dinner? It's not fat

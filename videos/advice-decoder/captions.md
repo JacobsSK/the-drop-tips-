@@ -135,3 +135,15 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #menopauseadvice #menopause #perimenopause #womenover40 #menopausesupport #decisionmaking #midlifewomen #womenshealth #over40
 
 **Shorts title:** What the 4 colours in the Menopause Advice Decoder mean
+
+---
+
+# Round 16 (comment keyword: DECODE)
+
+## Video 12: "You've decoded the advice. Now what?" (one-page-plan, 15s)
+
+**Caption:** You've decoded the advice. Now what? 📝 The Menopause Advice Decoder ends with a one-page plan: everything you decided across the 10 flowcharts, on a single sheet. Stick it on the fridge. Follow your plan, not the feed. (Plan shown in the video is an example.) $17. Comment DECODE and I'll send it to you 📩
+
+**Hashtags:** #menopauseadvice #menopause #perimenopause #womenover40 #menopausesupport #stopscrolling #midlifewomen #womenshealth #over40
+
+**Shorts title:** You've decoded the menopause advice. Now what?
