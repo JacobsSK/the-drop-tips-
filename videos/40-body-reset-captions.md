@@ -319,3 +319,17 @@ Every diet works until day 31
 **Hashtags:** #cortisol #stressrelief #womenover40 #perimenopause #menopausebelly #478breathing #over40fitness #midlifewomen #bellyfat
 
 **Shorts title:** 5 stress fixes that are actually fat-loss tools after 40
+
+---
+
+# Round 17: Black Friday (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer details to keep straight:** all 4 guides $29 from Fri 27 to Mon 30 Nov (midnight US Pacific), $59 if bought separately, $37 from Tue 1 Dec. 30-day money-back. Post these from now until Monday night, then stop: after Monday the price in the video is wrong.
+
+## "Black Friday: one deal you'll actually use" (40-body-reset-bf, 23s)
+
+**Caption:** Black Friday is full of deals on things you'll never use 🛍️ Here's one you will. The 40+ Body Reset: a 30-day plan built for women over 40, with protein-first meals, strength workouts and 6 printable trackers. This weekend it comes with 3 more guides: the Protein Plate Playbook, the Bloat Reset and the Menopause Advice Decoder. All 4 for $29 instead of $59, Fri 27 – Mon 30 Nov 🖤 Comment FRIDAY and I'll send you the bundle 📩
+
+**Hashtags:** #blackfriday #blackfridaydeals #womenover40 #perimenopause #menopause #over40fitness #strengthtraining #midlifewomen #30dayplan
+
+**Shorts title:** The one Black Friday deal you'll actually use (women over 40)

@@ -140,3 +140,17 @@ Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
 **Hashtags:** #bloating #jeansdontfit #womenover40 #perimenopause #menopausebelly #bloatorfat #guthealth #bloatingrelief #over40
 
 **Shorts title:** Jeans fit at breakfast but not at dinner? It's not fat
+
+---
+
+# Round 17: Black Friday (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer details to keep straight:** all 4 guides $29 from Fri 27 to Mon 30 Nov (midnight US Pacific), $59 if bought separately, $37 from Tue 1 Dec. 30-day money-back. Post these from now until Monday night, then stop: after Monday the price in the video is wrong.
+
+## Video 13: "Before you buy bigger jeans this Black Friday" (bf-jeans, 22s)
+
+**Caption:** Before you buy bigger jeans this Black Friday, do this first 👖 Measure your waist in the morning and again at night. If it grows by about 2 cm or more, bloat is part of your picture, and the 7-Day Reset helps you calm it, one change a day 📏 This weekend it's in a bundle with 3 more guides: all 4 for $29 instead of $59, Fri 27 – Mon 30 Nov 🖤 Comment FRIDAY and I'll send it to you 📩
+
+**Hashtags:** #blackfriday #bloating #jeansdontfit #womenover40 #perimenopause #menopausebelly #bloatorfat #guthealth #over40
+
+**Shorts title:** Before you buy bigger jeans this Black Friday, do this

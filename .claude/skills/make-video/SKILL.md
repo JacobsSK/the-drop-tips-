@@ -116,6 +116,20 @@ put all motion in `window.renderFrame(t)` and call `renderer.render()` there; se
 `preserveDrawingBuffer: true`. Rendering uses software WebGL: about 3–8s of render time per second
 of video at 1080×1920. Render 3D shots as separate clips and join them with ffmpeg.
 
+Multi-product shot: `videos/bf-bundle/3d-bundle.tpl` stands four books in a 2×2 display (two on a
+glossy riser, two in front) that fills a portrait frame. `__FIRST__` picks which book lands first
+(close-up), then the other three cascade in and the camera pulls back. Generate one HTML per
+featured product with `sed`, render each to a 10s clip, and play it as a `<video data-clip>` background.
+Side-by-side rows of books are too small in 9:16; use the 2×2 riser layout instead.
+
+## Finishing pass (motion blur, grain)
+
+For the final render, use `render.js ... --fps 60 --audio final.mp3` to a temp file, then
+`scripts/polish.sh <in_60fps.mp4> <out.mp4>`. It blends each pair of 60fps frames into one 30fps
+frame (a natural 180° shutter motion blur on whips, drops and punches), then adds light luma grain
+and a soft vignette. It roughly doubles render time; skip it for quick drafts. Give every temp file
+a unique name when rendering several videos in parallel.
+
 ## Style and long videos
 
 Read `reference/style-playbook.md` before planning anything bigger than a simple ad. It covers

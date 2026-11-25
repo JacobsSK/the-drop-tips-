@@ -147,3 +147,17 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #menopauseadvice #menopause #perimenopause #womenover40 #menopausesupport #stopscrolling #midlifewomen #womenshealth #over40
 
 **Shorts title:** You've decoded the menopause advice. Now what?
+
+---
+
+# Round 17: Black Friday (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer details to keep straight:** all 4 guides $29 from Fri 27 to Mon 30 Nov (midnight US Pacific), $59 if bought separately, $37 from Tue 1 Dec. 30-day money-back. Post these from now until Monday night, then stop: after Monday the price in the video is wrong.
+
+## Video 13: "Black Friday is about to sell you a menopause miracle" (bf-filter, 23s)
+
+**Caption:** Black Friday is about to sell you a menopause miracle ✨ Teas. Pills. Detox kits. Before you buy any of it, run it through the 5-second bad-advice filter: 7 red flags 🚩 and 5 green flags ✅, in The Menopause Advice Decoder. This weekend the Decoder comes with 3 more guides: all 4 for $29 instead of $59, Fri 27 – Mon 30 Nov 🖤 Comment FRIDAY and I'll send you the bundle 📩 (The "miracle fix" ad in the video is a made-up example, not a real product.)
+
+**Hashtags:** #blackfriday #menopause #menopauseadvice #perimenopause #womenover40 #menopausesupport #wellnessscams #midlifewomen #over40
+
+**Shorts title:** Black Friday is about to sell you a menopause miracle

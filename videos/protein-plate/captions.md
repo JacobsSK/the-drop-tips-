@@ -346,3 +346,17 @@ Note: the grocery list items on screen are labelled "example".
 **Hashtags:** #quickmeals #15minutemeals #highprotein #proteinforwomen #womenover40 #perimenopause #easyrecipes #mealprep #busymom
 
 **Shorts title:** No time to cook? 31 high-protein plates in 15 minutes or less
+
+---
+
+# Round 17: Black Friday (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer details to keep straight:** all 4 guides $29 from Fri 27 to Mon 30 Nov (midnight US Pacific), $59 if bought separately, $37 from Tue 1 Dec. 30-day money-back. Post these from now until Monday night, then stop: after Monday the price in the video is wrong.
+
+## Video 20: "Sick of chicken and broccoli?" (bf-plates, 22s)
+
+**Caption:** A Black Friday deal for anyone sick of chicken and broccoli 🍗🥦 The 30g Protein Plate Playbook: 45 high-protein plates (15 breakfasts, 15 lunches, 15 dinners), every one 30 g+, maths already done. This weekend it comes in a bundle with 3 more guides for women over 40. All 4 for $29 instead of $59, that's $30 off, Fri 27 – Mon 30 Nov 🖤 Comment FRIDAY and I'll send you the bundle 📩
+
+**Hashtags:** #blackfriday #blackfridaydeals #highprotein #proteinforwomen #womenover40 #perimenopause #easyrecipes #mealideas #over40
+
+**Shorts title:** Sick of chicken and broccoli? A Black Friday deal for you
