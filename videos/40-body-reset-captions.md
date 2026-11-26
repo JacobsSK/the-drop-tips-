@@ -333,3 +333,17 @@ Every diet works until day 31
 **Hashtags:** #blackfriday #blackfridaydeals #womenover40 #perimenopause #menopause #over40fitness #strengthtraining #midlifewomen #30dayplan
 
 **Shorts title:** The one Black Friday deal you'll actually use (women over 40)
+
+---
+
+# Round 18: Black Friday 2 (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer details:** all 4 guides $29 Fri 27 – Mon 30 Nov (midnight US Pacific), $59 bought separately, $37 from Tue 1 Dec, 30-day money-back. Post until Monday night, then stop.
+
+## "30 days. Under a dollar a day." (40-body-reset-bf2, 25s)
+
+**Caption:** 30 days. Under a dollar a day 💛 This Black Friday weekend the 40+ Body Reset comes with 3 more guides: a 30-day plan, 45 protein plates, a 7-day bloat reset and 10 advice flowcharts. All 4 for $29, that's 97¢ a day for your first month. And if it's not right for you, reply to your receipt within 30 days for a full refund, no forms 🛡️ Comment FRIDAY and I'll send you the bundle 📩
+
+**Hashtags:** #blackfriday #blackfridaydeals #womenover40 #perimenopause #menopause #over40fitness #30dayplan #midlifewomen #healthyhabits
+
+**Shorts title:** A 30-day reset for under a dollar a day (Black Friday)

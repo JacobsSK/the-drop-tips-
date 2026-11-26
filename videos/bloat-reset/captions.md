@@ -154,3 +154,17 @@ Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
 **Hashtags:** #blackfriday #bloating #jeansdontfit #womenover40 #perimenopause #menopausebelly #bloatorfat #guthealth #over40
 
 **Shorts title:** Before you buy bigger jeans this Black Friday, do this
+
+---
+
+# Round 18: Black Friday 2 (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer details:** all 4 guides $29 Fri 27 – Mon 30 Nov (midnight US Pacific), $59 bought separately, $37 from Tue 1 Dec, 30-day money-back. Post until Monday night, then stop.
+
+## Video 14: "Bloat or belly fat? Find out in 2 minutes" (bf-selfcheck, 21s)
+
+**Caption:** Is it bloat or belly fat? You can find out in 2 minutes 🎈 10 tick-box questions point you to mostly bloat, mostly fat, or a bit of both. Then the tape test and 7 done-for-you days. It's all in the 7-Day Reset, and this Black Friday weekend it comes with 3 more guides: all 4 for $29 instead of $59 🖤 Comment FRIDAY and I'll send it to you 📩
+
+**Hashtags:** #blackfriday #bloating #bloatorfat #womenover40 #perimenopause #menopausebelly #guthealth #bloatingrelief #over40
+
+**Shorts title:** Bloat or belly fat? Find out in 2 minutes

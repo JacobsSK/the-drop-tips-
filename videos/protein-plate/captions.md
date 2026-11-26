@@ -360,3 +360,17 @@ Note: the grocery list items on screen are labelled "example".
 **Hashtags:** #blackfriday #blackfridaydeals #highprotein #proteinforwomen #womenover40 #perimenopause #easyrecipes #mealideas #over40
 
 **Shorts title:** Sick of chicken and broccoli? A Black Friday deal for you
+
+---
+
+# Round 18: Black Friday 2 (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer details:** all 4 guides $29 Fri 27 – Mon 30 Nov (midnight US Pacific), $59 bought separately, $37 from Tue 1 Dec, 30-day money-back. Post until Monday night, then stop.
+
+## Video 21: "55 high-protein recipes in one bundle" (bf-55, 22s)
+
+**Caption:** 55 high-protein recipes in one Black Friday bundle 🍳 45 plates from the 30g Protein Plate Playbook, plus 10 low-bloat recipes from the 7-Day Reset, every one 30 g of protein or more. Plus a 30-day plan and 10 advice flowcharts. All 4 guides for $29 instead of $59, this weekend only 🖤 Comment FRIDAY and I'll send you the bundle 📩
+
+**Hashtags:** #blackfriday #highprotein #proteinrecipes #proteinforwomen #womenover40 #perimenopause #easyrecipes #mealplan #over40
+
+**Shorts title:** 55 high-protein recipes in one Black Friday bundle

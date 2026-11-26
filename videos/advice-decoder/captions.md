@@ -161,3 +161,17 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #blackfriday #menopause #menopauseadvice #perimenopause #womenover40 #menopausesupport #wellnessscams #midlifewomen #over40
 
 **Shorts title:** Black Friday is about to sell you a menopause miracle
+
+---
+
+# Round 18: Black Friday 2 (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer details:** all 4 guides $29 Fri 27 – Mon 30 Nov (midnight US Pacific), $59 bought separately, $37 from Tue 1 Dec, 30-day money-back. Post until Monday night, then stop.
+
+## Video 14: "4 guides. Where do you start?" (bf-start, 23s)
+
+**Caption:** 4 guides. Where do you start? 🤔 Feeling puffy: start with the 7-Day Reset 🎈 Confused by all the advice: start with the Menopause Advice Decoder and make your one-page plan 📝 Just want to be told what to do: start the 30-day Body Reset and copy your meals from the Protein Playbook 🍳 All 4 for $29 instead of $59, this Black Friday weekend only 🖤 Comment FRIDAY and I'll send you the bundle 📩
+
+**Hashtags:** #blackfriday #menopause #perimenopause #womenover40 #menopausesupport #midlifewomen #womenshealth #over40 #wheretostart
+
+**Shorts title:** 4 guides for women over 40. Where do you start?

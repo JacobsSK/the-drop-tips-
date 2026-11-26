@@ -8,6 +8,7 @@
 import * as THREE from 'three';
 // Four books stand in a fan on a dark Black Friday set. FIRST lands at 0.2s, the other three cascade in from 1.3s.
 const FIRST = '__FIRST__';
+const MOTION = '__MOTION__' === '__' + 'MOTION__' ? 'drop' : '__MOTION__';  // 'drop' (cascade in) or 'hero' (featured book lifts out to the front)
 const ORDER = ['br', 'pp', 'bl', 'dc'];
 const SPINE = { br: '#8b1050', pp: '#1f4d3a', bl: '#1f8a77', dc: '#26375e' };
 window.VIDEO = { width: 1080, height: 1920, fps: 30, duration: 10 };
@@ -55,6 +56,7 @@ const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), easeOut = (p) =>
 const bounce = (p) => { const n = 7.5625, d = 2.75; if (p < 1 / d) return n * p * p; if (p < 2 / d) return n * (p -= 1.5 / d) * p + .75;
   if (p < 2.5 / d) return n * (p -= 2.25 / d) * p + .9375; return n * (p -= 2.625 / d) * p + .984375; };
 window.renderFrame = (t) => {
+  if (MOTION === 'hero') return hero(t);
   for (const { b, i, t0 } of books) {
     const p = clamp((t - t0) / 0.9), d = bounce(p);
     b.visible = t >= t0 - 0.01;
@@ -70,6 +72,24 @@ window.renderFrame = (t) => {
   rimL.intensity = rimR.intensity = 26 + 8 * Math.sin(t * 2.2);
   renderer.render(scene, camera);
 };
+function hero(t) {
+  // all four on the display; the camera sweeps in from the side while the featured book lifts out, spins and floats to the front
+  for (const { b, i } of books) {
+    b.visible = true;
+    if (ORDER[i] !== FIRST) { b.position.set(X[i], Y0[i] + bh / 2, Z[i]); b.rotation.set(0, RY[i], 0); continue; }
+    const p = easeOut(clamp((t - 1.0) / 1.6)), up = Math.sin(clamp((t - 1.0) / 1.6) * Math.PI) * 0.9;
+    const bob = Math.sin(Math.max(0, t - 2.6) * 1.8) * 0.06 * (t > 2.6);
+    b.position.set(X[i] * (1 - p), Y0[i] * (1 - p) + bh / 2 + 0.25 * p + up + bob, Z[i] + (1.75 - Z[i]) * p);
+    b.rotation.set(0, RY[i] * (1 - p) + Math.PI * 2 * p + Math.sin(Math.max(0, t - 2.6) * 0.9) * 0.08, 0);
+  }
+  const k = easeOut(clamp(t / 3.2)), a = 0.75 * (1 - k) + Math.sin(t * 0.4) * 0.07 * k;
+  const dist = 9.0 + 2.2 * k - 0.6 * clamp((t - 3.2) / 6.8);
+  camera.position.set(Math.sin(a) * dist, 3.4 - 2.3 * k, Math.cos(a) * dist);
+  camera.lookAt(0, 1.4 - 0.6 * k, 0.3);
+  spot.intensity = 60 + 30 * Math.max(0, Math.sin(t * 1.3));
+  rimL.intensity = rimR.intensity = 26 + 8 * Math.sin(t * 2.2);
+  renderer.render(scene, camera);
+}
 if (location.search.includes('render=1')) window.renderFrame(0);
 window.VIDEO_READY = true;
 </script></body></html>
