@@ -168,3 +168,17 @@ Note: the "day 10 · fizz · trigger" card is labelled on screen as an example.
 **Hashtags:** #blackfriday #bloating #bloatorfat #womenover40 #perimenopause #menopausebelly #guthealth #bloatingrelief #over40
 
 **Shorts title:** Bloat or belly fat? Find out in 2 minutes
+
+---
+
+# Round 19: Black Friday 3 (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer:** all 4 guides $29 Fri 27 – Mon 30 Nov (midnight US Pacific), $59 bought separately, $37 from Tue 1 Dec, 30-day money-back. Post until Monday night, then stop.
+
+## Video 15: "This Black Friday, skip the detox tea" (bf-detox, 23s)
+
+**Caption:** This Black Friday, skip the detox tea 🍵❌ Most bloating comes from everyday things: fizzy drinks, chewing gum, eating fast, constipation, salt and late dinners. The 7-Day Reset changes one thing at a time. No pills, teas or shakes. This weekend it comes with 3 more guides: all 4 for $29 instead of $59 🖤 Comment FRIDAY and I'll send it to you 📩 (The detox tea in the video is a made-up example, not a real product.)
+
+**Hashtags:** #blackfriday #bloating #detoxtea #womenover40 #perimenopause #menopausebelly #guthealth #bloatingrelief #over40
+
+**Shorts title:** This Black Friday, skip the detox tea

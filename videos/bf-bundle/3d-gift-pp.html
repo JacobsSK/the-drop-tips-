@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8" /><title>3D gift box bundle</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}#stage{position:relative;width:1080px;height:1920px;overflow:hidden}canvas{position:absolute;inset:0}</style>
+<script>window.VIDEO_READY = false;</script>
+<script type="importmap">{ "imports": { "three": "/.claude/skills/make-video/vendor/three.module.min.js" } }</script>
+</head><body><div id="stage"></div>
+<script type="module">
+import * as THREE from 'three';
+// Black gift box with a gold ribbon: the lid pops off (0.5s) in a burst of gold sparks, then the four books
+// grow up out of the box into a floating 2x2 (FIRST rises first), and hover. 10s, camera slowly pushes in.
+const FIRST = 'pp';
+const ORDER = ['br', 'pp', 'bl', 'dc'];
+const SPINE = { br: '#8b1050', pp: '#1f4d3a', bl: '#1f8a77', dc: '#26375e' };
+window.VIDEO = { width: 1080, height: 1920, fps: 30, duration: 10 };
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.35;
+document.getElementById('stage').prepend(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#0a0809'); scene.fog = new THREE.Fog('#0a0809', 11, 24);
+const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 100);
+scene.add(new THREE.HemisphereLight('#fff3dc', '#120c08', 0.8));
+const key = new THREE.DirectionalLight('#ffffff', 2.2); key.position.set(3, 8, 7); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -5, right: 5, top: 6, bottom: -3 }); key.shadow.radius = 5; scene.add(key);
+const rimL = new THREE.PointLight('#f5c542', 30, 14); rimL.position.set(-4, 4, -2.5); scene.add(rimL);
+const rimR = new THREE.PointLight('#f5c542', 30, 14); rimR.position.set(4, 4, -2.5); scene.add(rimR);
+const inner = new THREE.PointLight('#ffd76a', 0, 6); inner.position.set(0, 1.5, 0.2); scene.add(inner);
+const floor = new THREE.Mesh(new THREE.CircleGeometry(40, 64), new THREE.MeshStandardMaterial({ color: '#16110d', roughness: 0.38, metalness: 0.35 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+// --- gift box (open top) + lid, ribbon
+const BW = 3.2, BH = 0.95, BD = 1.6, T = 0.06;
+const black = new THREE.MeshStandardMaterial({ color: '#111013', roughness: 0.32, metalness: 0.4 });
+const gold = new THREE.MeshStandardMaterial({ color: '#f5c542', roughness: 0.25, metalness: 0.85, emissive: '#3a2a00' });
+const box = new THREE.Group(); scene.add(box);
+const wall = (w, h, d, x, y, z, m = black) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(x, y, z); o.castShadow = o.receiveShadow = true; box.add(o); return o; };
+wall(BW, T, BD, 0, T / 2, 0); wall(BW, BH, T, 0, BH / 2, BD / 2); wall(BW, BH, T, 0, BH / 2, -BD / 2); wall(T, BH, BD, BW / 2, BH / 2, 0); wall(T, BH, BD, -BW / 2, BH / 2, 0);
+wall(0.24, BH + 0.002, T + 0.01, 0, BH / 2, BD / 2, gold); wall(T + 0.01, BH + 0.002, 0.24, BW / 2, BH / 2, 0, gold); wall(T + 0.01, BH + 0.002, 0.24, -BW / 2, BH / 2, 0, gold);
+const lid = new THREE.Group(); scene.add(lid);
+const lm = (w, h, d, x, y, z, m = black) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(x, y, z); o.castShadow = true; lid.add(o); };
+lm(BW + 0.12, 0.16, BD + 0.12, 0, 0, 0); lm(0.26, 0.17, BD + 0.14, 0, 0, 0, gold); lm(BW + 0.14, 0.17, 0.26, 0, 0, 0, gold);
+for (const s of [-1, 1]) { const bow = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.07, 12, 32), gold); bow.position.set(s * 0.26, 0.2, 0); bow.rotation.set(0, 0, s * 0.5); bow.scale.set(1, 0.7, 1); lid.add(bow); }
+// --- sparks
+const NS = 220, sp = new THREE.BufferGeometry(), spPos = new Float32Array(NS * 3); sp.setAttribute('position', new THREE.BufferAttribute(spPos, 3));
+const sparks = new THREE.Points(sp, new THREE.PointsMaterial({ map: (() => { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d'); const r = g.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, 'rgba(255,248,220,1)'); r.addColorStop(0.25, 'rgba(255,205,80,.9)'); r.addColorStop(1, 'rgba(255,170,0,0)'); g.fillStyle = r; g.fillRect(0, 0, 64, 64); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })(), color: '#ffffff', size: 0.2, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })); sparks.frustumCulled = false; scene.add(sparks);
+const rnd = (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+// --- books
+function pagesTexture(vertical) { const c = document.createElement('canvas'); c.width = 256; c.height = 256; const g = c.getContext('2d');
+  g.fillStyle = '#f6efe9'; g.fillRect(0, 0, 256, 256); g.strokeStyle = 'rgba(120,90,80,.18)';
+  for (let i = 0; i < 256; i += 3) { g.beginPath(); vertical ? (g.moveTo(i, 0), g.lineTo(i, 256)) : (g.moveTo(0, i), g.lineTo(256, i)); g.stroke(); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; }
+const loader = new THREE.TextureLoader(); const bw = 1.3, bh = 1.68, bd = 0.16;
+// floating 2x2 above the box: back row (br, pp) higher
+const X = [-0.72, 0.72, -0.78, 0.78], Y = [3.15, 3.15, 1.75, 1.75], Z = [-0.5, -0.5, 0.35, 0.35], RY = [0.1, -0.1, 0.14, -0.14];
+const books = [];
+for (const [i, id] of ORDER.entries()) {
+  const tex = await loader.loadAsync(`assets/cover-${id}.png`); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  const m = (o) => new THREE.MeshStandardMaterial({ roughness: 0.42, ...o });
+  const b = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), [m({ map: pagesTexture(false) }), m({ color: SPINE[id] }), m({ map: pagesTexture(true) }),
+    m({ map: pagesTexture(true) }), m({ map: tex, roughness: 0.3 }), m({ color: SPINE[id] })]);
+  b.castShadow = true; scene.add(b);
+  const rank = id === FIRST ? 0 : 1 + ORDER.filter((o) => o !== FIRST).indexOf(id);
+  books.push({ b, i, t0: 0.85 + rank * 0.32 });
+}
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), easeOut = (p) => 1 - Math.pow(1 - p, 3);
+const back = (p) => { const c = 1.9; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+window.renderFrame = (t) => {
+  // lid: shake 0–0.45, pop 0.45–1.4 (flies up and back, tumbling)
+  const sh = t < 0.45 ? Math.sin(t * 60) * 0.03 * (t / 0.45) : 0, lp = clamp((t - 0.45) / 0.95);
+  lid.position.set(sh, BH + 0.08 + lp * 13 + Math.sin(lp * Math.PI) * 0.5, -lp * 9); lid.rotation.set(-lp * 2.2, lp * 0.7, sh * 2);
+  inner.intensity = 16 * clamp((t - 0.45) / 0.3) * (0.6 + 0.4 * Math.exp(-(t - 0.45) * 1.2));
+  // sparks: burst out of the box at 0.45s, fall with gravity
+  for (let i = 0; i < NS; i++) { const lt = t - 0.45 - rnd(i) * 0.25, a = rnd(i + 3) * Math.PI * 2, v = 1.5 + rnd(i + 7) * 3.5, up = 3 + rnd(i + 11) * 5;
+    const k = Math.max(0, lt); spPos[i * 3] = Math.cos(a) * v * k * 0.6; spPos[i * 3 + 1] = lt < 0 ? -5 : BH + up * k - 4.9 * k * k; spPos[i * 3 + 2] = Math.sin(a) * v * k * 0.4; }
+  sp.attributes.position.needsUpdate = true; sparks.material.opacity = clamp(1 - (t - 2.2) / 1.2);
+  // books grow up out of the box into place, then hover
+  for (const { b, i, t0 } of books) {
+    const p = clamp((t - t0) / 1.0), e = back(p), s = 0.25 + 0.75 * easeOut(p);
+    b.visible = t >= t0; b.scale.setScalar(s);
+    const bob = Math.sin((t - t0) * 1.6 + i) * 0.05 * clamp(t - t0 - 1);
+    b.position.set(X[i] * e, BH * 0.4 + (Y[i] - BH * 0.4) * e + bob, Z[i] * e);
+    b.rotation.set(0, RY[i] + (1 - easeOut(p)) * Math.PI * 1.5, 0);
+  }
+  const k = easeOut(clamp(t / 10)), sway = Math.sin(t * 0.4) * 0.08;
+  const dist = 14.2 - 1.6 * k; camera.position.set(Math.sin(sway) * dist, 1.9, Math.cos(sway) * dist); camera.lookAt(0, 1.65, 0);
+  rimL.intensity = rimR.intensity = 26 + 8 * Math.sin(t * 2.2);
+  renderer.render(scene, camera);
+};
+if (location.search.includes('render=1')) window.renderFrame(0);
+window.VIDEO_READY = true;
+</script></body></html>

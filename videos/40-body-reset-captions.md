@@ -347,3 +347,17 @@ Every diet works until day 31
 **Hashtags:** #blackfriday #blackfridaydeals #womenover40 #perimenopause #menopause #over40fitness #30dayplan #midlifewomen #healthyhabits
 
 **Shorts title:** A 30-day reset for under a dollar a day (Black Friday)
+
+---
+
+# Round 19: Black Friday 3 (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer:** all 4 guides $29 Fri 27 – Mon 30 Nov (midnight US Pacific), $59 bought separately, $37 from Tue 1 Dec, 30-day money-back. Post until Monday night, then stop.
+
+## "Not an athlete? Good. Neither is this plan." (40-body-reset-bf3, 24s)
+
+**Caption:** Not an athlete? Good. Neither is this plan 💛 Week 1 of the 40+ Body Reset is six simple habits: 🍳 protein at each meal, 💧 water, 🚶‍♀️ a 30-minute walk, 🌙 bed by 10:30, 🏋️‍♀️ three strength sessions in the week and 📓 a short evening journal. This Black Friday weekend it comes with 3 more guides: all 4 for $29 instead of $59 🖤 Comment FRIDAY and I'll send you the bundle 📩
+
+**Hashtags:** #blackfriday #womenover40 #beginnerworkout #perimenopause #menopause #over40fitness #healthyhabits #midlifewomen #strengthtraining
+
+**Shorts title:** Not an athlete? Good. Neither is this plan.

@@ -175,3 +175,17 @@ Note: the bottle is a made-up "MENO FORMULA", no real brand, as the doc asks.
 **Hashtags:** #blackfriday #menopause #perimenopause #womenover40 #menopausesupport #midlifewomen #womenshealth #over40 #wheretostart
 
 **Shorts title:** 4 guides for women over 40. Where do you start?
+
+---
+
+# Round 19: Black Friday 3 (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer:** all 4 guides $29 Fri 27 – Mon 30 Nov (midnight US Pacific), $59 bought separately, $37 from Tue 1 Dec, 30-day money-back. Post until Monday night, then stop.
+
+## Video 15: "10 questions, 10 different answers" (bf-10q, 26s)
+
+**Caption:** 10 menopause questions you keep getting different answers to 🤯 Fasting. HIIT. Carbs. Lifting. Supplements. Cortisol. Gluten and dairy. Alcohol. HRT. And "eat less, move more". The Menopause Advice Decoder gives each one a page and a clear verdict for you, plus doctor appointment prep so nothing gets forgotten 🩺 This Black Friday weekend it's in the bundle: all 4 guides for $29 instead of $59 🖤 Comment FRIDAY and I'll send you the bundle 📩
+
+**Hashtags:** #blackfriday #menopause #menopauseadvice #perimenopause #womenover40 #hrt #menopausesupport #midlifewomen #over40
+
+**Shorts title:** 10 menopause questions with 10 different answers online

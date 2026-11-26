@@ -374,3 +374,17 @@ Note: the grocery list items on screen are labelled "example".
 **Hashtags:** #blackfriday #highprotein #proteinrecipes #proteinforwomen #womenover40 #perimenopause #easyrecipes #mealplan #over40
 
 **Shorts title:** 55 high-protein recipes in one Black Friday bundle
+
+---
+
+# Round 19: Black Friday 3 (comment keyword: FRIDAY → the 40+ Reset Collection bundle)
+
+**Offer:** all 4 guides $29 Fri 27 – Mon 30 Nov (midnight US Pacific), $59 bought separately, $37 from Tue 1 Dec, 30-day money-back. Post until Monday night, then stop.
+
+## Video 22: "Your first week, already planned" (bf-week1, 23s)
+
+**Caption:** Your first week of high-protein eating, already planned 📅 The 30g Protein Plate Playbook has a done-for-you first week, and every day lands between 105 and 126 g of protein. Plus 20 quick add-ons, from +2 g to +23 g. This Black Friday weekend it's in a bundle with 3 more guides: all 4 for $29 instead of $59 🖤 Comment FRIDAY and I'll send you the bundle 📩
+
+**Hashtags:** #blackfriday #highprotein #mealplan #proteinforwomen #womenover40 #perimenopause #mealprep #100gprotein #over40
+
+**Shorts title:** Your first week of high-protein eating, already planned
